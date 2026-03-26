@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The HardMiner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=SF+Pro+Display:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:          #fafafa;
+  --surface:     #ffffff;
+  --ink:         #1d1d1f;
+  --ink-2:       #424245;
+  --ink-3:       #6e6e73;
+  --ink-4:       #aeaeb2;
+  --border:      rgba(0,0,0,0.08);
+  --border-mid:  rgba(0,0,0,0.12);
+  --red:         #c0392b;
+  --red-2:       #e74c3c;
+  --ease:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* ── Subtle noise ── */
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.018; pointer-events:none; z-index:9999;
+}
+
+/* ════════════════════════════════════
+   TOPBAR
+════════════════════════════════════ */
+.topbar {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background: rgba(250,250,250,0.82);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+  opacity: 0;
+  animation: fadeIn .5s var(--ease) .05s forwards;
+}
+
+.topbar-date {
+  font-size: .65rem;
+  font-weight: 400;
+  letter-spacing: .06em;
+  color: var(--ink-4);
+}
+
+.topbar-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-size: .62rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: var(--ink-3);
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  padding: 4px 11px;
+  border-radius: 20px;
+}
+
+.live-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: #30d158;
+  animation: breathe 2.4s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.55;transform:scale(.8)}
+}
+
+/* ════════════════════════════════════
+   HERO — THE HARDMINER
+════════════════════════════════════ */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 7rem 2rem 5rem;
+  text-align: center;
+  opacity: 0;
+  animation: heroIn .9s var(--ease) .15s forwards;
+}
+
+@keyframes heroIn {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.hero-eyebrow {
+  font-size: .62rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 1.4rem;
+  opacity: 0;
+  animation: fadeIn .6s var(--ease) .4s forwards;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: clamp(3.8rem, 9vw, 7.2rem);
+  font-weight: 400;
+  line-height: .95;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin-bottom: 1.8rem;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--red);
+  font-weight: 400;
+}
+
+.hero-rule {
+  width: 40px; height: 1px;
+  background: var(--ink-4);
+  margin: 0 auto;
+  opacity: 0;
+  animation: fadeIn .6s var(--ease) .65s forwards;
+}
+
+@keyframes fadeIn {
+  from{opacity:0} to{opacity:1}
+}
+
+/* ════════════════════════════════════
+   TWO-COLUMN GRID
+════════════════════════════════════ */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 4rem 2rem 6rem;
+  gap: 0;
+  opacity: 0;
+  animation: fadeIn .7s var(--ease) .55s forwards;
+}
+
+.col {
+  padding: 0 3rem;
+}
+.col:first-child {
+  border-right: 1px solid var(--border);
+  padding-left: 0;
+}
+.col:last-child {
+  padding-right: 0;
+}
+
+/* ── Column heading ── */
+.col-heading {
+  font-size: .6rem;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: .9rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Row button ── */
+.row-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: .9rem 1rem;
+  border: none;
+  background: none;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: background .2s var(--ease);
+}
+.row-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .28s var(--ease);
+  border-radius: 0;
+}
+.row-btn:hover::before { transform: scaleX(1); }
+.row-btn:hover .rb-name { color: #fff; }
+.row-btn:hover .rb-sub  { color: rgba(255,255,255,.55); }
+.row-btn:hover .rb-arrow { opacity:1; transform:translateX(4px); color: rgba(255,255,255,.7); }
+
+.rb-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.rb-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex: 1;
+}
+
+.rb-name {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--ink-2);
+  letter-spacing: -.01em;
+  line-height: 1;
+  transition: color .2s;
+}
+
+.rb-sub {
+  font-size: .58rem;
+  font-weight: 400;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  transition: color .2s;
+}
+
+.rb-arrow {
+  font-size: .8rem;
+  color: var(--ink-4);
+  opacity: 0;
+  transition: opacity .2s, transform .25s var(--ease), color .2s;
+  position: absolute;
+  right: 0;
+}
+
+/* ════════════════════════════════════
+   FOOTER
+════════════════════════════════════ */
+footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding: 1.4rem;
+  text-align: center;
+  opacity: 0;
+  animation: fadeIn .5s var(--ease) .85s forwards;
+}
+.footer-text {
+  font-size: .58rem;
+  font-weight: 400;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+/* ════════════════════════════════════
+   MODAL
+════════════════════════════════════ */
+.overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+}
+.overlay.open { display: flex; }
+
+.modal {
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  width: min(440px, 92vw);
+  padding: 2.6rem 2.8rem 2.2rem;
+  position: relative;
+  box-shadow: 0 32px 80px rgba(0,0,0,.12), 0 8px 20px rgba(0,0,0,.06);
+  animation: modalIn .35s var(--spring) forwards;
+}
+@keyframes modalIn {
+  from { opacity:0; transform:scale(.93) translateY(14px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+
+.modal-close {
+  position: absolute; top: 1.1rem; right: 1.3rem;
+  width: 26px; height: 26px;
+  background: rgba(0,0,0,.06);
+  border: none; border-radius: 50%;
+  font-size: .7rem;
+  color: var(--ink-3);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+}
+.modal-close:hover { background: rgba(0,0,0,.12); }
+
+.modal-eyebrow {
+  font-size: .55rem;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 1.8rem;
+  line-height: 1.05;
+  letter-spacing: -.01em;
+}
+
+.modal-list { display: flex; flex-direction: column; gap: 6px; }
+
+.modal-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .78rem 1.1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .18s, border-color .18s, transform .2s var(--ease), box-shadow .2s;
+}
+.modal-item:hover {
+  background: var(--red);
+  border-color: var(--red);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(192,57,43,.22);
+}
+.modal-item:hover .mi-label { color: #fff; }
+.modal-item:hover .mi-icon  { color: rgba(255,255,255,.7); }
+
+.mi-label {
+  font-size: .82rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  letter-spacing: -.01em;
+  transition: color .18s;
+}
+.mi-icon {
+  font-size: .75rem;
+  color: var(--ink-4);
+  transition: color .18s;
+}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<header class="topbar">
+  <div class="topbar-date" id="live-date"></div>
+  <div class="topbar-pill">
+    <span class="live-dot"></span>
+    Coffee Live
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-eyebrow">ETG Softs &amp; Ags</div>
+  <h1 class="hero-title">The Hard<em>Miner</em></h1>
+  <div class="hero-rule"></div>
+</section>
+
+<!-- Grid -->
+<div class="grid">
+
+  <!-- Fundamentals -->
+  <div class="col">
+    <div class="col-heading">Fundamentals</div>
+
+    <button class="row-btn" onclick="open('Coffee','fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Coffee</span>
+          <span class="rb-sub">Arabica · Robusta</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+
+    <button class="row-btn" onclick="open('Cocoa','fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Cocoa</span>
+          <span class="rb-sub">Beans · Products</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+
+    <button class="row-btn" onclick="open('Sugar','fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Sugar</span>
+          <span class="rb-sub">Raw · White</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+
+    <button class="row-btn" onclick="open('Cotton','fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Cotton</span>
+          <span class="rb-sub">Fibre</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+
+    <button class="row-btn" onclick="open('Orange Juice','fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Orange Juice</span>
+          <span class="rb-sub">FCOJ</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+  </div>
+
+  <!-- Non-Fundamentals -->
+  <div class="col">
+    <div class="col-heading">Non-Fundamentals</div>
+
+    <button class="row-btn" onclick="open('COT Analysis','non-fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">COT Analysis</span>
+          <span class="rb-sub">Positioning</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+
+    <button class="row-btn" onclick="open('Seasonality','non-fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Seasonality</span>
+          <span class="rb-sub">Historical patterns</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+
+    <button class="row-btn" onclick="open('Futures Curve','non-fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Futures Curve</span>
+          <span class="rb-sub">Rollex · Term structure</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+
+    <button class="row-btn" onclick="open('Open Interest','non-fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Open Interest</span>
+          <span class="rb-sub">Volume · Liquidity</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+
+    <button class="row-btn" onclick="open('Macro Dashboard','non-fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Macro Dashboard</span>
+          <span class="rb-sub">FX · Rates · Indices</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <span class="footer-text">The HardMiner &nbsp;·&nbsp; ETG Softs Prop Trading &nbsp;·&nbsp; Internal Use Only</span>
+</footer>
+
+<!-- Modal -->
+<div class="overlay" id="overlay" onclick="closeOutside(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="close()">✕</button>
+    <div class="modal-eyebrow" id="m-eyebrow"></div>
+    <div class="modal-title"   id="m-title"></div>
+    <div class="modal-list"    id="m-list"></div>
+  </div>
+</div>
+
+<script>
+  // Date
+  document.getElementById('live-date').textContent =
+    new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  // Link registry — replace null with Streamlit URLs as you build them
+  const LINKS = {
+    fundamentals: {
+      'Coffee':       {'Trade Flows':null,'Supply & Demand':null,'Production / Crop':null,'Stocks / Inventories':null},
+      'Cocoa':        {'Trade Flows':null,'Supply & Demand':null,'Production / Crop':null,'Stocks / Inventories':null},
+      'Sugar':        {'Trade Flows':null,'Supply & Demand':null,'Production / Crop':null,'Stocks / Inventories':null},
+      'Cotton':       {'Trade Flows':null,'Supply & Demand':null,'Production / Crop':null,'Stocks / Inventories':null},
+      'Orange Juice': {'Trade Flows':null,'Supply & Demand':null,'Production / Crop':null,'Stocks / Inventories':null},
+    },
+    'non-fundamentals': {
+      'COT Analysis':    {'Coffee':null,'Cocoa':null,'Sugar':null,'All Commodities':null},
+      'Seasonality':     {'Coffee':null,'Cocoa':null,'Sugar':null,'All Commodities':null},
+      'Futures Curve':   {'Coffee':null,'Cocoa':null,'Sugar':null},
+      'Open Interest':   {'Overview':null},
+      'Macro Dashboard': {'Open Dashboard':null},
+    }
+  };
+
+  function open(name, type) {
+    document.getElementById('m-eyebrow').textContent =
+      type === 'fundamentals' ? 'Fundamentals' : 'Non-Fundamentals';
+    document.getElementById('m-title').textContent = name;
+
+    const list = document.getElementById('m-list');
+    list.innerHTML = '';
+
+    const sections = LINKS[type][name] || {};
+    Object.entries(sections).forEach(([label, url]) => {
+      const a = document.createElement('a');
+      a.className = 'modal-item';
+      a.href = url || '#';
+      if (url) { a.target = '_blank'; a.rel = 'noopener'; }
+      else a.addEventListener('click', e => e.preventDefault());
+      a.innerHTML = `<span class="mi-label">${label}</span><span class="mi-icon">${url ? '↗' : '→'}</span>`;
+      list.appendChild(a);
+    });
+
+    document.getElementById('overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    document.getElementById('overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeOutside(e) {
+    if (e.target === document.getElementById('overlay')) close();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+</script>
+</body>
+</html>
