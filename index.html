@@ -537,18 +537,18 @@ footer {
   // Link registry — replace null with Streamlit URLs as you build them
   const LINKS = {
     fundamentals: {
-      'Coffee':       {'Trade Flows':null,'Supply & Demand':null,'Production / Crop':null,'Stocks / Inventories':null},
-      'Cocoa':        {'Trade Flows':null,'Supply & Demand':null,'Production / Crop':null,'Stocks / Inventories':null},
-      'Sugar':        {'Trade Flows':null,'Supply & Demand':null,'Production / Crop':null,'Stocks / Inventories':null},
-      'Cotton':       {'Trade Flows':null,'Supply & Demand':null,'Production / Crop':null,'Stocks / Inventories':null},
-      'Orange Juice': {'Trade Flows':null,'Supply & Demand':null,'Production / Crop':null,'Stocks / Inventories':null},
+      'Coffee':       {'TDM Trade Flows':'https://coffeeexportertdm-a4vbj7jhz3cllqvhaz4nsi.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
+      'Cocoa':        {'Trade Flows':'coming-soon.html','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
+      'Sugar':        {'Trade Flows':'coming-soon.html','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
+      'Cotton':       {'Trade Flows':'coming-soon.html','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
+      'Orange Juice': {'Trade Flows':'coming-soon.html','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
     },
     'non-fundamentals': {
-      'COT Analysis':    {'Coffee':null,'Cocoa':null,'Sugar':null,'All Commodities':null},
-      'Seasonality':     {'Coffee':null,'Cocoa':null,'Sugar':null,'All Commodities':null},
-      'Futures Curve':   {'Coffee':null,'Cocoa':null,'Sugar':null},
-      'Open Interest':   {'Overview':null},
-      'Macro Dashboard': {'Open Dashboard':null},
+      'COT Analysis':    {'Coffee':'coming-soon.html','Cocoa':'coming-soon.html','Sugar':'coming-soon.html','All Commodities':'coming-soon.html'},
+      'Seasonality':     {'Coffee':'coming-soon.html','Cocoa':'coming-soon.html','Sugar':'coming-soon.html','All Commodities':'coming-soon.html'},
+      'Futures Curve':   {'Coffee':'coming-soon.html','Cocoa':'coming-soon.html','Sugar':'coming-soon.html'},
+      'Open Interest':   {'Overview':'coming-soon.html'},
+      'Macro Dashboard': {'Open Dashboard':'coming-soon.html'},
     }
   };
 
@@ -564,10 +564,12 @@ footer {
     Object.entries(sections).forEach(([label, url]) => {
       const a = document.createElement('a');
       a.className = 'modal-item';
+      const isExternal = url && url.startsWith('http');
+      const isComingSoon = url && url === 'coming-soon.html';
       a.href = url || '#';
-      if (url) { a.target = '_blank'; a.rel = 'noopener'; }
-      else a.addEventListener('click', e => e.preventDefault());
-      a.innerHTML = `<span class="mi-label">${label}</span><span class="mi-icon">${url ? '↗' : '→'}</span>`;
+      if (isExternal) { a.target = '_blank'; a.rel = 'noopener'; }
+      if (!url) a.addEventListener('click', e => e.preventDefault());
+      a.innerHTML = `<span class="mi-label">${label}</span><span class="mi-icon">${isExternal ? '↗' : '→'}</span>`;
       list.appendChild(a);
     });
 
