@@ -28,6 +28,7 @@ html { font-size: 16px; -webkit-font-smoothing: antialiased; }
 
 body {
   background: var(--bg);
+  
   color: var(--ink);
   font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif;
   min-height: 100vh;
@@ -176,11 +177,11 @@ body::after {
 
 /* ── Column heading ── */
 .col-heading {
-  font-size: .6rem;
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: .22em;
+  letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--ink-4);
+  color: var(--ink-3);
   text-align: center;
   margin-bottom: 2rem;
   padding-bottom: .9rem;
@@ -200,22 +201,12 @@ body::after {
   cursor: pointer;
   text-align: center;
   position: relative;
-  overflow: hidden;
   transition: background .2s var(--ease);
 }
-.row-btn::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: var(--red);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .28s var(--ease);
-  border-radius: 0;
-}
-.row-btn:hover::before { transform: scaleX(1); }
-.row-btn:hover .rb-name { color: #fff; }
-.row-btn:hover .rb-sub  { color: rgba(255,255,255,.55); }
-.row-btn:hover .rb-arrow { opacity:1; transform:translateX(4px); color: rgba(255,255,255,.7); }
+.row-btn:hover { background: rgba(192,57,43,0.06); }
+.row-btn:hover .rb-name { color: var(--red); }
+.row-btn:hover .rb-sub  { color: var(--ink-3); }
+.row-btn:hover .rb-arrow { opacity:1; transform:translateX(4px); color: var(--red); }
 
 .rb-inner {
   display: flex;
@@ -407,7 +398,7 @@ footer {
   <div class="col">
     <div class="col-heading">Fundamentals</div>
 
-    <button class="row-btn" onclick="open('Coffee','fundamentals')">
+    <button class="row-btn" onclick="openModal('Coffee','fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Coffee</span>
@@ -417,7 +408,7 @@ footer {
       </div>
     </button>
 
-    <button class="row-btn" onclick="open('Cocoa','fundamentals')">
+    <button class="row-btn" onclick="openModal('Cocoa','fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Cocoa</span>
@@ -427,7 +418,7 @@ footer {
       </div>
     </button>
 
-    <button class="row-btn" onclick="open('Sugar','fundamentals')">
+    <button class="row-btn" onclick="openModal('Sugar','fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Sugar</span>
@@ -437,7 +428,7 @@ footer {
       </div>
     </button>
 
-    <button class="row-btn" onclick="open('Cotton','fundamentals')">
+    <button class="row-btn" onclick="openModal('Cotton','fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Cotton</span>
@@ -447,7 +438,7 @@ footer {
       </div>
     </button>
 
-    <button class="row-btn" onclick="open('Orange Juice','fundamentals')">
+    <button class="row-btn" onclick="openModal('Orange Juice','fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Orange Juice</span>
@@ -462,7 +453,7 @@ footer {
   <div class="col">
     <div class="col-heading">Non-Fundamentals</div>
 
-    <button class="row-btn" onclick="open('COT Analysis','non-fundamentals')">
+    <button class="row-btn" onclick="openModal('COT Analysis','non-fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">COT Analysis</span>
@@ -472,7 +463,7 @@ footer {
       </div>
     </button>
 
-    <button class="row-btn" onclick="open('Seasonality','non-fundamentals')">
+    <button class="row-btn" onclick="openModal('Seasonality','non-fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Seasonality</span>
@@ -482,7 +473,7 @@ footer {
       </div>
     </button>
 
-    <button class="row-btn" onclick="open('Futures Curve','non-fundamentals')">
+    <button class="row-btn" onclick="openModal('Futures Curve','non-fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Futures Curve</span>
@@ -492,7 +483,7 @@ footer {
       </div>
     </button>
 
-    <button class="row-btn" onclick="open('Open Interest','non-fundamentals')">
+    <button class="row-btn" onclick="openModal('Open Interest','non-fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Open Interest</span>
@@ -502,7 +493,7 @@ footer {
       </div>
     </button>
 
-    <button class="row-btn" onclick="open('Macro Dashboard','non-fundamentals')">
+    <button class="row-btn" onclick="openModal('Macro Dashboard','non-fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Macro Dashboard</span>
@@ -523,7 +514,7 @@ footer {
 <!-- Modal -->
 <div class="overlay" id="overlay" onclick="closeOutside(event)">
   <div class="modal" id="modal-box">
-    <button class="modal-close" onclick="close()">✕</button>
+    <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-eyebrow" id="m-eyebrow"></div>
     <div class="modal-title"   id="m-title"></div>
     <div class="modal-list"    id="m-list"></div>
@@ -553,7 +544,7 @@ footer {
     }
   };
 
-  function open(name, type) {
+  function openModal(name, type) {
     document.getElementById('m-eyebrow').textContent =
       type === 'fundamentals' ? 'Fundamentals' : 'Non-Fundamentals';
     document.getElementById('m-title').textContent = name;
@@ -578,16 +569,16 @@ footer {
     document.body.style.overflow = 'hidden';
   }
 
-  function close() {
+  function closeModal() {
     document.getElementById('overlay').classList.remove('open');
     document.body.style.overflow = '';
   }
 
   function closeOutside(e) {
-    if (e.target === document.getElementById('overlay')) close();
+    if (e.target === document.getElementById('overlay')) closeModal();
   }
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
 </html>
