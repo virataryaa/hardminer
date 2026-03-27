@@ -124,12 +124,12 @@ body::after {
 
 .hero-title {
   font-family: 'Playfair Display', 'Georgia', serif;
-  font-size: clamp(3.8rem, 9vw, 7.2rem);
+  font-size: clamp(1.9rem, 4.5vw, 3.6rem);
   font-weight: 400;
   line-height: .95;
   letter-spacing: -.02em;
   color: #0a2463;
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.2rem;
 }
 .hero-title em {
   font-style: italic;
@@ -276,6 +276,16 @@ body::after {
   right: 0;
 }
 
+/* ── Section sub-heading ── */
+.section-sub {
+  font-size: .55rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin: 0 0 .6rem 0;
+}
+
 /* ════════════════════════════════════
    FOOTER
 ════════════════════════════════════ */
@@ -420,64 +430,74 @@ footer {
   <div class="col">
     <div class="col-heading">Fundamentals</div>
 
-    <div class="btn-group-box">
-      <button class="row-btn" onclick="openModal('Coffee','fundamentals')">
-        <div class="rb-inner">
-          <div class="rb-text">
-            <span class="rb-name">Coffee</span>
-            <span class="rb-sub">Arabica · Robusta</span>
-          </div>
-          <span class="rb-arrow">→</span>
-        </div>
-      </button>
+    <div class="section-sub">Commodity Wise</div>
 
-      <button class="row-btn" onclick="openModal('Cocoa','fundamentals')">
-        <div class="rb-inner">
-          <div class="rb-text">
-            <span class="rb-name">Cocoa</span>
-            <span class="rb-sub">Beans · Products</span>
-          </div>
-          <span class="rb-arrow">→</span>
+    <button class="row-btn" onclick="openModal('Coffee','fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Coffee</span>
+          <span class="rb-sub">Arabica · Robusta</span>
         </div>
-      </button>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
 
-      <button class="row-btn" onclick="openModal('Sugar','fundamentals')">
-        <div class="rb-inner">
-          <div class="rb-text">
-            <span class="rb-name">Sugar</span>
-            <span class="rb-sub">Raw · White</span>
-          </div>
-          <span class="rb-arrow">→</span>
+    <button class="row-btn" onclick="openModal('Cocoa','fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Cocoa</span>
+          <span class="rb-sub">Beans · Products</span>
         </div>
-      </button>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
 
-      <button class="row-btn" onclick="openModal('Cotton','fundamentals')">
-        <div class="rb-inner">
-          <div class="rb-text">
-            <span class="rb-name">Cotton</span>
-            <span class="rb-sub">Fibre</span>
-          </div>
-          <span class="rb-arrow">→</span>
+    <button class="row-btn" onclick="openModal('Sugar','fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Sugar</span>
+          <span class="rb-sub">Raw · White</span>
         </div>
-      </button>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
 
-      <button class="row-btn" onclick="openModal('Orange Juice','fundamentals')">
-        <div class="rb-inner">
-          <div class="rb-text">
-            <span class="rb-name">Orange Juice</span>
-            <span class="rb-sub">FCOJ</span>
-          </div>
-          <span class="rb-arrow">→</span>
+    <button class="row-btn" onclick="openModal('Cotton','fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Cotton</span>
+          <span class="rb-sub">Fibre</span>
         </div>
-      </button>
-    </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
 
-    <div class="btn-group-box" style="margin-top:1rem">
+    <button class="row-btn" onclick="openModal('Orange Juice','fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Orange Juice</span>
+          <span class="rb-sub">FCOJ</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+
+    <div style="margin-top:2rem">
       <button class="row-btn" onclick="openModal('Weather','weather')">
         <div class="rb-inner">
           <div class="rb-text">
             <span class="rb-name">Weather</span>
             <span class="rb-sub">Precipitation · Temperature</span>
+          </div>
+          <span class="rb-arrow">→</span>
+        </div>
+      </button>
+
+      <button class="row-btn" onclick="openModal('TDM Trade Flows','tradeflows')">
+        <div class="rb-inner">
+          <div class="rb-text">
+            <span class="rb-name">TDM Trade Flows</span>
+            <span class="rb-sub">Exports · Imports · Partners</span>
           </div>
           <span class="rb-arrow">→</span>
         </div>
@@ -542,22 +562,6 @@ footer {
 
 </div>
 
-<!-- Trade Data Section -->
-<div class="trade-section">
-  <div class="col-heading" style="text-align:left">Trade Data</div>
-  <div class="btn-group-box" style="max-width:420px">
-    <button class="row-btn" onclick="openModal('TDM Trade Flows','tradeflows')">
-      <div class="rb-inner">
-        <div class="rb-text">
-          <span class="rb-name">TDM Trade Flows</span>
-          <span class="rb-sub">Exports · Imports · Partners</span>
-        </div>
-        <span class="rb-arrow">→</span>
-      </div>
-    </button>
-  </div>
-</div>
-
 <!-- Footer -->
 <footer>
   <span class="footer-text">HardMiner &nbsp;·&nbsp; ETG Softs Prop Trading &nbsp;·&nbsp; Internal Use Only for Barry, Romain &amp; Virat</span>
@@ -597,9 +601,9 @@ footer {
     },
     weather: {
       'Weather': {
-        'Colombia':  'https://coffeeweather-d5p68rbeg8lwi34tgcpyt3.streamlit.app/',
-        'Brazil':    'coming-soon.html',
-        'Honduras':  'coming-soon.html',
+        'Coffee': 'https://coffeeweather-d5p68rbeg8lwi34tgcpyt3.streamlit.app/',
+        'Cocoa':  'coming-soon.html',
+        'Sugar':  'coming-soon.html',
       },
     },
     'non-fundamentals': {
