@@ -82,23 +82,6 @@ body::after {
   border-radius: 20px;
 }
 
-.currency-btn {
-  display: flex; align-items: center; gap: 6px;
-  font-size: .62rem;
-  font-weight: 600;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: #fff;
-  background: #0a2463;
-  border: none;
-  padding: 5px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background .2s, transform .15s;
-}
-.currency-btn:hover { background: var(--red); transform: translateY(-1px); }
-
 .live-dot {
   width: 5px; height: 5px; border-radius: 50%;
   background: #30d158;
@@ -427,14 +410,9 @@ footer {
 <!-- Topbar -->
 <header class="topbar">
   <div class="topbar-date" id="live-date"></div>
-  <div style="display:flex;align-items:center;gap:10px;">
-    <a class="currency-btn" href="https://currencydashboard-6czutxwm5ume5rzndcs9k5.streamlit.app/" target="_blank" rel="noopener">
-      ₣ Currency Dashboard
-    </a>
-    <div class="topbar-pill">
-      <span class="live-dot"></span>
-      Coffee Live
-    </div>
+  <div class="topbar-pill">
+    <span class="live-dot"></span>
+    Coffee Live
   </div>
 </header>
 
