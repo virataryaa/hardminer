@@ -410,9 +410,20 @@ footer {
 <!-- Topbar -->
 <header class="topbar">
   <div class="topbar-date" id="live-date"></div>
-  <div class="topbar-pill">
-    <span class="live-dot"></span>
-    Coffee Live
+  <div style="display:flex;align-items:center;gap:10px">
+    <div class="topbar-pill">
+      <span class="live-dot"></span>
+      Coffee Live
+    </div>
+    <a href="https://dailyupdates-7caerpq35kzuz6djyrcusc.streamlit.app/" target="_blank" rel="noopener"
+       style="display:flex;align-items:center;gap:6px;font-size:.62rem;font-weight:600;
+              letter-spacing:.05em;color:#fff;background:#c0392b;border:none;
+              padding:5px 13px;border-radius:20px;text-decoration:none;
+              transition:background .2s,transform .15s;white-space:nowrap"
+       onmouseover="this.style.background='#a93226';this.style.transform='translateY(-1px)'"
+       onmouseout="this.style.background='#c0392b';this.style.transform='translateY(0)'">
+      ⚡ Daily Updates <span style="font-size:.5rem;opacity:.8;margin-left:3px">BETA</span>
+    </a>
   </div>
 </header>
 
