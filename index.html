@@ -518,6 +518,16 @@ footer {
   <div class="col">
     <div class="col-heading">Non-Fundamentals</div>
 
+    <button class="row-btn" onclick="openModal('Rollex','non-fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Rollex</span>
+          <span class="rb-sub">Seasonality · Scatter · Volatility</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+
     <button class="row-btn" onclick="openModal('COT Analysis','non-fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
@@ -616,6 +626,7 @@ footer {
       },
     },
     'non-fundamentals': {
+      'Rollex':          {'Open Dashboard':'https://rollex-th78knodmfltf27h5wfbfx.streamlit.app/'},
       'COT Analysis':    {'Coffee':'coming-soon.html','Cocoa':'coming-soon.html','Sugar':'coming-soon.html','All Commodities':'coming-soon.html'},
       'Seasonality':     {'Coffee':'coming-soon.html','Cocoa':'coming-soon.html','Sugar':'coming-soon.html','All Commodities':'coming-soon.html'},
       'Futures Curve':   {'Coffee':'coming-soon.html','Cocoa':'coming-soon.html','Sugar':'coming-soon.html'},
