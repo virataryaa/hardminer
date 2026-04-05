@@ -473,10 +473,6 @@ footer {
 <header class="topbar">
   <div class="topbar-date" id="live-date"></div>
   <div style="display:flex;align-items:center;gap:10px">
-    <div class="topbar-pill">
-      <span class="live-dot"></span>
-      Coffee Live
-    </div>
     <a href="https://dailyupdates-7caerpq35kzuz6djyrcusc.streamlit.app/" target="_blank" rel="noopener"
        style="display:flex;align-items:center;gap:6px;font-size:.62rem;font-weight:600;
               letter-spacing:.05em;color:#fff;background:#c0392b;border:none;
@@ -600,15 +596,15 @@ footer {
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Seasonality','non-fundamentals')">
+    <a class="row-btn" href="https://cross-section-xhmmsmbdysa87gd64g5ca6.streamlit.app/" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="rb-inner">
         <div class="rb-text">
-          <span class="rb-name">Seasonality</span>
-          <span class="rb-sub">Historical patterns</span>
+          <span class="rb-name">Cross Section</span>
+          <span class="rb-sub">Momentum · Roll Yield</span>
         </div>
-        <span class="rb-arrow">→</span>
+        <span class="rb-arrow">↗</span>
       </div>
-    </button>
+    </a>
 
     <button class="row-btn" onclick="openModal('Roll Yield','non-fundamentals')">
       <div class="rb-inner">
@@ -656,9 +652,7 @@ footer {
 </div>
 
 <!-- Footer -->
-<footer>
-  <span class="footer-text">HardMiner &nbsp;·&nbsp; ETG Softs Prop Trading &nbsp;·&nbsp; Internal Use Only for Barry, Romain &amp; Virat</span>
-</footer>
+<footer style="display:none;"></footer>
 
 <!-- Modal -->
 <div class="overlay" id="overlay" onclick="closeOutside(event)">
