@@ -772,7 +772,7 @@ footer {
       'Seasonality':     {'Coffee':'coming-soon.html','Cocoa':'coming-soon.html','Sugar':'coming-soon.html','All Commodities':'coming-soon.html'},
       'Roll Yield':      {'Roll Yield Monitor':'https://roll-yield-ofghtdpvrca3nmdcgjma8y.streamlit.app/','Initial Margin':'coming-soon.html'},
       'Open Interest':   {'Overview':'coming-soon.html'},
-      'VaR':             {'VaR Monitor':'iframe:VaR Monitor:https://rollex-vj3oevjtghz5ofltz44dra.streamlit.app/','Initial Margin':'coming-soon.html','Spec in VaR':'coming-soon.html'},
+      'VaR':             {'VaR Monitor':'popup:https://rollex-vj3oevjtghz5ofltz44dra.streamlit.app/','Initial Margin':'coming-soon.html','Spec in VaR':'coming-soon.html'},
       'Optimus Prime':   {'Backtesting Engine':'coming-soon.html','Statistics':'https://www.notion.so/Optimus-Prime-Statistics-333fbb7607b880ee8876cdfe10893956?source=copy_link','Strategy':'coming-soon.html'},
     }
   };
@@ -798,6 +798,15 @@ footer {
         const iframeUrl = parts.slice(2).join(':');
         a.href = '#';
         a.addEventListener('click', e => { e.preventDefault(); openIframe(iframeTitle, iframeUrl); });
+        a.innerHTML = `<span class="mi-label">${label}</span><span class="mi-icon">&#9654;</span>`;
+      } else if (url && url.startsWith('popup:')) {
+        const popupUrl = url.slice(6);
+        a.href = '#';
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          const w = screen.width, h = screen.height;
+          window.open(popupUrl, '_blank', `width=${w},height=${h},left=0,top=0,menubar=no,toolbar=no,location=no,status=no`);
+        });
         a.innerHTML = `<span class="mi-label">${label}</span><span class="mi-icon">&#9654;</span>`;
       } else {
         a.href = url || '#';
