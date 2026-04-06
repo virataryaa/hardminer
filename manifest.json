@@ -2,7 +2,7 @@
   "name": "HardMiner",
   "short_name": "HardMiner",
   "description": "ETG Softs Prop Trading — Internal Dashboard",
-  "start_url": "/",
+  "start_url": "/hardminer/",
   "display": "standalone",
   "background_color": "#fafafa",
   "theme_color": "#0a2463",
