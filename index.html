@@ -308,6 +308,67 @@ footer {
 }
 
 /* ════════════════════════════════════
+   IFRAME VIEWER
+════════════════════════════════════ */
+.iframe-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  z-index: 600;
+  flex-direction: column;
+  background: #fafafa;
+}
+.iframe-overlay.open { display: flex; }
+
+.iframe-topbar {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.4rem;
+  background: #0a2463;
+  flex-shrink: 0;
+}
+
+.iframe-back {
+  display: flex; align-items: center; gap: 7px;
+  color: rgba(255,255,255,0.85);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .05em;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  border-radius: 8px;
+  padding: 5px 13px;
+  cursor: pointer;
+  transition: background .2s;
+}
+.iframe-back:hover { background: rgba(255,255,255,0.22); }
+
+.iframe-title {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,0.9);
+  text-transform: uppercase;
+}
+
+.iframe-open-ext {
+  display: flex; align-items: center; gap: 5px;
+  color: rgba(255,255,255,0.6);
+  font-size: .65rem;
+  text-decoration: none;
+  letter-spacing: .04em;
+  transition: color .2s;
+}
+.iframe-open-ext:hover { color: #fff; }
+
+.iframe-frame {
+  flex: 1;
+  border: none;
+  width: 100%;
+}
+
+/* ════════════════════════════════════
    MODAL
 ════════════════════════════════════ */
 .overlay {
@@ -656,6 +717,16 @@ footer {
 <!-- Footer -->
 <footer style="display:none;"></footer>
 
+<!-- Iframe Viewer -->
+<div class="iframe-overlay" id="iframe-overlay">
+  <div class="iframe-topbar">
+    <button class="iframe-back" onclick="closeIframe()">&#8592; HardMiner</button>
+    <span class="iframe-title" id="iframe-title"></span>
+    <a class="iframe-open-ext" id="iframe-ext-link" href="#" target="_blank" rel="noopener">Open in browser &#8599;</a>
+  </div>
+  <iframe class="iframe-frame" id="iframe-frame" src="" allow="fullscreen"></iframe>
+</div>
+
 <!-- Modal -->
 <div class="overlay" id="overlay" onclick="closeOutside(event)">
   <div class="modal" id="modal-box">
@@ -701,7 +772,7 @@ footer {
       'Seasonality':     {'Coffee':'coming-soon.html','Cocoa':'coming-soon.html','Sugar':'coming-soon.html','All Commodities':'coming-soon.html'},
       'Roll Yield':      {'Roll Yield Monitor':'https://roll-yield-ofghtdpvrca3nmdcgjma8y.streamlit.app/','Initial Margin':'coming-soon.html'},
       'Open Interest':   {'Overview':'coming-soon.html'},
-      'VaR':             {'VaR Monitor':'https://rollex-vj3oevjtghz5ofltz44dra.streamlit.app/','Initial Margin':'coming-soon.html','Spec in VaR':'coming-soon.html'},
+      'VaR':             {'VaR Monitor':'iframe:VaR Monitor:https://rollex-vj3oevjtghz5ofltz44dra.streamlit.app/','Initial Margin':'coming-soon.html','Spec in VaR':'coming-soon.html'},
       'Optimus Prime':   {'Backtesting Engine':'coming-soon.html','Statistics':'https://www.notion.so/Optimus-Prime-Statistics-333fbb7607b880ee8876cdfe10893956?source=copy_link','Strategy':'coming-soon.html'},
     }
   };
@@ -718,12 +789,22 @@ footer {
     Object.entries(sections).forEach(([label, url]) => {
       const a = document.createElement('a');
       a.className = 'modal-item';
-      const isExternal = url && url.startsWith('http');
-      const isComingSoon = url && url === 'coming-soon.html';
-      a.href = url || '#';
-      if (isExternal) { a.target = '_blank'; a.rel = 'noopener'; }
-      if (!url) a.addEventListener('click', e => e.preventDefault());
-      a.innerHTML = `<span class="mi-label">${label}</span><span class="mi-icon">${isExternal ? '↗' : '→'}</span>`;
+      const isIframe = url && url.startsWith('iframe:');
+      const isExternal = !isIframe && url && url.startsWith('http');
+
+      if (isIframe) {
+        const parts = url.split(':');
+        const iframeTitle = parts[1];
+        const iframeUrl = parts.slice(2).join(':');
+        a.href = '#';
+        a.addEventListener('click', e => { e.preventDefault(); openIframe(iframeTitle, iframeUrl); });
+        a.innerHTML = `<span class="mi-label">${label}</span><span class="mi-icon">&#9654;</span>`;
+      } else {
+        a.href = url || '#';
+        if (isExternal) { a.target = '_blank'; a.rel = 'noopener'; }
+        if (!url) a.addEventListener('click', e => e.preventDefault());
+        a.innerHTML = `<span class="mi-label">${label}</span><span class="mi-icon">${isExternal ? '↗' : '→'}</span>`;
+      }
       list.appendChild(a);
     });
 
@@ -740,7 +821,22 @@ footer {
     if (e.target === document.getElementById('overlay')) closeModal();
   }
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeIframe(); } });
+
+  function openIframe(title, url) {
+    document.getElementById('iframe-title').textContent = title;
+    document.getElementById('iframe-frame').src = url;
+    document.getElementById('iframe-ext-link').href = url;
+    document.getElementById('iframe-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    closeModal();
+  }
+
+  function closeIframe() {
+    document.getElementById('iframe-overlay').classList.remove('open');
+    document.getElementById('iframe-frame').src = '';
+    document.body.style.overflow = '';
+  }
 
   // Register service worker for PWA
   if ('serviceWorker' in navigator) {
