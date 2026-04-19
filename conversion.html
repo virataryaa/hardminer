@@ -403,6 +403,134 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
     </div>
   </div>
 
+  <!-- ══ SECTION 5: P&L CALCULATOR ══ -->
+  <div class="section-label" style="margin-top:2rem">P&amp;L Calculator</div>
+  <div class="card" style="margin-bottom:1rem">
+    <div class="card-title">Trade P&amp;L</div>
+    <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
+      <div class="conv-group" style="min-width:90px">
+        <div class="conv-label">Commodity</div>
+        <select id="pnl-comm" onchange="updatePnlUnit();calcPnl()">
+          <option value="KC">KC</option><option value="RC">RC</option>
+          <option value="QC">QC</option><option value="CC">CC</option>
+          <option value="CT">CT</option><option value="SB">SB</option>
+          <option value="LSU">LSU</option>
+        </select>
+      </div>
+      <div class="conv-group" style="min-width:70px">
+        <div class="conv-label">Direction</div>
+        <select id="pnl-dir" onchange="calcPnl()">
+          <option value="1">Long</option>
+          <option value="-1">Short</option>
+        </select>
+      </div>
+      <div class="conv-group" style="min-width:90px">
+        <div class="conv-label">Lots</div>
+        <input type="number" id="pnl-lots" placeholder="e.g. 50" oninput="calcPnl()">
+      </div>
+      <div class="conv-group" style="min-width:100px">
+        <div class="conv-label">Entry <span id="pnl-unit-entry" style="color:var(--navy)">¢/lbs</span></div>
+        <input type="number" id="pnl-entry" placeholder="e.g. 380" oninput="calcPnl()">
+      </div>
+      <div class="conv-group" style="min-width:100px">
+        <div class="conv-label">Exit <span id="pnl-unit-exit" style="color:var(--navy)">¢/lbs</span></div>
+        <input type="number" id="pnl-exit" placeholder="e.g. 420" oninput="calcPnl()">
+      </div>
+      <div style="display:flex;gap:.7rem;flex:1;min-width:260px">
+        <div class="conv-group" style="flex:1">
+          <div class="conv-label">P&amp;L / Lot</div>
+          <div class="result-box" id="pnl-per-lot">—</div>
+        </div>
+        <div class="conv-group" style="flex:1">
+          <div class="conv-label">Total P&amp;L</div>
+          <div class="result-box" id="pnl-total" style="font-size:1.05rem">—</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:.8rem;font-size:.65rem;color:var(--ink-4);letter-spacing:.04em">
+      Lot values: KC $375/lot · RC $10/lot · CC $10/lot · CT $500/lot · SB $1,120/lot · LSU $50/lot
+    </div>
+  </div>
+
+  <!-- ══ SECTION 6: MARGIN + FX ══ -->
+  <div class="section-label" style="margin-top:1.5rem">Margin &amp; FX</div>
+  <div class="cards-row col-2" style="margin-bottom:1.5rem">
+
+    <!-- Margin Estimator -->
+    <div class="card">
+      <div class="card-title">Margin Estimator</div>
+      <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
+        <div class="conv-group" style="min-width:90px">
+          <div class="conv-label">Commodity</div>
+          <select id="mg-comm" onchange="updateMarginDefaults()">
+            <option value="KC">KC</option><option value="RC">RC</option>
+            <option value="QC">QC</option><option value="CC">CC</option>
+            <option value="CT">CT</option><option value="SB">SB</option>
+            <option value="LSU">LSU</option>
+          </select>
+        </div>
+        <div class="conv-group" style="min-width:80px">
+          <div class="conv-label">Lots</div>
+          <input type="number" id="mg-lots" placeholder="e.g. 100" oninput="calcMargin()">
+        </div>
+        <div class="conv-group" style="flex:1;min-width:110px">
+          <div class="conv-label">Margin / Lot (USD)</div>
+          <input type="number" id="mg-per-lot" placeholder="e.g. 2000" oninput="calcMargin()">
+        </div>
+        <div class="conv-group" style="min-width:130px">
+          <div class="conv-label">Total Margin</div>
+          <div class="result-box" id="mg-result">—</div>
+        </div>
+      </div>
+      <div style="margin-top:.8rem;font-size:.65rem;color:var(--ink-4);letter-spacing:.04em">
+        Enter exchange initial margin per lot — varies by broker &amp; volatility.
+      </div>
+    </div>
+
+    <!-- FX Price Converter -->
+    <div class="card">
+      <div class="card-title">FX Price Converter</div>
+      <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
+        <div class="conv-group" style="flex:1;min-width:90px">
+          <div class="conv-label">Price</div>
+          <input type="number" id="fx-price" placeholder="e.g. 5000" oninput="calcFx()">
+        </div>
+        <div class="conv-group" style="min-width:100px">
+          <div class="conv-label">Price Unit</div>
+          <select id="fx-unit" onchange="calcFx()">
+            <option value="dolMT">$/MT</option>
+            <option value="centsLbs">¢/lbs</option>
+            <option value="dolKg">$/Kg</option>
+            <option value="dolLbs">$/lbs</option>
+            <option value="centsKg">¢/kg</option>
+          </select>
+        </div>
+        <div class="conv-group" style="min-width:110px">
+          <div class="conv-label">FX Rate (per USD)</div>
+          <input type="number" id="fx-rate" placeholder="e.g. 0.93 EUR" step="0.0001" oninput="calcFx()">
+        </div>
+        <div class="conv-group" style="min-width:80px">
+          <div class="conv-label">Output Unit</div>
+          <select id="fx-out-unit" onchange="calcFx()">
+            <option value="dolMT">$/MT</option>
+            <option value="centsLbs">¢/lbs</option>
+            <option value="dolKg">$/Kg</option>
+            <option value="dolLbs">$/lbs</option>
+            <option value="centsKg">¢/kg</option>
+          </select>
+        </div>
+        <div class="conv-group" style="min-width:130px">
+          <div class="conv-label">Converted Price</div>
+          <div class="result-box" id="fx-result">—</div>
+        </div>
+      </div>
+      <div style="margin-top:.8rem;font-size:.65rem;color:var(--ink-4);letter-spacing:.04em">
+        FX rate = units of foreign currency per 1 USD (e.g. EUR/USD = 0.93 → enter 0.93)
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
 <script>
@@ -410,13 +538,13 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
 //  DATA — add new commodities here
 // ══════════════════════════════════════════════
 const COMMODITIES = {
-  KC:  { name: 'KC Lots',  stdVal: 37500,  stdUnit: 'Lbs', lotKg: 17010  },
-  RC:  { name: 'RC Lots',  stdVal: 10,     stdUnit: 'MT',  lotKg: 10000  },
-  QC:  { name: 'QC Lots',  stdVal: 10,     stdUnit: 'MT',  lotKg: 10000  },
-  CC:  { name: 'CC Lots',  stdVal: 10,     stdUnit: 'MT',  lotKg: 10000  },
-  CT:  { name: 'CT Lots',  stdVal: 50000,  stdUnit: 'Lbs', lotKg: 22680  },
-  SB:  { name: 'SB Lots',  stdVal: 112000, stdUnit: 'Lbs', lotKg: 50802  },
-  LSU: { name: 'LSU Lots', stdVal: 50,     stdUnit: 'MT',  lotKg: 50000  },
+  KC:  { name: 'KC Lots',  stdVal: 37500,  stdUnit: 'Lbs', lotKg: 17010,  priceUnit: '¢/lbs', lotValue: 375   },
+  RC:  { name: 'RC Lots',  stdVal: 10,     stdUnit: 'MT',  lotKg: 10000,  priceUnit: '$/MT',  lotValue: 10    },
+  QC:  { name: 'QC Lots',  stdVal: 10,     stdUnit: 'MT',  lotKg: 10000,  priceUnit: '$/MT',  lotValue: 10    },
+  CC:  { name: 'CC Lots',  stdVal: 10,     stdUnit: 'MT',  lotKg: 10000,  priceUnit: '$/MT',  lotValue: 10    },
+  CT:  { name: 'CT Lots',  stdVal: 50000,  stdUnit: 'Lbs', lotKg: 22680,  priceUnit: '¢/lbs', lotValue: 500   },
+  SB:  { name: 'SB Lots',  stdVal: 112000, stdUnit: 'Lbs', lotKg: 50802,  priceUnit: '¢/lbs', lotValue: 1120  },
+  LSU: { name: 'LSU Lots', stdVal: 50,     stdUnit: 'MT',  lotKg: 50000,  priceUnit: '$/MT',  lotValue: 50    },
 };
 
 // Weight unit → kg
@@ -556,6 +684,56 @@ function buildQuickRef() {
     div.innerHTML = `<span class="bc-val">1</span><span class="bc-unit">${c.name}</span><span class="bc-eq">=</span><span class="bc-val">${c.lotKg.toLocaleString()}</span><span class="bc-unit">Kg</span>`;
     el.appendChild(div);
   });
+}
+
+// ── P&L ──
+function updatePnlUnit() {
+  const unit = COMMODITIES[document.getElementById('pnl-comm').value].priceUnit;
+  document.getElementById('pnl-unit-entry').textContent = unit;
+  document.getElementById('pnl-unit-exit').textContent  = unit;
+}
+function calcPnl() {
+  const comm  = document.getElementById('pnl-comm').value;
+  const dir   = parseFloat(document.getElementById('pnl-dir').value);
+  const lots  = parseFloat(document.getElementById('pnl-lots').value);
+  const entry = parseFloat(document.getElementById('pnl-entry').value);
+  const exit  = parseFloat(document.getElementById('pnl-exit').value);
+  if (!lots || !entry || !exit) {
+    document.getElementById('pnl-per-lot').textContent = '—';
+    document.getElementById('pnl-total').textContent   = '—';
+    return;
+  }
+  const lv       = COMMODITIES[comm].lotValue;
+  const perLot   = dir * (exit - entry) * lv;
+  const total    = perLot * lots;
+  const sign     = perLot >= 0 ? '+' : '';
+  const color    = perLot >= 0 ? '#1b7f3b' : '#c0392b';
+  document.getElementById('pnl-per-lot').textContent = sign + '$' + fmt(perLot);
+  document.getElementById('pnl-per-lot').style.background = color;
+  document.getElementById('pnl-total').textContent   = sign + '$' + fmt(total);
+  document.getElementById('pnl-total').style.background   = color;
+}
+
+// ── Margin ──
+function updateMarginDefaults() { calcMargin(); }
+function calcMargin() {
+  const lots   = parseFloat(document.getElementById('mg-lots').value);
+  const perLot = parseFloat(document.getElementById('mg-per-lot').value);
+  if (!lots || !perLot) { document.getElementById('mg-result').textContent = '—'; return; }
+  document.getElementById('mg-result').textContent = '$' + fmt(lots * perLot);
+}
+
+// ── FX ──
+function calcFx() {
+  const price   = parseFloat(document.getElementById('fx-price').value);
+  const unit    = document.getElementById('fx-unit').value;
+  const rate    = parseFloat(document.getElementById('fx-rate').value);
+  const outUnit = document.getElementById('fx-out-unit').value;
+  if (!price || !rate) { document.getElementById('fx-result').textContent = '—'; return; }
+  const inDolMT  = price * TO_DOLMT[unit];
+  const outDolMT = inDolMT * rate;
+  const result   = outDolMT / TO_DOLMT[outUnit];
+  document.getElementById('fx-result').textContent = fmt(result);
 }
 
 buildRefTable();
