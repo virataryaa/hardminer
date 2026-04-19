@@ -355,51 +355,53 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
 
   </div>
 
-  <!-- ══ SECTION 3: MATRICES ══ -->
-  <div class="section-label">Conversion Matrices</div>
-  <div class="cards-row col-2" style="margin-bottom:1.5rem">
-
-    <!-- Weight matrix -->
-    <div class="card">
-      <div class="card-title">Weight Conversions</div>
-      <div class="matrix-wrap" id="weight-matrix"></div>
-    </div>
-
-    <!-- Price matrix -->
-    <div class="card">
-      <div class="card-title">Price Conversions</div>
-      <div class="matrix-wrap" id="price-matrix"></div>
-    </div>
-
-  </div>
-
-  <!-- ══ SECTION 4: BASIC REFS ══ -->
-  <div class="cards-row col-3">
-    <div class="card">
-      <div class="card-title">Weight References</div>
-      <div class="basic-conv">
-        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bag (60Kg)</span><span class="bc-eq">=</span><span class="bc-val">60</span><span class="bc-unit">Kg</span></div>
-        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bag (60Kg)</span><span class="bc-eq">=</span><span class="bc-val">132.277</span><span class="bc-unit">Lbs</span></div>
-        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Kg</span><span class="bc-eq">=</span><span class="bc-val">2.20462</span><span class="bc-unit">Lbs</span></div>
-        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bale</span><span class="bc-eq">=</span><span class="bc-val">480</span><span class="bc-unit">Lbs</span></div>
-        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bale</span><span class="bc-eq">=</span><span class="bc-val">217.724</span><span class="bc-unit">Kg</span></div>
-        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">MT</span><span class="bc-eq">=</span><span class="bc-val">1,000</span><span class="bc-unit">Kg</span></div>
-        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">MT</span><span class="bc-eq">=</span><span class="bc-val">2,204.62</span><span class="bc-unit">Lbs</span></div>
+  <!-- ══ SECTION 3 & 4: MATRICES (collapsible) ══ -->
+  <div style="margin-bottom:1.5rem">
+    <button onclick="toggleMatrices()" id="matrices-toggle"
+      style="display:flex;align-items:center;gap:8px;background:none;border:none;
+             cursor:pointer;padding:0;margin-bottom:1rem">
+      <span style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-4)">Conversion Matrices</span>
+      <span id="matrices-chevron" style="font-size:.65rem;color:var(--ink-4);transition:transform .25s">▼</span>
+    </button>
+    <div id="matrices-body" style="display:none">
+      <div class="cards-row col-2" style="margin-bottom:1rem">
+        <div class="card">
+          <div class="card-title">Weight Conversions</div>
+          <div class="matrix-wrap" id="weight-matrix"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Price Conversions</div>
+          <div class="matrix-wrap" id="price-matrix"></div>
+        </div>
       </div>
-    </div>
-    <div class="card">
-      <div class="card-title">Price References</div>
-      <div class="rate-pills">
-        <div class="rate-pill"><span class="rp-from">1 ¢/lbs</span><span class="rp-eq">=</span><span class="rp-to">22.0462 $/MT</span></div>
-        <div class="rate-pill"><span class="rp-from">1 $/MT</span><span class="rp-eq">=</span><span class="rp-to">0.04536 ¢/lbs</span></div>
-        <div class="rate-pill"><span class="rp-from">1 $/lbs</span><span class="rp-eq">=</span><span class="rp-to">100 ¢/lbs</span></div>
-        <div class="rate-pill"><span class="rp-from">1 $/MT</span><span class="rp-eq">=</span><span class="rp-to">0.001 $/Kg</span></div>
-        <div class="rate-pill"><span class="rp-from">1 ¢/lbs</span><span class="rp-eq">=</span><span class="rp-to">0.220462 ¢/kg</span></div>
+      <div class="cards-row col-3">
+        <div class="card">
+          <div class="card-title">Weight References</div>
+          <div class="basic-conv">
+            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bag (60Kg)</span><span class="bc-eq">=</span><span class="bc-val">60</span><span class="bc-unit">Kg</span></div>
+            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bag (60Kg)</span><span class="bc-eq">=</span><span class="bc-val">132.277</span><span class="bc-unit">Lbs</span></div>
+            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Kg</span><span class="bc-eq">=</span><span class="bc-val">2.20462</span><span class="bc-unit">Lbs</span></div>
+            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bale</span><span class="bc-eq">=</span><span class="bc-val">480</span><span class="bc-unit">Lbs</span></div>
+            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bale</span><span class="bc-eq">=</span><span class="bc-val">217.724</span><span class="bc-unit">Kg</span></div>
+            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">MT</span><span class="bc-eq">=</span><span class="bc-val">1,000</span><span class="bc-unit">Kg</span></div>
+            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">MT</span><span class="bc-eq">=</span><span class="bc-val">2,204.62</span><span class="bc-unit">Lbs</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Price References</div>
+          <div class="rate-pills">
+            <div class="rate-pill"><span class="rp-from">1 ¢/lbs</span><span class="rp-eq">=</span><span class="rp-to">22.0462 $/MT</span></div>
+            <div class="rate-pill"><span class="rp-from">1 $/MT</span><span class="rp-eq">=</span><span class="rp-to">0.04536 ¢/lbs</span></div>
+            <div class="rate-pill"><span class="rp-from">1 $/lbs</span><span class="rp-eq">=</span><span class="rp-to">100 ¢/lbs</span></div>
+            <div class="rate-pill"><span class="rp-from">1 $/MT</span><span class="rp-eq">=</span><span class="rp-to">0.001 $/Kg</span></div>
+            <div class="rate-pill"><span class="rp-from">1 ¢/lbs</span><span class="rp-eq">=</span><span class="rp-to">0.220462 ¢/kg</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Contract Quick Ref</div>
+          <div class="basic-conv" id="contract-quickref"></div>
+        </div>
       </div>
-    </div>
-    <div class="card">
-      <div class="card-title">Contract Quick Ref</div>
-      <div class="basic-conv" id="contract-quickref"></div>
     </div>
   </div>
 
@@ -734,6 +736,14 @@ function calcFx() {
   const outDolMT = inDolMT * rate;
   const result   = outDolMT / TO_DOLMT[outUnit];
   document.getElementById('fx-result').textContent = fmt(result);
+}
+
+function toggleMatrices() {
+  const body = document.getElementById('matrices-body');
+  const chev = document.getElementById('matrices-chevron');
+  const open = body.style.display === 'none';
+  body.style.display = open ? 'block' : 'none';
+  chev.style.transform = open ? 'rotate(0deg)' : 'rotate(-90deg)';
 }
 
 buildRefTable();
