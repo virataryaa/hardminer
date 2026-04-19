@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversion Sheet</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #fafafa; --surface: #fff; --ink: #1d1d1f; --ink-2: #424245;
+  --ink-3: #6e6e73; --ink-4: #aeaeb2; --border: rgba(0,0,0,0.08);
+  --border-mid: rgba(0,0,0,0.13); --navy: #0a2463; --red: #c0392b;
+  --red-2: #e74c3c; --ease: cubic-bezier(0.25,0.46,0.45,0.94);
+}
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); color: var(--ink); font-family: -apple-system,'Helvetica Neue',sans-serif; min-height: 100vh; }
+
+/* ── Topbar ── */
+.topbar {
+  height: 48px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.6rem; background: var(--navy);
+  position: sticky; top: 0; z-index: 100;
+}
+.back-btn {
+  display: flex; align-items: center; gap: 7px;
+  color: rgba(255,255,255,.85); font-size: .72rem; font-weight: 500;
+  letter-spacing: .05em; background: rgba(255,255,255,.12);
+  border: none; border-radius: 8px; padding: 5px 13px; cursor: pointer;
+  transition: background .2s; text-decoration: none;
+}
+.back-btn:hover { background: rgba(255,255,255,.22); }
+.topbar-title {
+  font-size: .78rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.9);
+}
+
+/* ── Layout ── */
+.page { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+/* ── Section heading ── */
+.section-label {
+  font-size: .55rem; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--ink-4); margin-bottom: 1rem;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--surface); border: 1px solid var(--border-mid);
+  border-radius: 14px; padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+}
+.card-title {
+  font-size: .72rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-3); margin-bottom: 1.2rem;
+  padding-bottom: .7rem; border-bottom: 1px solid var(--border);
+}
+
+/* ── Row of cards ── */
+.cards-row { display: grid; gap: 1rem; }
+.cards-row.col-2 { grid-template-columns: 1fr 1fr; }
+.cards-row.col-3 { grid-template-columns: 1fr 1fr 1fr; }
+.cards-row.col-2-1 { grid-template-columns: 1.1fr 0.9fr; }
+
+/* ── Converter UI ── */
+.conv-row {
+  display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
+}
+.conv-label {
+  font-size: .58rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-4); margin-bottom: .3rem;
+}
+.conv-group { display: flex; flex-direction: column; }
+.conv-group.fill { flex: 1; min-width: 80px; }
+
+input[type=number], select {
+  height: 38px; border: 1px solid var(--border-mid); border-radius: 8px;
+  background: #f5f5f7; color: var(--ink); font-size: .88rem;
+  padding: 0 .75rem; outline: none; width: 100%;
+  transition: border-color .2s, background .2s;
+  font-family: -apple-system,'Helvetica Neue',sans-serif;
+}
+input[type=number]:focus, select:focus {
+  border-color: var(--navy); background: #fff;
+}
+input[type=number] { -moz-appearance: textfield; }
+input[type=number]::-webkit-inner-spin-button { display: none; }
+
+.to-label {
+  font-size: .72rem; color: var(--ink-4); font-weight: 500;
+  padding-top: 1.3rem; white-space: nowrap;
+}
+
+.result-box {
+  height: 38px; border-radius: 8px; background: var(--navy);
+  color: #fff; font-size: .95rem; font-weight: 600;
+  display: flex; align-items: center; padding: 0 .85rem;
+  letter-spacing: .01em; min-width: 110px; width: 100%;
+}
+
+/* ── Reference table ── */
+.ref-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.ref-table th {
+  font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-4);
+  padding: .45rem .7rem; text-align: right; border-bottom: 1px solid var(--border);
+}
+.ref-table th:first-child { text-align: left; }
+.ref-table td {
+  padding: .45rem .7rem; border-bottom: 1px solid var(--border);
+  text-align: right; color: var(--ink-2);
+}
+.ref-table td:first-child { text-align: left; font-weight: 600; color: var(--ink); }
+.ref-table tr:last-child td { border-bottom: none; }
+
+/* ── Matrix table ── */
+.matrix-wrap { overflow-x: auto; }
+.matrix { border-collapse: collapse; font-size: .76rem; width: 100%; }
+.matrix th {
+  background: var(--navy); color: rgba(255,255,255,.85);
+  padding: .45rem .6rem; font-size: .58rem; font-weight: 600;
+  letter-spacing: .06em; text-align: center; white-space: nowrap;
+}
+.matrix th:first-child { text-align: left; border-radius: 6px 0 0 0; }
+.matrix th:last-child { border-radius: 0 6px 0 0; }
+.matrix td {
+  padding: .45rem .6rem; border-bottom: 1px solid var(--border);
+  text-align: center; color: var(--ink-2);
+}
+.matrix td:first-child {
+  font-weight: 700; color: var(--ink); background: #f5f5f7;
+  text-align: left; white-space: nowrap;
+}
+.matrix td.diag { background: rgba(10,36,99,.07); color: var(--navy); font-weight: 700; }
+.matrix tr:last-child td { border-bottom: none; }
+
+/* ── Basic conversions ── */
+.basic-conv { display: flex; flex-direction: column; gap: .55rem; }
+.bc-row {
+  display: flex; align-items: center; gap: .5rem;
+  font-size: .82rem; color: var(--ink-2);
+}
+.bc-val { font-weight: 700; color: var(--navy); min-width: 30px; }
+.bc-eq  { color: var(--ink-4); }
+.bc-unit { color: var(--ink-3); }
+
+/* ── Rate pills ── */
+.rate-pills { display: flex; flex-direction: column; gap: .5rem; margin-top: 1rem; }
+.rate-pill {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #f5f5f7; border: 1px solid var(--border);
+  border-radius: 8px; padding: .5rem .85rem;
+  font-size: .78rem;
+}
+.rp-from { color: var(--ink-3); }
+.rp-eq   { color: var(--ink-4); margin: 0 .4rem; }
+.rp-to   { font-weight: 700; color: var(--navy); }
+
+/* ── Commodity selector tabs ── */
+.commodity-tabs {
+  display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.1rem;
+}
+.ctab {
+  padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border-mid);
+  font-size: .65rem; font-weight: 600; letter-spacing: .05em;
+  cursor: pointer; transition: all .18s; color: var(--ink-3); background: var(--bg);
+}
+.ctab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.ctab:hover:not(.active) { border-color: var(--navy); color: var(--navy); }
+
+@media (max-width: 700px) {
+  .cards-row.col-2, .cards-row.col-3, .cards-row.col-2-1 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-btn" href="javascript:history.back()">&#8592; HardMiner</a>
+  <span class="topbar-title">Conversion Sheet</span>
+  <div style="width:100px"></div>
+</div>
+
+<div class="page">
+
+  <!-- ══ SECTION 1: VALUE ↔ LOTS ══ -->
+  <div class="section-label">Contract Calculators</div>
+  <div class="cards-row col-2" style="margin-bottom:1.5rem">
+
+    <!-- Value → Lots -->
+    <div class="card">
+      <div class="card-title">Value → Lots</div>
+      <div class="conv-row">
+        <div class="conv-group fill">
+          <div class="conv-label">Value</div>
+          <input type="number" id="vtl-value" placeholder="e.g. 6300000" oninput="calcVtoL()">
+        </div>
+        <div class="conv-group">
+          <div class="conv-label">Unit</div>
+          <select id="vtl-unit" onchange="calcVtoL()">
+            <option value="mt">MT</option>
+            <option value="kg">KG</option>
+            <option value="lbs">Lbs</option>
+            <option value="bags">Bags (60Kg)</option>
+            <option value="bale">Bale</option>
+          </select>
+        </div>
+        <div class="to-label">→</div>
+        <div class="conv-group">
+          <div class="conv-label">Commodity</div>
+          <select id="vtl-comm" onchange="calcVtoL()">
+            <option value="KC">KC Lots</option>
+            <option value="RC">RC Lots</option>
+            <option value="QC">QC Lots</option>
+            <option value="CC">CC Lots</option>
+            <option value="CT">CT Lots</option>
+            <option value="SB">SB Lots</option>
+            <option value="LSU">LSU Lots</option>
+          </select>
+        </div>
+        <div class="conv-group" style="min-width:110px">
+          <div class="conv-label">Lots</div>
+          <div class="result-box" id="vtl-result">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lots → Value -->
+    <div class="card">
+      <div class="card-title">Lots → Value</div>
+      <div class="conv-row">
+        <div class="conv-group fill">
+          <div class="conv-label">Lots</div>
+          <input type="number" id="ltv-lots" placeholder="e.g. 1500" oninput="calcLtoV()">
+        </div>
+        <div class="conv-group">
+          <div class="conv-label">Commodity</div>
+          <select id="ltv-comm" onchange="calcLtoV()">
+            <option value="KC">KC Lots</option>
+            <option value="RC">RC Lots</option>
+            <option value="QC">QC Lots</option>
+            <option value="CC">CC Lots</option>
+            <option value="CT">CT Lots</option>
+            <option value="SB">SB Lots</option>
+            <option value="LSU">LSU Lots</option>
+          </select>
+        </div>
+        <div class="to-label">→</div>
+        <div class="conv-group">
+          <div class="conv-label">Unit</div>
+          <select id="ltv-unit" onchange="calcLtoV()">
+            <option value="mt">MT</option>
+            <option value="kg">KG</option>
+            <option value="lbs">Lbs</option>
+            <option value="bags">Bags (60Kg)</option>
+            <option value="bale">Bale</option>
+          </select>
+        </div>
+        <div class="conv-group" style="min-width:120px">
+          <div class="conv-label">Value</div>
+          <div class="result-box" id="ltv-result">—</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ SECTION 2: GENERAL CONVERTER + PRICE + REF TABLE ══ -->
+  <div class="section-label">Unit Converters</div>
+  <div class="cards-row col-2-1" style="margin-bottom:1.5rem">
+
+    <div style="display:flex;flex-direction:column;gap:1rem">
+
+      <!-- General Weight Converter -->
+      <div class="card">
+        <div class="card-title">General Weight Converter</div>
+        <div class="conv-row">
+          <div class="conv-group fill">
+            <div class="conv-label">Value</div>
+            <input type="number" id="gen-val" placeholder="e.g. 2000" oninput="calcGen()">
+          </div>
+          <div class="conv-group">
+            <div class="conv-label">From</div>
+            <select id="gen-from" onchange="calcGen()">
+              <option value="mt">MT</option>
+              <option value="kg">KG</option>
+              <option value="lbs">Lbs</option>
+              <option value="bags">Bags (60Kg)</option>
+              <option value="bale">Bale</option>
+            </select>
+          </div>
+          <div class="to-label">→</div>
+          <div class="conv-group">
+            <div class="conv-label">To</div>
+            <select id="gen-to" onchange="calcGen()">
+              <option value="bags">Bags (60Kg)</option>
+              <option value="mt">MT</option>
+              <option value="kg">KG</option>
+              <option value="lbs">Lbs</option>
+              <option value="bale">Bale</option>
+            </select>
+          </div>
+          <div class="conv-group" style="min-width:120px">
+            <div class="conv-label">Result</div>
+            <div class="result-box" id="gen-result">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price Converter -->
+      <div class="card">
+        <div class="card-title">Price to Price</div>
+        <div class="conv-row">
+          <div class="conv-group fill">
+            <div class="conv-label">Price</div>
+            <input type="number" id="ptp-val" placeholder="e.g. 380" oninput="calcPtp()">
+          </div>
+          <div class="conv-group">
+            <div class="conv-label">From</div>
+            <select id="ptp-from" onchange="calcPtp()">
+              <option value="centsLbs">¢/lbs</option>
+              <option value="dolMT">$/MT</option>
+              <option value="dolKg">$/Kg</option>
+              <option value="dolLbs">$/lbs</option>
+              <option value="centsKg">¢/kg</option>
+            </select>
+          </div>
+          <div class="to-label">→</div>
+          <div class="conv-group">
+            <div class="conv-label">To</div>
+            <select id="ptp-to" onchange="calcPtp()">
+              <option value="dolMT">$/MT</option>
+              <option value="centsLbs">¢/lbs</option>
+              <option value="dolKg">$/Kg</option>
+              <option value="dolLbs">$/lbs</option>
+              <option value="centsKg">¢/kg</option>
+            </select>
+          </div>
+          <div class="conv-group" style="min-width:120px">
+            <div class="conv-label">Result</div>
+            <div class="result-box" id="ptp-result">—</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Contract Size Reference -->
+    <div class="card">
+      <div class="card-title">Contract Sizes</div>
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>Contract</th>
+            <th>Standard</th>
+            <th>Unit</th>
+            <th>Kg</th>
+          </tr>
+        </thead>
+        <tbody id="ref-table-body"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ══ SECTION 3: MATRICES ══ -->
+  <div class="section-label">Conversion Matrices</div>
+  <div class="cards-row col-2" style="margin-bottom:1.5rem">
+
+    <!-- Weight matrix -->
+    <div class="card">
+      <div class="card-title">Weight Conversions</div>
+      <div class="matrix-wrap" id="weight-matrix"></div>
+    </div>
+
+    <!-- Price matrix -->
+    <div class="card">
+      <div class="card-title">Price Conversions</div>
+      <div class="matrix-wrap" id="price-matrix"></div>
+    </div>
+
+  </div>
+
+  <!-- ══ SECTION 4: BASIC REFS ══ -->
+  <div class="cards-row col-3">
+    <div class="card">
+      <div class="card-title">Weight References</div>
+      <div class="basic-conv">
+        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bag (60Kg)</span><span class="bc-eq">=</span><span class="bc-val">60</span><span class="bc-unit">Kg</span></div>
+        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bag (60Kg)</span><span class="bc-eq">=</span><span class="bc-val">132.277</span><span class="bc-unit">Lbs</span></div>
+        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Kg</span><span class="bc-eq">=</span><span class="bc-val">2.20462</span><span class="bc-unit">Lbs</span></div>
+        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bale</span><span class="bc-eq">=</span><span class="bc-val">480</span><span class="bc-unit">Lbs</span></div>
+        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bale</span><span class="bc-eq">=</span><span class="bc-val">217.724</span><span class="bc-unit">Kg</span></div>
+        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">MT</span><span class="bc-eq">=</span><span class="bc-val">1,000</span><span class="bc-unit">Kg</span></div>
+        <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">MT</span><span class="bc-eq">=</span><span class="bc-val">2,204.62</span><span class="bc-unit">Lbs</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Price References</div>
+      <div class="rate-pills">
+        <div class="rate-pill"><span class="rp-from">1 ¢/lbs</span><span class="rp-eq">=</span><span class="rp-to">22.0462 $/MT</span></div>
+        <div class="rate-pill"><span class="rp-from">1 $/MT</span><span class="rp-eq">=</span><span class="rp-to">0.04536 ¢/lbs</span></div>
+        <div class="rate-pill"><span class="rp-from">1 $/lbs</span><span class="rp-eq">=</span><span class="rp-to">100 ¢/lbs</span></div>
+        <div class="rate-pill"><span class="rp-from">1 $/MT</span><span class="rp-eq">=</span><span class="rp-to">0.001 $/Kg</span></div>
+        <div class="rate-pill"><span class="rp-from">1 ¢/lbs</span><span class="rp-eq">=</span><span class="rp-to">0.220462 ¢/kg</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Contract Quick Ref</div>
+      <div class="basic-conv" id="contract-quickref"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+//  DATA — add new commodities here
+// ══════════════════════════════════════════════
+const COMMODITIES = {
+  KC:  { name: 'KC Lots',  stdVal: 37500,  stdUnit: 'Lbs', lotKg: 17010  },
+  RC:  { name: 'RC Lots',  stdVal: 10,     stdUnit: 'MT',  lotKg: 10000  },
+  QC:  { name: 'QC Lots',  stdVal: 10,     stdUnit: 'MT',  lotKg: 10000  },
+  CC:  { name: 'CC Lots',  stdVal: 10,     stdUnit: 'MT',  lotKg: 10000  },
+  CT:  { name: 'CT Lots',  stdVal: 50000,  stdUnit: 'Lbs', lotKg: 22680  },
+  SB:  { name: 'SB Lots',  stdVal: 112000, stdUnit: 'Lbs', lotKg: 50802  },
+  LSU: { name: 'LSU Lots', stdVal: 50,     stdUnit: 'MT',  lotKg: 50000  },
+};
+
+// Weight unit → kg
+const TO_KG = {
+  mt:   1000,
+  kg:   1,
+  lbs:  1 / 2.20462,
+  bags: 60,
+  bale: 217.724,
+};
+
+// Price unit → $/MT base
+const TO_DOLMT = {
+  dolMT:    1,
+  centsLbs: 22.0462,
+  dolKg:    1000,
+  dolLbs:   2204.62,
+  centsKg:  10,
+};
+
+// ── Formatting ──
+function fmt(n, decimals = 2) {
+  if (!isFinite(n) || isNaN(n)) return '—';
+  if (Math.abs(n) >= 1e6)  return (n / 1e6).toFixed(3) + 'M';
+  if (Math.abs(n) >= 1000) return n.toLocaleString('en', { maximumFractionDigits: decimals });
+  return n.toFixed(decimals);
+}
+
+// ── Calculators ──
+function calcVtoL() {
+  const val  = parseFloat(document.getElementById('vtl-value').value);
+  const unit = document.getElementById('vtl-unit').value;
+  const comm = document.getElementById('vtl-comm').value;
+  if (!val) { document.getElementById('vtl-result').textContent = '—'; return; }
+  const kg   = val * TO_KG[unit];
+  const lots = kg / COMMODITIES[comm].lotKg;
+  document.getElementById('vtl-result').textContent = fmt(lots, 1);
+}
+
+function calcLtoV() {
+  const lots = parseFloat(document.getElementById('ltv-lots').value);
+  const comm = document.getElementById('ltv-comm').value;
+  const unit = document.getElementById('ltv-unit').value;
+  if (!lots) { document.getElementById('ltv-result').textContent = '—'; return; }
+  const kg  = lots * COMMODITIES[comm].lotKg;
+  const val = kg / TO_KG[unit];
+  document.getElementById('ltv-result').textContent = fmt(val, 0);
+}
+
+function calcGen() {
+  const val  = parseFloat(document.getElementById('gen-val').value);
+  const from = document.getElementById('gen-from').value;
+  const to   = document.getElementById('gen-to').value;
+  if (!val) { document.getElementById('gen-result').textContent = '—'; return; }
+  const result = val * TO_KG[from] / TO_KG[to];
+  document.getElementById('gen-result').textContent = fmt(result, 2);
+}
+
+function calcPtp() {
+  const val  = parseFloat(document.getElementById('ptp-val').value);
+  const from = document.getElementById('ptp-from').value;
+  const to   = document.getElementById('ptp-to').value;
+  if (!val) { document.getElementById('ptp-result').textContent = '—'; return; }
+  const inDolMT = val * TO_DOLMT[from];
+  const result  = inDolMT / TO_DOLMT[to];
+  document.getElementById('ptp-result').textContent = fmt(result, 3);
+}
+
+// ── Build reference table ──
+function buildRefTable() {
+  const tbody = document.getElementById('ref-table-body');
+  Object.entries(COMMODITIES).forEach(([key, c]) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${c.name}</td>
+      <td>${c.stdVal.toLocaleString()}</td>
+      <td>${c.stdUnit}</td>
+      <td>${c.lotKg.toLocaleString()}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ── Build weight matrix ──
+function buildWeightMatrix() {
+  const units = ['MT','KG','Lbs','Bale','Bags\n(60Kg)'];
+  const keys  = ['mt','kg','lbs','bale','bags'];
+  let html = '<table class="matrix"><thead><tr><th></th>';
+  units.forEach(u => html += `<th>${u}</th>`);
+  html += '</tr></thead><tbody>';
+  keys.forEach((rk, ri) => {
+    html += `<tr><td>${units[ri].replace('\n',' ')}</td>`;
+    keys.forEach((ck, ci) => {
+      const val = TO_KG[rk] / TO_KG[ck];
+      const cls = ri === ci ? ' class="diag"' : '';
+      html += `<td${cls}>${fmtMatrix(val)}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('weight-matrix').innerHTML = html;
+}
+
+// ── Build price matrix ──
+function buildPriceMatrix() {
+  const labels = ['$/MT','¢/lbs','$/Kg','$/lbs','¢/kg'];
+  const keys   = ['dolMT','centsLbs','dolKg','dolLbs','centsKg'];
+  let html = '<table class="matrix"><thead><tr><th></th>';
+  labels.forEach(l => html += `<th>${l}</th>`);
+  html += '</tr></thead><tbody>';
+  keys.forEach((rk, ri) => {
+    html += `<tr><td>${labels[ri]}</td>`;
+    keys.forEach((ck, ci) => {
+      const val = TO_DOLMT[rk] / TO_DOLMT[ck];
+      const cls = ri === ci ? ' class="diag"' : '';
+      html += `<td${cls}>${fmtMatrix(val)}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('price-matrix').innerHTML = html;
+}
+
+function fmtMatrix(n) {
+  if (n === 1) return '1.00';
+  if (n >= 1000) return n.toLocaleString('en', { maximumFractionDigits: 0 });
+  if (n >= 1)    return n.toFixed(2);
+  if (n >= 0.01) return n.toFixed(4);
+  return n.toFixed(5);
+}
+
+// ── Quick ref ──
+function buildQuickRef() {
+  const el = document.getElementById('contract-quickref');
+  Object.entries(COMMODITIES).forEach(([key, c]) => {
+    const div = document.createElement('div');
+    div.className = 'bc-row';
+    div.innerHTML = `<span class="bc-val">1</span><span class="bc-unit">${c.name}</span><span class="bc-eq">=</span><span class="bc-val">${c.lotKg.toLocaleString()}</span><span class="bc-unit">Kg</span>`;
+    el.appendChild(div);
+  });
+}
+
+buildRefTable();
+buildWeightMatrix();
+buildPriceMatrix();
+buildQuickRef();
+</script>
+</body>
+</html>
