@@ -438,11 +438,11 @@ const TO_DOLMT = {
 };
 
 // ── Formatting ──
-function fmt(n, decimals = 2) {
+function fmt(n) {
   if (!isFinite(n) || isNaN(n)) return '—';
-  if (Math.abs(n) >= 1e6)  return (n / 1e6).toFixed(3) + 'M';
-  if (Math.abs(n) >= 1000) return n.toLocaleString('en', { maximumFractionDigits: decimals });
-  return n.toFixed(decimals);
+  if (Math.abs(n) >= 1e6)  return (n / 1e6).toFixed(1) + 'M';
+  if (Math.abs(n) >= 1000) return n.toLocaleString('en', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  return n.toFixed(1);
 }
 
 // ── Calculators ──
@@ -453,7 +453,7 @@ function calcVtoL() {
   if (!val) { document.getElementById('vtl-result').textContent = '—'; return; }
   const kg   = val * TO_KG[unit];
   const lots = kg / COMMODITIES[comm].lotKg;
-  document.getElementById('vtl-result').textContent = fmt(lots, 1);
+  document.getElementById('vtl-result').textContent = fmt(lots);
 }
 
 function calcLtoV() {
@@ -463,7 +463,7 @@ function calcLtoV() {
   if (!lots) { document.getElementById('ltv-result').textContent = '—'; return; }
   const kg  = lots * COMMODITIES[comm].lotKg;
   const val = kg / TO_KG[unit];
-  document.getElementById('ltv-result').textContent = fmt(val, 0);
+  document.getElementById('ltv-result').textContent = fmt(val);
 }
 
 function calcGen() {
@@ -472,7 +472,7 @@ function calcGen() {
   const to   = document.getElementById('gen-to').value;
   if (!val) { document.getElementById('gen-result').textContent = '—'; return; }
   const result = val * TO_KG[from] / TO_KG[to];
-  document.getElementById('gen-result').textContent = fmt(result, 2);
+  document.getElementById('gen-result').textContent = fmt(result);
 }
 
 function calcPtp() {
@@ -482,7 +482,7 @@ function calcPtp() {
   if (!val) { document.getElementById('ptp-result').textContent = '—'; return; }
   const inDolMT = val * TO_DOLMT[from];
   const result  = inDolMT / TO_DOLMT[to];
-  document.getElementById('ptp-result').textContent = fmt(result, 3);
+  document.getElementById('ptp-result').textContent = fmt(result);
 }
 
 // ── Build reference table ──
