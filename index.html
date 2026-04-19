@@ -534,15 +534,17 @@ footer {
 
 <!-- Topbar -->
 <header class="topbar">
+  <div class="topbar-date" id="live-date"></div>
   <div style="display:flex;align-items:center;gap:10px">
-    <div class="topbar-date" id="live-date"></div>
-    <button onclick="openIframe('Unit Desk','conversion.html')" class="topbar-pill"
-      style="cursor:pointer;border:none;transition:opacity .2s"
-      onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
+    <button onclick="openIframe('Unit Desk','conversion.html')"
+      style="display:flex;align-items:center;gap:6px;font-size:.62rem;font-weight:600;
+             letter-spacing:.05em;color:#fff;background:#1a3a7a;border:none;
+             padding:5px 13px;border-radius:20px;cursor:pointer;
+             transition:background .2s,transform .15s;white-space:nowrap"
+      onmouseover="this.style.background='#0a2463';this.style.transform='translateY(-1px)'"
+      onmouseout="this.style.background='#1a3a7a';this.style.transform='translateY(0)'">
       Unit Desk
     </button>
-  </div>
-  <div style="display:flex;align-items:center;gap:10px">
     <a href="https://certs-automation-4u8roxdqdzjscztlbc6vbo.streamlit.app/" target="_blank" rel="noopener"
        style="display:flex;align-items:center;gap:6px;font-size:.62rem;font-weight:600;
               letter-spacing:.05em;color:#fff;background:#c0392b;border:none;
