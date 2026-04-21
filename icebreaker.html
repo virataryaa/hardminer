@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HardMiner</title>
+<title>ICEBREAKER</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0a2463">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,8 +12,8 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:          #fafafa;
-  --surface:     #ffffff;
+  --bg:          #FFF9DD;
+  --surface:     #fffef5;
   --ink:         #1d1d1f;
   --ink-2:       #424245;
   --ink-3:       #6e6e73;
@@ -30,7 +30,6 @@ html { font-size: 16px; -webkit-font-smoothing: antialiased; }
 
 body {
   background: var(--bg);
-  
   color: var(--ink);
   font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif;
   min-height: 100vh;
@@ -56,7 +55,7 @@ body::after {
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 0 2rem;
-  background: rgba(250,250,250,0.82);
+  background: rgba(255,249,221,0.85);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--border);
@@ -95,7 +94,7 @@ body::after {
 }
 
 /* ════════════════════════════════════
-   HERO — THE HARDMINER
+   HERO
 ════════════════════════════════════ */
 .hero {
   display: flex;
@@ -190,7 +189,7 @@ body::after {
   border-bottom: 1px solid var(--border);
 }
 
-/* ── Button group box (grey container) ── */
+/* ── Button group box ── */
 .btn-group-box {
   background: rgba(0,0,0,0.03);
   border: 1px solid var(--border);
@@ -315,7 +314,7 @@ footer {
   position: fixed; inset: 0;
   z-index: 600;
   flex-direction: column;
-  background: #fafafa;
+  background: var(--bg);
 }
 .iframe-overlay.open { display: flex; }
 
@@ -384,7 +383,7 @@ footer {
 .overlay.open { display: flex; }
 
 .modal {
-  background: rgba(255,255,255,.95);
+  background: rgba(255,249,221,.97);
   backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   border-radius: 18px;
@@ -473,13 +472,13 @@ footer {
 <!-- Password Gate -->
 <div id="gate" style="
   position:fixed;inset:0;z-index:9998;
-  background:#fafafa;
+  background:#FFF9DD;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
   gap:1.4rem;
 ">
   <div style="font-family:'Playfair Display',Georgia,serif;font-size:2rem;font-weight:400;color:#0a2463;letter-spacing:-.02em;">
-    Hard<em style="font-style:italic;color:#c0392b;">Miner</em>
+    Ice<em style="font-style:italic;color:#c0392b;">Breaker</em>
   </div>
   <div style="font-size:.58rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#aeaeb2;">
     Internal Access Only
@@ -489,7 +488,7 @@ footer {
       style="
         width:100%;padding:.85rem 1.1rem;
         border:1px solid rgba(0,0,0,0.12);border-radius:10px;
-        background:#fff;font-size:.9rem;color:#1d1d1f;
+        background:#fffef5;font-size:.9rem;color:#1d1d1f;
         outline:none;transition:border-color .2s;
         font-family:-apple-system,'Helvetica Neue',sans-serif;
       "
@@ -535,16 +534,16 @@ footer {
 <!-- Topbar -->
 <header class="topbar">
 
-  <!-- Left: ICEBREAKER -->
+  <!-- Left: back to HardMiner -->
   <div style="display:flex;align-items:center;">
-    <a href="icebreaker.html"
+    <a href="index.html"
       style="display:flex;align-items:center;gap:6px;font-size:.62rem;font-weight:600;
-             letter-spacing:.05em;color:var(--ink-2);background:rgba(0,0,0,0.06);
-             border:none;padding:5px 13px;border-radius:20px;text-decoration:none;
+             letter-spacing:.05em;color:var(--ink-2);background:rgba(0,0,0,0.06);border:none;
+             padding:5px 13px;border-radius:20px;text-decoration:none;
              transition:background .2s,transform .15s;white-space:nowrap"
       onmouseover="this.style.background='rgba(0,0,0,0.1)';this.style.transform='translateY(-1px)'"
       onmouseout="this.style.background='rgba(0,0,0,0.06)';this.style.transform='translateY(0)'">
-      ❄ ICEBREAKER
+      ← HardMiner
     </a>
   </div>
 
@@ -576,136 +575,104 @@ footer {
 
 <!-- Hero -->
 <section class="hero">
-<h1 class="hero-title">Hard<em>Miner</em></h1>
+  <h1 class="hero-title">Ice<em>Breaker</em></h1>
   <div class="hero-rule"></div>
-
 </section>
 
 <!-- Grid -->
 <div class="grid">
 
-  <!-- Fundamentals -->
+  <!-- Left column -->
   <div class="col">
-    <div class="col-heading">Fundamentals</div>
+    <div class="col-heading">Futures</div>
 
-    <button class="row-btn" onclick="openModal('Coffee','fundamentals')">
+    <button class="row-btn" onclick="openModal('Coffee','futures')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Coffee</span>
-          <span class="rb-sub">Arabica · Robusta</span>
+          <span class="rb-sub">KC · RC</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Cocoa','fundamentals')">
+    <button class="row-btn" onclick="openModal('Cocoa','futures')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Cocoa</span>
-          <span class="rb-sub">Beans · Products</span>
+          <span class="rb-sub">CC · LCC</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Sugar','fundamentals')">
+    <button class="row-btn" onclick="openModal('Sugar','futures')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Sugar</span>
-          <span class="rb-sub">Raw · White</span>
+          <span class="rb-sub">SB · LSU</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Cotton','fundamentals')">
+    <button class="row-btn" onclick="openModal('Cotton','futures')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Cotton</span>
-          <span class="rb-sub">Fibre</span>
+          <span class="rb-sub">CT</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Orange Juice','fundamentals')">
+    <button class="row-btn" onclick="openModal('Orange Juice','futures')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Orange Juice</span>
-          <span class="rb-sub">FCOJ</span>
+          <span class="rb-sub">OJ</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <div style="margin-top:2rem">
-      <button class="row-btn" onclick="openModal('Weather','weather')">
-        <div class="rb-inner">
-          <div class="rb-text">
-            <span class="rb-name">Weather</span>
-            <span class="rb-sub">Precipitation · Temperature</span>
-          </div>
-          <span class="rb-arrow">→</span>
-        </div>
-      </button>
-
-      <button class="row-btn" onclick="openModal('Trade Flows','tradeflows')">
-        <div class="rb-inner">
-          <div class="rb-text">
-            <span class="rb-name">Trade Flows</span>
-            <span class="rb-sub">Exports · Imports · Partners</span>
-          </div>
-          <span class="rb-arrow">→</span>
-        </div>
-      </button>
-    </div>
   </div>
 
-  <!-- Non-Fundamentals -->
+  <!-- Right column -->
   <div class="col">
-    <div class="col-heading">Non-Fundamentals</div>
+    <div class="col-heading">Analytics</div>
 
-    <button class="row-btn" onclick="openModal('Rollex','non-fundamentals')">
+    <button class="row-btn" onclick="openModal('COT','analytics')">
       <div class="rb-inner">
         <div class="rb-text">
-          <span class="rb-name">Rollex</span>
-          <span class="rb-sub">Seasonality · Scatter · Volatility</span>
+          <span class="rb-name">COT</span>
+          <span class="rb-sub">Managed Money · Positioning</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('COT Analysis','non-fundamentals')">
+    <button class="row-btn" onclick="openModal('Certified Stocks','analytics')">
       <div class="rb-inner">
         <div class="rb-text">
-          <span class="rb-name">COT Analysis</span>
-          <span class="rb-sub">Positioning</span>
+          <span class="rb-name">Certified Stocks</span>
+          <span class="rb-sub">KC · RC · CC · LCC</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openIframe('Unit Desk','conversion.html')">
+    <button class="row-btn" onclick="openModal('Options','analytics')">
       <div class="rb-inner">
         <div class="rb-text">
-          <span class="rb-name">Unit Desk</span>
-          <span class="rb-sub">Lots · Weight · Price</span>
+          <span class="rb-name">Options</span>
+          <span class="rb-sub">OI Change · ImpVol · Settle</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <a class="row-btn" href="https://cross-section-new-wbjv7bf2y77jjnmedlugkq.streamlit.app/" target="_blank" rel="noopener" style="text-decoration:none;">
-      <div class="rb-inner">
-        <div class="rb-text">
-          <span class="rb-name">Cross Section</span>
-          <span class="rb-sub">Momentum · Roll Yield</span>
-        </div>
-        <span class="rb-arrow">↗</span>
-      </div>
-    </a>
-
-    <button class="row-btn" onclick="openModal('Roll Yield','non-fundamentals')">
+    <button class="row-btn" onclick="openModal('Roll Yield','analytics')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Roll Yield</span>
@@ -715,7 +682,7 @@ footer {
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Open Interest','non-fundamentals')">
+    <button class="row-btn" onclick="openModal('Open Interest','analytics')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Open Interest</span>
@@ -725,37 +692,6 @@ footer {
       </div>
     </button>
 
-    <a class="row-btn" href="https://options-hdurdctupwvarhj6xwubz3.streamlit.app/" target="_blank" rel="noopener" style="text-decoration:none;">
-      <div class="rb-inner">
-        <div class="rb-text">
-          <span class="rb-name">Options</span>
-          <span class="rb-sub">OI Change · Volume · Settle</span>
-        </div>
-        <span class="rb-arrow">↗</span>
-      </div>
-    </a>
-
-    <button class="row-btn" onclick="openModal('VaR','non-fundamentals')">
-      <div class="rb-inner">
-        <div class="rb-text">
-          <span class="rb-name">VaR</span>
-          <span class="rb-sub">VaR Monitor · Initial Margin · Spec in VaR</span>
-        </div>
-        <span class="rb-arrow">→</span>
-      </div>
-    </button>
-
-    <div style="margin-top:2rem">
-      <button class="row-btn" onclick="openModal('Optimus Prime','non-fundamentals')">
-        <div class="rb-inner">
-          <div class="rb-text">
-            <span class="rb-name">Optimus Prime</span>
-            <span class="rb-sub">Backtesting · Statistics · Strategy</span>
-          </div>
-          <span class="rb-arrow">→</span>
-        </div>
-      </button>
-    </div>
   </div>
 
 </div>
@@ -766,7 +702,7 @@ footer {
 <!-- Iframe Viewer -->
 <div class="iframe-overlay" id="iframe-overlay">
   <div class="iframe-topbar">
-    <button class="iframe-back" onclick="closeIframe()">&#8592; HardMiner</button>
+    <button class="iframe-back" onclick="closeIframe()">&#8592; IceBreaker</button>
     <span class="iframe-title" id="iframe-title"></span>
     <a class="iframe-open-ext" id="iframe-ext-link" href="#" target="_blank" rel="noopener">Open in browser &#8599;</a>
   </div>
@@ -788,43 +724,25 @@ footer {
   document.getElementById('live-date').textContent =
     new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-  // Link registry — replace null with Streamlit URLs as you build them
   const LINKS = {
-    fundamentals: {
-      'Coffee':       {'TDM Trade Flows':'iframe:TDM Trade Flows:https://coffeeexportertdm-a4vbj7jhz3cllqvhaz4nsi.streamlit.app/','Currency Dashboard':'https://currencydashboard-6czutxwm5ume5rzndcs9k5.streamlit.app/','Tender Parity':'iframe:Tender Parity:https://tender-parity-bww8jqzb4ozdlczphsha4k.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
-      'Cocoa':        {'TDM Trade Flows':'https://cocoa-tradeflows-3rfkxpn5osmtg6cb4uqxbs.streamlit.app/','Currency Dashboard':'https://currencydashboard-6czutxwm5ume5rzndcs9k5.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
-      'Sugar':        {'Trade Flows':'https://sugar-tradeflows-8y8mt7mrj9qr5znqftk7gm.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
-      'Cotton':       {'Trade Flows':'coming-soon.html','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
-      'Orange Juice': {'Trade Flows':'coming-soon.html','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
+    futures: {
+      'Coffee':       { 'Price History': 'coming-soon.html', 'Continuous Chart': 'coming-soon.html' },
+      'Cocoa':        { 'Price History': 'coming-soon.html', 'Continuous Chart': 'coming-soon.html' },
+      'Sugar':        { 'Price History': 'coming-soon.html', 'Continuous Chart': 'coming-soon.html' },
+      'Cotton':       { 'Price History': 'coming-soon.html', 'Continuous Chart': 'coming-soon.html' },
+      'Orange Juice': { 'Price History': 'coming-soon.html', 'Continuous Chart': 'coming-soon.html' },
     },
-    tradeflows: {
-      'Trade Flows': {
-        'Coffee':  'https://coffeeexportertdm-a4vbj7jhz3cllqvhaz4nsi.streamlit.app/',
-        'Cocoa':   'https://cocoa-tradeflows-3rfkxpn5osmtg6cb4uqxbs.streamlit.app/',
-        'Sugar':   'https://sugar-tradeflows-8y8mt7mrj9qr5znqftk7gm.streamlit.app/',
-        'Cotton':  'coming-soon.html',
-      },
-    },
-    weather: {
-      'Weather': {
-        'Coffee': 'https://weather-new-3vkh3k8cfyoyodhspwhmur.streamlit.app/',
-        'Cocoa':  'https://cocoa-weather-asmewzdyvp6xqoijmneuyz.streamlit.app/',
-        'Sugar':  'coming-soon.html',
-      },
-    },
-    'non-fundamentals': {
-      'Rollex':          {'Open Dashboard':'https://rollex-new-lapprpu45ysmmiycckod3oj.streamlit.app/'},
-      'COT Analysis':    {'COT Dashboard':'https://cot-view-zzrtspxyqdfvfnkbmsqpmm.streamlit.app/','Pain Trade Monitor':'https://cot-view-fyqtkmawtaayrknnynq4fq.streamlit.app/','COT Prediction':'coming-soon.html','Spec Proximity Dashboard':'coming-soon.html'},
-      'Seasonality':     {'Coffee':'coming-soon.html','Cocoa':'coming-soon.html','Sugar':'coming-soon.html','All Commodities':'coming-soon.html'},
-      'Roll Yield':      {'Roll Yield Monitor':'https://roll-yield-ofghtdpvrca3nmdcgjma8y.streamlit.app/','Initial Margin':'coming-soon.html'},
-      'Open Interest':   {'Overview':'coming-soon.html'},
-      'VaR':             {'VaR Monitor':'popup:https://rollex-new-36wuipyryfhfa2fusl3apt.streamlit.app/','Initial Margin':'coming-soon.html','Spec in VaR':'coming-soon.html'},
-      'Optimus Prime':   {'Backtesting Engine':'coming-soon.html','Statistics':'https://www.notion.so/Optimus-Prime-Statistics-333fbb7607b880ee8876cdfe10893956?source=copy_link','Strategy':'coming-soon.html'},
+    analytics: {
+      'COT':              { 'COT Dashboard': 'coming-soon.html', 'Pain Trade Monitor': 'coming-soon.html' },
+      'Certified Stocks': { 'Stocks Dashboard': 'coming-soon.html' },
+      'Options':          { 'Options Dashboard': 'coming-soon.html' },
+      'Roll Yield':       { 'Roll Yield Monitor': 'coming-soon.html' },
+      'Open Interest':    { 'Overview': 'coming-soon.html' },
     }
   };
 
   function openModal(name, type) {
-    const eyebrowMap = { fundamentals: 'Fundamentals', 'non-fundamentals': 'Non-Fundamentals', tradeflows: 'Trade Data', weather: 'Weather' };
+    const eyebrowMap = { futures: 'Futures', analytics: 'Analytics' };
     document.getElementById('m-eyebrow').textContent = eyebrowMap[type] || '';
     document.getElementById('m-title').textContent = name;
 
@@ -844,15 +762,6 @@ footer {
         const iframeUrl = parts.slice(2).join(':');
         a.href = '#';
         a.addEventListener('click', e => { e.preventDefault(); openIframe(iframeTitle, iframeUrl); });
-        a.innerHTML = `<span class="mi-label">${label}</span><span class="mi-icon">&#9654;</span>`;
-      } else if (url && url.startsWith('popup:')) {
-        const popupUrl = url.slice(6);
-        a.href = '#';
-        a.addEventListener('click', e => {
-          e.preventDefault();
-          const w = screen.width, h = screen.height;
-          window.open(popupUrl, '_blank', `width=${w},height=${h},left=0,top=0,menubar=no,toolbar=no,location=no,status=no`);
-        });
         a.innerHTML = `<span class="mi-label">${label}</span><span class="mi-icon">&#9654;</span>`;
       } else {
         a.href = url || '#';
@@ -893,7 +802,6 @@ footer {
     document.body.style.overflow = '';
   }
 
-  // Register service worker for PWA
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js');
   }
