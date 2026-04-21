@@ -12,16 +12,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:          #F3F5F8;
-  --surface:     #ffffff;
-  --ink:         #1d1d1f;
-  --ink-2:       #424245;
-  --ink-3:       #6e6e73;
-  --ink-4:       #aeaeb2;
-  --border:      rgba(0,0,0,0.08);
-  --border-mid:  rgba(0,0,0,0.12);
-  --red:         #c0392b;
-  --red-2:       #e74c3c;
+  --bg:          #EEE5D9;
+  --surface:     #FDFFFF;
+  --ink:         #000000;
+  --ink-2:       #1a1a1a;
+  --ink-3:       #222D52;
+  --ink-4:       #D2B68A;
+  --border:      rgba(210,182,138,0.28);
+  --border-mid:  rgba(210,182,138,0.42);
+  --red:         #222D52;
+  --red-2:       #2d3a6b;
   --ease:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -55,7 +55,7 @@ body::after {
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 0 2rem;
-  background: rgba(243,245,248,0.85);
+  background: rgba(238,229,217,0.88);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--border);
@@ -117,12 +117,12 @@ body::after {
   font-weight: 400;
   line-height: .95;
   letter-spacing: -.02em;
-  color: #0a2463;
+  color: #222D52;
   margin-bottom: 1.2rem;
 }
 .hero-title em {
   font-style: italic;
-  color: #c0392b;
+  color: #D2B68A;
   font-weight: 400;
 }
 
@@ -215,7 +215,7 @@ body::after {
   position: relative;
   transition: background .2s var(--ease);
 }
-.row-btn:hover { background: rgba(192,57,43,0.06); }
+.row-btn:hover { background: rgba(210,182,138,0.18); }
 .row-btn:hover .rb-name { color: var(--red); }
 .row-btn:hover .rb-sub  { color: var(--ink-3); }
 .row-btn:hover .rb-arrow { opacity:1; transform:translateX(4px); color: var(--red); }
@@ -312,7 +312,7 @@ footer {
   align-items: center;
   justify-content: space-between;
   padding: 0 1.4rem;
-  background: #0a2463;
+  background: #222D52;
   flex-shrink: 0;
 }
 
@@ -436,7 +436,7 @@ footer {
   background: var(--red);
   border-color: var(--red);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(192,57,43,.22);
+  box-shadow: 0 6px 20px rgba(34,45,82,.22);
 }
 .modal-item:hover .mi-label { color: #fff; }
 .modal-item:hover .mi-icon  { color: rgba(255,255,255,.7); }
@@ -460,15 +460,15 @@ footer {
 <!-- Password Gate -->
 <div id="gate" style="
   position:fixed;inset:0;z-index:9998;
-  background:#F3F5F8;
+  background:#EEE5D9;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
   gap:1.4rem;
 ">
-  <div style="font-family:'Playfair Display',Georgia,serif;font-size:2rem;font-weight:400;color:#0a2463;letter-spacing:-.02em;">
-    Ice<em style="font-style:italic;color:#c0392b;">Breaker</em>
+  <div style="font-family:'Playfair Display',Georgia,serif;font-size:2rem;font-weight:400;color:#222D52;letter-spacing:-.02em;">
+    Ice<em style="font-style:italic;color:#D2B68A;">Breaker</em>
   </div>
-  <div style="font-size:.58rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#aeaeb2;">
+  <div style="font-size:.58rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#D2B68A;">
     Internal Access Only
   </div>
   <div style="display:flex;flex-direction:column;gap:.6rem;width:min(320px,88vw)">
@@ -526,11 +526,11 @@ footer {
   <div style="display:flex;align-items:center;">
     <a href="index.html"
       style="display:flex;align-items:center;gap:6px;font-size:.62rem;font-weight:600;
-             letter-spacing:.05em;color:var(--ink-2);background:rgba(0,0,0,0.06);
+             letter-spacing:.05em;color:#222D52;background:rgba(210,182,138,0.22);
              border:none;padding:5px 13px;border-radius:20px;text-decoration:none;
              transition:background .2s,transform .15s;white-space:nowrap"
-      onmouseover="this.style.background='rgba(0,0,0,0.1)';this.style.transform='translateY(-1px)'"
-      onmouseout="this.style.background='rgba(0,0,0,0.06)';this.style.transform='translateY(0)'">
+      onmouseover="this.style.background='rgba(210,182,138,0.38)';this.style.transform='translateY(-1px)'"
+      onmouseout="this.style.background='rgba(210,182,138,0.22)';this.style.transform='translateY(0)'">
       ← HardMiner
     </a>
   </div>
@@ -542,20 +542,20 @@ footer {
   <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end;">
     <button onclick="openIframe('Unit Desk','conversion.html')"
       style="display:flex;align-items:center;gap:6px;font-size:.62rem;font-weight:600;
-             letter-spacing:.05em;color:#fff;background:#1a3a7a;border:none;
+             letter-spacing:.05em;color:#FDFFFF;background:#222D52;border:none;
              padding:5px 13px;border-radius:20px;cursor:pointer;
              transition:background .2s,transform .15s;white-space:nowrap"
-      onmouseover="this.style.background='#0a2463';this.style.transform='translateY(-1px)'"
-      onmouseout="this.style.background='#1a3a7a';this.style.transform='translateY(0)'">
+      onmouseover="this.style.background='#1a2240';this.style.transform='translateY(-1px)'"
+      onmouseout="this.style.background='#222D52';this.style.transform='translateY(0)'">
       Unit Desk
     </button>
     <a href="https://certs-automation-4u8roxdqdzjscztlbc6vbo.streamlit.app/" target="_blank" rel="noopener"
        style="display:flex;align-items:center;gap:6px;font-size:.62rem;font-weight:600;
-              letter-spacing:.05em;color:#fff;background:#c0392b;border:none;
+              letter-spacing:.05em;color:#222D52;background:#D2B68A;border:none;
               padding:5px 13px;border-radius:20px;text-decoration:none;
               transition:background .2s,transform .15s;white-space:nowrap"
-       onmouseover="this.style.background='#a93226';this.style.transform='translateY(-1px)'"
-       onmouseout="this.style.background='#c0392b';this.style.transform='translateY(0)'">
+       onmouseover="this.style.background='#b89660';this.style.transform='translateY(-1px)'"
+       onmouseout="this.style.background='#D2B68A';this.style.transform='translateY(0)'">
       ⚡ Daily Updates
     </a>
   </div>
