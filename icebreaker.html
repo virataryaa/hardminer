@@ -12,8 +12,8 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:          #FFF9DD;
-  --surface:     #fffef5;
+  --bg:          #F3F5F8;
+  --surface:     #ffffff;
   --ink:         #1d1d1f;
   --ink-2:       #424245;
   --ink-3:       #6e6e73;
@@ -55,7 +55,7 @@ body::after {
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 0 2rem;
-  background: rgba(255,249,221,0.85);
+  background: rgba(243,245,248,0.85);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--border);
@@ -69,18 +69,6 @@ body::after {
   font-weight: 400;
   letter-spacing: .06em;
   color: var(--ink-4);
-}
-
-.topbar-pill {
-  display: flex; align-items: center; gap: 6px;
-  font-size: .62rem;
-  font-weight: 500;
-  letter-spacing: .04em;
-  color: var(--ink-3);
-  background: var(--surface);
-  border: 1px solid var(--border-mid);
-  padding: 4px 11px;
-  border-radius: 20px;
 }
 
 .live-dot {
@@ -383,7 +371,7 @@ footer {
 .overlay.open { display: flex; }
 
 .modal {
-  background: rgba(255,249,221,.97);
+  background: rgba(255,255,255,.95);
   backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   border-radius: 18px;
@@ -472,7 +460,7 @@ footer {
 <!-- Password Gate -->
 <div id="gate" style="
   position:fixed;inset:0;z-index:9998;
-  background:#FFF9DD;
+  background:#F3F5F8;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
   gap:1.4rem;
@@ -488,7 +476,7 @@ footer {
       style="
         width:100%;padding:.85rem 1.1rem;
         border:1px solid rgba(0,0,0,0.12);border-radius:10px;
-        background:#fffef5;font-size:.9rem;color:#1d1d1f;
+        background:#fff;font-size:.9rem;color:#1d1d1f;
         outline:none;transition:border-color .2s;
         font-family:-apple-system,'Helvetica Neue',sans-serif;
       "
@@ -538,8 +526,8 @@ footer {
   <div style="display:flex;align-items:center;">
     <a href="index.html"
       style="display:flex;align-items:center;gap:6px;font-size:.62rem;font-weight:600;
-             letter-spacing:.05em;color:var(--ink-2);background:rgba(0,0,0,0.06);border:none;
-             padding:5px 13px;border-radius:20px;text-decoration:none;
+             letter-spacing:.05em;color:var(--ink-2);background:rgba(0,0,0,0.06);
+             border:none;padding:5px 13px;border-radius:20px;text-decoration:none;
              transition:background .2s,transform .15s;white-space:nowrap"
       onmouseover="this.style.background='rgba(0,0,0,0.1)';this.style.transform='translateY(-1px)'"
       onmouseout="this.style.background='rgba(0,0,0,0.06)';this.style.transform='translateY(0)'">
@@ -582,97 +570,128 @@ footer {
 <!-- Grid -->
 <div class="grid">
 
-  <!-- Left column -->
+  <!-- Fundamentals -->
   <div class="col">
-    <div class="col-heading">Futures</div>
+    <div class="col-heading">Fundamentals</div>
 
-    <button class="row-btn" onclick="openModal('Coffee','futures')">
+    <button class="row-btn" onclick="openModal('Coffee','fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Coffee</span>
-          <span class="rb-sub">KC · RC</span>
+          <span class="rb-sub">Arabica · Robusta</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Cocoa','futures')">
+    <button class="row-btn" onclick="openModal('Cocoa','fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Cocoa</span>
-          <span class="rb-sub">CC · LCC</span>
+          <span class="rb-sub">Beans · Products</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Sugar','futures')">
+    <button class="row-btn" onclick="openModal('Sugar','fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Sugar</span>
-          <span class="rb-sub">SB · LSU</span>
+          <span class="rb-sub">Raw · White</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Cotton','futures')">
+    <button class="row-btn" onclick="openModal('Cotton','fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Cotton</span>
-          <span class="rb-sub">CT</span>
+          <span class="rb-sub">Fibre</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Orange Juice','futures')">
+    <button class="row-btn" onclick="openModal('Orange Juice','fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Orange Juice</span>
-          <span class="rb-sub">OJ</span>
+          <span class="rb-sub">FCOJ</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
+    <div style="margin-top:2rem">
+      <button class="row-btn" onclick="openModal('Weather','weather')">
+        <div class="rb-inner">
+          <div class="rb-text">
+            <span class="rb-name">Weather</span>
+            <span class="rb-sub">Precipitation · Temperature</span>
+          </div>
+          <span class="rb-arrow">→</span>
+        </div>
+      </button>
+
+      <button class="row-btn" onclick="openModal('Trade Flows','tradeflows')">
+        <div class="rb-inner">
+          <div class="rb-text">
+            <span class="rb-name">Trade Flows</span>
+            <span class="rb-sub">Exports · Imports · Partners</span>
+          </div>
+          <span class="rb-arrow">→</span>
+        </div>
+      </button>
+    </div>
   </div>
 
-  <!-- Right column -->
+  <!-- Non-Fundamentals -->
   <div class="col">
-    <div class="col-heading">Analytics</div>
+    <div class="col-heading">Non-Fundamentals</div>
 
-    <button class="row-btn" onclick="openModal('COT','analytics')">
+    <button class="row-btn" onclick="openModal('Rollex','non-fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
-          <span class="rb-name">COT</span>
-          <span class="rb-sub">Managed Money · Positioning</span>
+          <span class="rb-name">Rollex</span>
+          <span class="rb-sub">Seasonality · Scatter · Volatility</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Certified Stocks','analytics')">
+    <button class="row-btn" onclick="openModal('COT Analysis','non-fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
-          <span class="rb-name">Certified Stocks</span>
-          <span class="rb-sub">KC · RC · CC · LCC</span>
+          <span class="rb-name">COT Analysis</span>
+          <span class="rb-sub">Positioning</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Options','analytics')">
+    <button class="row-btn" onclick="openIframe('Unit Desk','conversion.html')">
       <div class="rb-inner">
         <div class="rb-text">
-          <span class="rb-name">Options</span>
-          <span class="rb-sub">OI Change · ImpVol · Settle</span>
+          <span class="rb-name">Unit Desk</span>
+          <span class="rb-sub">Lots · Weight · Price</span>
         </div>
         <span class="rb-arrow">→</span>
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Roll Yield','analytics')">
+    <a class="row-btn" href="https://cross-section-new-wbjv7bf2y77jjnmedlugkq.streamlit.app/" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Cross Section</span>
+          <span class="rb-sub">Momentum · Roll Yield</span>
+        </div>
+        <span class="rb-arrow">↗</span>
+      </div>
+    </a>
+
+    <button class="row-btn" onclick="openModal('Roll Yield','non-fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Roll Yield</span>
@@ -682,7 +701,7 @@ footer {
       </div>
     </button>
 
-    <button class="row-btn" onclick="openModal('Open Interest','analytics')">
+    <button class="row-btn" onclick="openModal('Open Interest','non-fundamentals')">
       <div class="rb-inner">
         <div class="rb-text">
           <span class="rb-name">Open Interest</span>
@@ -692,6 +711,37 @@ footer {
       </div>
     </button>
 
+    <a class="row-btn" href="https://options-hdurdctupwvarhj6xwubz3.streamlit.app/" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">Options</span>
+          <span class="rb-sub">OI Change · Volume · Settle</span>
+        </div>
+        <span class="rb-arrow">↗</span>
+      </div>
+    </a>
+
+    <button class="row-btn" onclick="openModal('VaR','non-fundamentals')">
+      <div class="rb-inner">
+        <div class="rb-text">
+          <span class="rb-name">VaR</span>
+          <span class="rb-sub">VaR Monitor · Initial Margin · Spec in VaR</span>
+        </div>
+        <span class="rb-arrow">→</span>
+      </div>
+    </button>
+
+    <div style="margin-top:2rem">
+      <button class="row-btn" onclick="openModal('Optimus Prime','non-fundamentals')">
+        <div class="rb-inner">
+          <div class="rb-text">
+            <span class="rb-name">Optimus Prime</span>
+            <span class="rb-sub">Backtesting · Statistics · Strategy</span>
+          </div>
+          <span class="rb-arrow">→</span>
+        </div>
+      </button>
+    </div>
   </div>
 
 </div>
@@ -725,24 +775,41 @@ footer {
     new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
   const LINKS = {
-    futures: {
-      'Coffee':       { 'Price History': 'coming-soon.html', 'Continuous Chart': 'coming-soon.html' },
-      'Cocoa':        { 'Price History': 'coming-soon.html', 'Continuous Chart': 'coming-soon.html' },
-      'Sugar':        { 'Price History': 'coming-soon.html', 'Continuous Chart': 'coming-soon.html' },
-      'Cotton':       { 'Price History': 'coming-soon.html', 'Continuous Chart': 'coming-soon.html' },
-      'Orange Juice': { 'Price History': 'coming-soon.html', 'Continuous Chart': 'coming-soon.html' },
+    fundamentals: {
+      'Coffee':       {'TDM Trade Flows':'iframe:TDM Trade Flows:https://coffeeexportertdm-a4vbj7jhz3cllqvhaz4nsi.streamlit.app/','Currency Dashboard':'https://currencydashboard-6czutxwm5ume5rzndcs9k5.streamlit.app/','Tender Parity':'iframe:Tender Parity:https://tender-parity-bww8jqzb4ozdlczphsha4k.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
+      'Cocoa':        {'TDM Trade Flows':'https://cocoa-tradeflows-3rfkxpn5osmtg6cb4uqxbs.streamlit.app/','Currency Dashboard':'https://currencydashboard-6czutxwm5ume5rzndcs9k5.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
+      'Sugar':        {'Trade Flows':'https://sugar-tradeflows-8y8mt7mrj9qr5znqftk7gm.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
+      'Cotton':       {'Trade Flows':'coming-soon.html','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
+      'Orange Juice': {'Trade Flows':'coming-soon.html','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
     },
-    analytics: {
-      'COT':              { 'COT Dashboard': 'coming-soon.html', 'Pain Trade Monitor': 'coming-soon.html' },
-      'Certified Stocks': { 'Stocks Dashboard': 'coming-soon.html' },
-      'Options':          { 'Options Dashboard': 'coming-soon.html' },
-      'Roll Yield':       { 'Roll Yield Monitor': 'coming-soon.html' },
-      'Open Interest':    { 'Overview': 'coming-soon.html' },
+    tradeflows: {
+      'Trade Flows': {
+        'Coffee':  'https://coffeeexportertdm-a4vbj7jhz3cllqvhaz4nsi.streamlit.app/',
+        'Cocoa':   'https://cocoa-tradeflows-3rfkxpn5osmtg6cb4uqxbs.streamlit.app/',
+        'Sugar':   'https://sugar-tradeflows-8y8mt7mrj9qr5znqftk7gm.streamlit.app/',
+        'Cotton':  'coming-soon.html',
+      },
+    },
+    weather: {
+      'Weather': {
+        'Coffee': 'https://weather-new-3vkh3k8cfyoyodhspwhmur.streamlit.app/',
+        'Cocoa':  'https://cocoa-weather-asmewzdyvp6xqoijmneuyz.streamlit.app/',
+        'Sugar':  'coming-soon.html',
+      },
+    },
+    'non-fundamentals': {
+      'Rollex':          {'Open Dashboard':'https://rollex-new-lapprpu45ysmmiycckod3oj.streamlit.app/'},
+      'COT Analysis':    {'COT Dashboard':'https://cot-view-zzrtspxyqdfvfnkbmsqpmm.streamlit.app/','Pain Trade Monitor':'https://cot-view-fyqtkmawtaayrknnynq4fq.streamlit.app/','COT Prediction':'coming-soon.html','Spec Proximity Dashboard':'coming-soon.html'},
+      'Seasonality':     {'Coffee':'coming-soon.html','Cocoa':'coming-soon.html','Sugar':'coming-soon.html','All Commodities':'coming-soon.html'},
+      'Roll Yield':      {'Roll Yield Monitor':'https://roll-yield-ofghtdpvrca3nmdcgjma8y.streamlit.app/','Initial Margin':'coming-soon.html'},
+      'Open Interest':   {'Overview':'coming-soon.html'},
+      'VaR':             {'VaR Monitor':'popup:https://rollex-new-36wuipyryfhfa2fusl3apt.streamlit.app/','Initial Margin':'coming-soon.html','Spec in VaR':'coming-soon.html'},
+      'Optimus Prime':   {'Backtesting Engine':'coming-soon.html','Statistics':'https://www.notion.so/Optimus-Prime-Statistics-333fbb7607b880ee8876cdfe10893956?source=copy_link','Strategy':'coming-soon.html'},
     }
   };
 
   function openModal(name, type) {
-    const eyebrowMap = { futures: 'Futures', analytics: 'Analytics' };
+    const eyebrowMap = { fundamentals: 'Fundamentals', 'non-fundamentals': 'Non-Fundamentals', tradeflows: 'Trade Data', weather: 'Weather' };
     document.getElementById('m-eyebrow').textContent = eyebrowMap[type] || '';
     document.getElementById('m-title').textContent = name;
 
@@ -762,6 +829,15 @@ footer {
         const iframeUrl = parts.slice(2).join(':');
         a.href = '#';
         a.addEventListener('click', e => { e.preventDefault(); openIframe(iframeTitle, iframeUrl); });
+        a.innerHTML = `<span class="mi-label">${label}</span><span class="mi-icon">&#9654;</span>`;
+      } else if (url && url.startsWith('popup:')) {
+        const popupUrl = url.slice(6);
+        a.href = '#';
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          const w = screen.width, h = screen.height;
+          window.open(popupUrl, '_blank', `width=${w},height=${h},left=0,top=0,menubar=no,toolbar=no,location=no,status=no`);
+        });
         a.innerHTML = `<span class="mi-label">${label}</span><span class="mi-icon">&#9654;</span>`;
       } else {
         a.href = url || '#';
