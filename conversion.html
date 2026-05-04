@@ -10,7 +10,7 @@
   --bg: #fafafa; --surface: #fff; --ink: #1d1d1f; --ink-2: #424245;
   --ink-3: #6e6e73; --ink-4: #aeaeb2; --border: rgba(0,0,0,0.08);
   --border-mid: rgba(0,0,0,0.13); --navy: #0a2463; --red: #c0392b;
-  --red-2: #e74c3c; --ease: cubic-bezier(0.25,0.46,0.45,0.94);
+  --ease: cubic-bezier(0.25,0.46,0.45,0.94);
 }
 html { font-size: 15px; -webkit-font-smoothing: antialiased; }
 body { background: var(--bg); color: var(--ink); font-family: -apple-system,'Helvetica Neue',sans-serif; min-height: 100vh; }
@@ -21,27 +21,48 @@ body { background: var(--bg); color: var(--ink); font-family: -apple-system,'Hel
   padding: 0 1.6rem; background: var(--navy);
   position: sticky; top: 0; z-index: 100;
 }
-.back-btn {
-  display: flex; align-items: center; gap: 7px;
-  color: rgba(255,255,255,.85); font-size: .72rem; font-weight: 500;
-  letter-spacing: .05em; background: rgba(255,255,255,.12);
-  border: none; border-radius: 8px; padding: 5px 13px; cursor: pointer;
-  transition: background .2s; text-decoration: none;
-}
-.back-btn:hover { background: rgba(255,255,255,.22); }
 .topbar-title {
   font-size: .78rem; font-weight: 600; letter-spacing: .1em;
   text-transform: uppercase; color: rgba(255,255,255,.9);
 }
+.ref-btn {
+  background: rgba(255,255,255,.12); border: none; border-radius: 8px;
+  color: rgba(255,255,255,.85); cursor: pointer; font-family: inherit;
+  font-size: .68rem; font-weight: 600; letter-spacing: .07em;
+  padding: 5px 13px; text-transform: uppercase; transition: background .2s;
+}
+.ref-btn:hover { background: rgba(255,255,255,.22); }
+.ref-btn.open  { background: rgba(255,255,255,.28); }
+
+/* ── Tab bar ── */
+.tabbar {
+  background: var(--surface); border-bottom: 2px solid var(--border);
+  display: flex; padding: 0 1.2rem;
+  position: sticky; top: 48px; z-index: 99;
+}
+.tab {
+  background: none; border: none; border-bottom: 2px solid transparent;
+  color: var(--ink-3); cursor: pointer; font-family: inherit;
+  font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+  padding: .75rem 1.1rem; text-transform: uppercase;
+  transition: color .18s, border-color .18s; margin-bottom: -2px;
+}
+.tab:hover:not(.active) { color: var(--navy); }
+.tab.active { border-bottom-color: var(--navy); color: var(--navy); }
+
+/* ── Reference panel ── */
+#ref-panel {
+  background: var(--surface); border-bottom: 1px solid var(--border-mid);
+  overflow: hidden; max-height: 0;
+  transition: max-height .35s var(--ease), padding .25s var(--ease);
+  padding: 0 1.5rem;
+}
+#ref-panel.open { max-height: 900px; padding: 1.4rem 1.5rem; }
 
 /* ── Layout ── */
-.page { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-
-/* ── Section heading ── */
-.section-label {
-  font-size: .55rem; font-weight: 700; letter-spacing: .2em;
-  text-transform: uppercase; color: var(--ink-4); margin-bottom: 1rem;
-}
+.page { max-width: 1100px; margin: 0 auto; padding: 1.8rem 1.5rem 4rem; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
 /* ── Card ── */
 .card {
@@ -53,17 +74,19 @@ body { background: var(--bg); color: var(--ink); font-family: -apple-system,'Hel
   text-transform: uppercase; color: var(--ink-3); margin-bottom: 1.2rem;
   padding-bottom: .7rem; border-bottom: 1px solid var(--border);
 }
+.card-desc {
+  font-size: .67rem; color: var(--ink-4); line-height: 1.55;
+  margin-bottom: 1rem; letter-spacing: .01em;
+}
 
-/* ── Row of cards ── */
+/* ── Grid rows ── */
 .cards-row { display: grid; gap: 1rem; }
-.cards-row.col-2 { grid-template-columns: 1fr 1fr; }
-.cards-row.col-3 { grid-template-columns: 1fr 1fr 1fr; }
-.cards-row.col-2-1 { grid-template-columns: 1.1fr 0.9fr; }
+.cards-row.col-2   { grid-template-columns: 1fr 1fr; }
+.cards-row.col-3   { grid-template-columns: 1fr 1fr 1fr; }
+.cards-row.col-2-1 { grid-template-columns: 1.15fr 0.85fr; }
 
 /* ── Converter UI ── */
-.conv-row {
-  display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
-}
+.conv-row { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
 .conv-label {
   font-size: .58rem; font-weight: 600; letter-spacing: .1em;
   text-transform: uppercase; color: var(--ink-4); margin-bottom: .3rem;
@@ -78,9 +101,7 @@ input[type=number], select {
   transition: border-color .2s, background .2s;
   font-family: -apple-system,'Helvetica Neue',sans-serif;
 }
-input[type=number]:focus, select:focus {
-  border-color: var(--navy); background: #fff;
-}
+input[type=number]:focus, select:focus { border-color: var(--navy); background: #fff; }
 input[type=number] { -moz-appearance: textfield; }
 input[type=number]::-webkit-inner-spin-button { display: none; }
 
@@ -88,7 +109,6 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
   font-size: .72rem; color: var(--ink-4); font-weight: 500;
   padding-top: 1.3rem; white-space: nowrap;
 }
-
 .result-box {
   height: 38px; border-radius: 8px; background: var(--navy);
   color: #fff; font-size: .95rem; font-weight: 600;
@@ -104,10 +124,7 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
   padding: .45rem .7rem; text-align: right; border-bottom: 1px solid var(--border);
 }
 .ref-table th:first-child { text-align: left; }
-.ref-table td {
-  padding: .45rem .7rem; border-bottom: 1px solid var(--border);
-  text-align: right; color: var(--ink-2);
-}
+.ref-table td { padding: .45rem .7rem; border-bottom: 1px solid var(--border); text-align: right; color: var(--ink-2); }
 .ref-table td:first-child { text-align: left; font-weight: 600; color: var(--ink); }
 .ref-table tr:last-child td { border-bottom: none; }
 
@@ -120,56 +137,30 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
   letter-spacing: .06em; text-align: center; white-space: nowrap;
 }
 .matrix th:first-child { text-align: left; border-radius: 6px 0 0 0; }
-.matrix th:last-child { border-radius: 0 6px 0 0; }
-.matrix td {
-  padding: .45rem .6rem; border-bottom: 1px solid var(--border);
-  text-align: center; color: var(--ink-2);
-}
-.matrix td:first-child {
-  font-weight: 700; color: var(--ink); background: #f5f5f7;
-  text-align: left; white-space: nowrap;
-}
+.matrix th:last-child  { border-radius: 0 6px 0 0; }
+.matrix td { padding: .45rem .6rem; border-bottom: 1px solid var(--border); text-align: center; color: var(--ink-2); }
+.matrix td:first-child { font-weight: 700; color: var(--ink); background: #f5f5f7; text-align: left; white-space: nowrap; }
 .matrix td.diag { background: rgba(10,36,99,.07); color: var(--navy); font-weight: 700; }
 .matrix tr:last-child td { border-bottom: none; }
 
-/* ── Basic conversions ── */
+/* ── Basic conv / rate pills ── */
 .basic-conv { display: flex; flex-direction: column; gap: .55rem; }
-.bc-row {
-  display: flex; align-items: center; gap: .5rem;
-  font-size: .82rem; color: var(--ink-2);
-}
-.bc-val { font-weight: 700; color: var(--navy); min-width: 30px; }
-.bc-eq  { color: var(--ink-4); }
+.bc-row { display: flex; align-items: center; gap: .5rem; font-size: .82rem; color: var(--ink-2); }
+.bc-val  { font-weight: 700; color: var(--navy); min-width: 30px; }
+.bc-eq   { color: var(--ink-4); }
 .bc-unit { color: var(--ink-3); }
-
-/* ── Rate pills ── */
-.rate-pills { display: flex; flex-direction: column; gap: .5rem; margin-top: 1rem; }
+.rate-pills { display: flex; flex-direction: column; gap: .5rem; }
 .rate-pill {
   display: flex; align-items: center; justify-content: space-between;
   background: #f5f5f7; border: 1px solid var(--border);
-  border-radius: 8px; padding: .5rem .85rem;
-  font-size: .78rem;
+  border-radius: 8px; padding: .5rem .85rem; font-size: .78rem;
 }
 .rp-from { color: var(--ink-3); }
 .rp-eq   { color: var(--ink-4); margin: 0 .4rem; }
 .rp-to   { font-weight: 700; color: var(--navy); }
 
-/* ── Commodity selector tabs ── */
-.commodity-tabs {
-  display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.1rem;
-}
-.ctab {
-  padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border-mid);
-  font-size: .65rem; font-weight: 600; letter-spacing: .05em;
-  cursor: pointer; transition: all .18s; color: var(--ink-3); background: var(--bg);
-}
-.ctab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
-.ctab:hover:not(.active) { border-color: var(--navy); color: var(--navy); }
+.footnote { margin-top:.8rem; font-size:.65rem; color:var(--ink-4); letter-spacing:.04em; }
 
-.card-desc {
-  font-size: .67rem; color: var(--ink-4); line-height: 1.55;
-  margin-bottom: 1rem; letter-spacing: .01em;
-}
 @media (max-width: 700px) {
   .cards-row.col-2, .cards-row.col-3, .cards-row.col-2-1 { grid-template-columns: 1fr; }
 }
@@ -177,97 +168,140 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
 </head>
 <body>
 
+<div class="topbar">
+  <div style="width:90px"></div>
+  <span class="topbar-title">Unit Desk</span>
+  <button class="ref-btn" id="ref-btn" onclick="toggleRefPanel()">Reference ▾</button>
+</div>
+
+<div class="tabbar">
+  <button class="tab active" onclick="switchTab('size',this)">Size / Volume</button>
+  <button class="tab" onclick="switchTab('price',this)">Price</button>
+  <button class="tab" onclick="switchTab('pnl',this)">P&amp;L</button>
+  <button class="tab" onclick="switchTab('risk',this)">Risk</button>
+</div>
+
+<!-- Reference panel — drops below tabbar, pushes content down -->
+<div id="ref-panel">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="cards-row col-2" style="margin-bottom:1rem">
+      <div class="card" style="margin-bottom:0">
+        <div class="card-title">Weight Conversions</div>
+        <div class="matrix-wrap" id="weight-matrix"></div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="card-title">Price Conversions</div>
+        <div class="matrix-wrap" id="price-matrix"></div>
+      </div>
+    </div>
+    <div class="cards-row col-3">
+      <div class="card" style="margin-bottom:0">
+        <div class="card-title">Weight References</div>
+        <div class="basic-conv">
+          <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bag (60Kg)</span><span class="bc-eq">=</span><span class="bc-val">60</span><span class="bc-unit">Kg</span></div>
+          <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bag (60Kg)</span><span class="bc-eq">=</span><span class="bc-val">132.277</span><span class="bc-unit">Lbs</span></div>
+          <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Kg</span><span class="bc-eq">=</span><span class="bc-val">2.20462</span><span class="bc-unit">Lbs</span></div>
+          <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bale</span><span class="bc-eq">=</span><span class="bc-val">480</span><span class="bc-unit">Lbs</span></div>
+          <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bale</span><span class="bc-eq">=</span><span class="bc-val">217.724</span><span class="bc-unit">Kg</span></div>
+          <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">MT</span><span class="bc-eq">=</span><span class="bc-val">1,000</span><span class="bc-unit">Kg</span></div>
+          <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">MT</span><span class="bc-eq">=</span><span class="bc-val">2,204.62</span><span class="bc-unit">Lbs</span></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="card-title">Price References</div>
+        <div class="rate-pills">
+          <div class="rate-pill"><span class="rp-from">1 ¢/lbs</span><span class="rp-eq">=</span><span class="rp-to">22.0462 $/MT</span></div>
+          <div class="rate-pill"><span class="rp-from">1 $/MT</span><span class="rp-eq">=</span><span class="rp-to">0.04536 ¢/lbs</span></div>
+          <div class="rate-pill"><span class="rp-from">1 $/lbs</span><span class="rp-eq">=</span><span class="rp-to">100 ¢/lbs</span></div>
+          <div class="rate-pill"><span class="rp-from">1 $/MT</span><span class="rp-eq">=</span><span class="rp-to">0.001 $/Kg</span></div>
+          <div class="rate-pill"><span class="rp-from">1 ¢/lbs</span><span class="rp-eq">=</span><span class="rp-to">0.220462 ¢/kg</span></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="card-title">Contract Quick Ref</div>
+        <div class="basic-conv" id="contract-quickref"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="page">
 
-  <!-- ══ SECTION 1: VALUE ↔ LOTS ══ -->
-  <div class="section-label">Contract Calculators</div>
-  <div class="cards-row col-2" style="margin-bottom:1.5rem">
+  <!-- ══ TAB: SIZE / VOLUME ══ -->
+  <div id="tab-size" class="tab-content active">
+    <div class="cards-row col-2" style="margin-bottom:1rem">
 
-    <!-- Value → Lots -->
-    <div class="card">
-      <div class="card-title">Value → Lots</div>
-      <div class="conv-row">
-        <div class="conv-group fill">
-          <div class="conv-label">Value</div>
-          <input type="number" id="vtl-value" placeholder="e.g. 6300000" oninput="calcVtoL()">
-        </div>
-        <div class="conv-group">
-          <div class="conv-label">Unit</div>
-          <select id="vtl-unit" onchange="calcVtoL()">
-            <option value="mt">MT</option>
-            <option value="kg">KG</option>
-            <option value="lbs">Lbs</option>
-            <option value="bags">Bags (60Kg)</option>
-            <option value="bale">Bale</option>
-          </select>
-        </div>
-        <div class="to-label">→</div>
-        <div class="conv-group">
-          <div class="conv-label">Commodity</div>
-          <select id="vtl-comm" onchange="calcVtoL()">
-            <option value="KC">KC Lots</option>
-            <option value="RC">RC Lots</option>
-            <option value="QC">QC Lots</option>
-            <option value="CC">CC Lots</option>
-            <option value="CT">CT Lots</option>
-            <option value="SB">SB Lots</option>
-            <option value="LSU">LSU Lots</option>
-          </select>
-        </div>
-        <div class="conv-group" style="min-width:110px">
-          <div class="conv-label">Lots</div>
-          <div class="result-box" id="vtl-result">—</div>
+      <div class="card">
+        <div class="card-title">Value → Lots</div>
+        <div class="conv-row">
+          <div class="conv-group fill">
+            <div class="conv-label">Value</div>
+            <input type="number" id="vtl-value" placeholder="e.g. 6300000" oninput="calcVtoL()">
+          </div>
+          <div class="conv-group">
+            <div class="conv-label">Unit</div>
+            <select id="vtl-unit" onchange="calcVtoL()">
+              <option value="mt">MT</option>
+              <option value="kg">KG</option>
+              <option value="lbs">Lbs</option>
+              <option value="bags">Bags (60Kg)</option>
+              <option value="bale">Bale</option>
+            </select>
+          </div>
+          <div class="to-label">→</div>
+          <div class="conv-group">
+            <div class="conv-label">Commodity</div>
+            <select id="vtl-comm" onchange="calcVtoL()">
+              <option value="KC">KC</option><option value="RC">RC</option>
+              <option value="QC">QC</option><option value="CC">CC</option>
+              <option value="CT">CT</option><option value="SB">SB</option>
+              <option value="LSU">LSU</option>
+            </select>
+          </div>
+          <div class="conv-group" style="min-width:110px">
+            <div class="conv-label">Lots</div>
+            <div class="result-box" id="vtl-result">—</div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Lots → Value -->
-    <div class="card">
-      <div class="card-title">Lots → Value</div>
-      <div class="conv-row">
-        <div class="conv-group fill">
-          <div class="conv-label">Lots</div>
-          <input type="number" id="ltv-lots" placeholder="e.g. 1500" oninput="calcLtoV()">
-        </div>
-        <div class="conv-group">
-          <div class="conv-label">Commodity</div>
-          <select id="ltv-comm" onchange="calcLtoV()">
-            <option value="KC">KC Lots</option>
-            <option value="RC">RC Lots</option>
-            <option value="QC">QC Lots</option>
-            <option value="CC">CC Lots</option>
-            <option value="CT">CT Lots</option>
-            <option value="SB">SB Lots</option>
-            <option value="LSU">LSU Lots</option>
-          </select>
-        </div>
-        <div class="to-label">→</div>
-        <div class="conv-group">
-          <div class="conv-label">Unit</div>
-          <select id="ltv-unit" onchange="calcLtoV()">
-            <option value="mt">MT</option>
-            <option value="kg">KG</option>
-            <option value="lbs">Lbs</option>
-            <option value="bags">Bags (60Kg)</option>
-            <option value="bale">Bale</option>
-          </select>
-        </div>
-        <div class="conv-group" style="min-width:120px">
-          <div class="conv-label">Value</div>
-          <div class="result-box" id="ltv-result">—</div>
+      <div class="card">
+        <div class="card-title">Lots → Value</div>
+        <div class="conv-row">
+          <div class="conv-group fill">
+            <div class="conv-label">Lots</div>
+            <input type="number" id="ltv-lots" placeholder="e.g. 1500" oninput="calcLtoV()">
+          </div>
+          <div class="conv-group">
+            <div class="conv-label">Commodity</div>
+            <select id="ltv-comm" onchange="calcLtoV()">
+              <option value="KC">KC</option><option value="RC">RC</option>
+              <option value="QC">QC</option><option value="CC">CC</option>
+              <option value="CT">CT</option><option value="SB">SB</option>
+              <option value="LSU">LSU</option>
+            </select>
+          </div>
+          <div class="to-label">→</div>
+          <div class="conv-group">
+            <div class="conv-label">Unit</div>
+            <select id="ltv-unit" onchange="calcLtoV()">
+              <option value="mt">MT</option>
+              <option value="kg">KG</option>
+              <option value="lbs">Lbs</option>
+              <option value="bags">Bags (60Kg)</option>
+              <option value="bale">Bale</option>
+            </select>
+          </div>
+          <div class="conv-group" style="min-width:120px">
+            <div class="conv-label">Value</div>
+            <div class="result-box" id="ltv-result">—</div>
+          </div>
         </div>
       </div>
+
     </div>
+    <div class="cards-row col-2-1">
 
-  </div>
-
-  <!-- ══ SECTION 2: GENERAL CONVERTER + PRICE + REF TABLE ══ -->
-  <div class="section-label">Unit Converters</div>
-  <div class="cards-row col-2-1" style="margin-bottom:1.5rem">
-
-    <div style="display:flex;flex-direction:column;gap:1rem">
-
-      <!-- General Weight Converter -->
       <div class="card">
         <div class="card-title">General Weight Converter</div>
         <div class="conv-row">
@@ -303,7 +337,21 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
         </div>
       </div>
 
-      <!-- Price Converter -->
+      <div class="card">
+        <div class="card-title">Contract Sizes</div>
+        <table class="ref-table">
+          <thead><tr><th>Contract</th><th>Standard</th><th>Unit</th><th>Kg</th></tr></thead>
+          <tbody id="ref-table-body"></tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ TAB: PRICE ══ -->
+  <div id="tab-price" class="tab-content">
+    <div class="cards-row col-2" style="margin-bottom:1rem">
+
       <div class="card">
         <div class="card-title">Price to Price</div>
         <div class="conv-row">
@@ -339,136 +387,314 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
         </div>
       </div>
 
-    </div>
-
-    <!-- Contract Size Reference -->
-    <div class="card">
-      <div class="card-title">Contract Sizes</div>
-      <table class="ref-table">
-        <thead>
-          <tr>
-            <th>Contract</th>
-            <th>Standard</th>
-            <th>Unit</th>
-            <th>Kg</th>
-          </tr>
-        </thead>
-        <tbody id="ref-table-body"></tbody>
-      </table>
-    </div>
-
-  </div>
-
-  <!-- ══ SECTION 3 & 4: MATRICES (collapsible) ══ -->
-  <div style="margin-bottom:1.5rem">
-    <button onclick="toggleMatrices()" id="matrices-toggle"
-      style="display:flex;align-items:center;gap:8px;background:none;border:none;
-             cursor:pointer;padding:0;margin-bottom:1rem">
-      <span style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-4)">Conversion Matrices</span>
-      <span id="matrices-chevron" style="font-size:.65rem;color:var(--ink-4);transition:transform .25s">▼</span>
-    </button>
-    <div id="matrices-body" style="display:none">
-      <div class="cards-row col-2" style="margin-bottom:1rem">
-        <div class="card">
-          <div class="card-title">Weight Conversions</div>
-          <div class="matrix-wrap" id="weight-matrix"></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Price Conversions</div>
-          <div class="matrix-wrap" id="price-matrix"></div>
-        </div>
-      </div>
-      <div class="cards-row col-3">
-        <div class="card">
-          <div class="card-title">Weight References</div>
-          <div class="basic-conv">
-            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bag (60Kg)</span><span class="bc-eq">=</span><span class="bc-val">60</span><span class="bc-unit">Kg</span></div>
-            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bag (60Kg)</span><span class="bc-eq">=</span><span class="bc-val">132.277</span><span class="bc-unit">Lbs</span></div>
-            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Kg</span><span class="bc-eq">=</span><span class="bc-val">2.20462</span><span class="bc-unit">Lbs</span></div>
-            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bale</span><span class="bc-eq">=</span><span class="bc-val">480</span><span class="bc-unit">Lbs</span></div>
-            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">Bale</span><span class="bc-eq">=</span><span class="bc-val">217.724</span><span class="bc-unit">Kg</span></div>
-            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">MT</span><span class="bc-eq">=</span><span class="bc-val">1,000</span><span class="bc-unit">Kg</span></div>
-            <div class="bc-row"><span class="bc-val">1</span><span class="bc-unit">MT</span><span class="bc-eq">=</span><span class="bc-val">2,204.62</span><span class="bc-unit">Lbs</span></div>
+      <div class="card">
+        <div class="card-title">FX Price Converter</div>
+        <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
+          <div class="conv-group" style="flex:1;min-width:90px">
+            <div class="conv-label">Price</div>
+            <input type="number" id="fx-price" placeholder="e.g. 5000" oninput="calcFx()">
+          </div>
+          <div class="conv-group" style="min-width:100px">
+            <div class="conv-label">Price Unit</div>
+            <select id="fx-unit" onchange="calcFx()">
+              <option value="dolMT">$/MT</option>
+              <option value="centsLbs">¢/lbs</option>
+              <option value="dolKg">$/Kg</option>
+              <option value="dolLbs">$/lbs</option>
+              <option value="centsKg">¢/kg</option>
+            </select>
+          </div>
+          <div class="conv-group" style="min-width:110px">
+            <div class="conv-label">FX Rate (per USD)</div>
+            <input type="number" id="fx-rate" placeholder="e.g. 0.93" step="0.0001" oninput="calcFx()">
+          </div>
+          <div class="conv-group" style="min-width:85px">
+            <div class="conv-label">Output Unit</div>
+            <select id="fx-out-unit" onchange="calcFx()">
+              <option value="dolMT">$/MT</option>
+              <option value="centsLbs">¢/lbs</option>
+              <option value="dolKg">$/Kg</option>
+              <option value="dolLbs">$/lbs</option>
+              <option value="centsKg">¢/kg</option>
+            </select>
+          </div>
+          <div class="conv-group" style="min-width:130px">
+            <div class="conv-label">Converted Price</div>
+            <div class="result-box" id="fx-result">—</div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-title">Price References</div>
-          <div class="rate-pills">
-            <div class="rate-pill"><span class="rp-from">1 ¢/lbs</span><span class="rp-eq">=</span><span class="rp-to">22.0462 $/MT</span></div>
-            <div class="rate-pill"><span class="rp-from">1 $/MT</span><span class="rp-eq">=</span><span class="rp-to">0.04536 ¢/lbs</span></div>
-            <div class="rate-pill"><span class="rp-from">1 $/lbs</span><span class="rp-eq">=</span><span class="rp-to">100 ¢/lbs</span></div>
-            <div class="rate-pill"><span class="rp-from">1 $/MT</span><span class="rp-eq">=</span><span class="rp-to">0.001 $/Kg</span></div>
-            <div class="rate-pill"><span class="rp-from">1 ¢/lbs</span><span class="rp-eq">=</span><span class="rp-to">0.220462 ¢/kg</span></div>
+        <p class="footnote">FX rate = units of foreign currency per 1 USD (e.g. EUR/USD = 0.93 → enter 0.93)</p>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <div class="card-title">Tick Value per Lot</div>
+      <p class="card-desc">Dollar value of a single minimum price move. Quick mental-maths on how much a 10-tick move is worth.</p>
+      <table class="ref-table" id="tick-table"></table>
+    </div>
+  </div>
+
+  <!-- ══ TAB: P&L ══ -->
+  <div id="tab-pnl" class="tab-content">
+    <div class="cards-row col-2" style="margin-bottom:1rem">
+
+      <div class="card">
+        <div class="card-title">Trade P&amp;L</div>
+        <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
+          <div class="conv-group" style="min-width:90px">
+            <div class="conv-label">Commodity</div>
+            <select id="pnl-comm" onchange="updatePnlUnit();calcPnl()">
+              <option value="KC">KC</option><option value="RC">RC</option>
+              <option value="QC">QC</option><option value="CC">CC</option>
+              <option value="CT">CT</option><option value="SB">SB</option>
+              <option value="LSU">LSU</option>
+            </select>
+          </div>
+          <div class="conv-group" style="min-width:70px">
+            <div class="conv-label">Direction</div>
+            <select id="pnl-dir" onchange="calcPnl()">
+              <option value="1">Long</option>
+              <option value="-1">Short</option>
+            </select>
+          </div>
+          <div class="conv-group" style="min-width:90px">
+            <div class="conv-label">Lots</div>
+            <input type="number" id="pnl-lots" placeholder="e.g. 50" oninput="calcPnl()">
+          </div>
+          <div class="conv-group" style="min-width:100px">
+            <div class="conv-label">Entry <span id="pnl-unit-entry" style="color:var(--navy)">¢/lbs</span></div>
+            <input type="number" id="pnl-entry" placeholder="e.g. 380" oninput="calcPnl()">
+          </div>
+          <div class="conv-group" style="min-width:100px">
+            <div class="conv-label">Exit <span id="pnl-unit-exit" style="color:var(--navy)">¢/lbs</span></div>
+            <input type="number" id="pnl-exit" placeholder="e.g. 420" oninput="calcPnl()">
           </div>
         </div>
-        <div class="card">
-          <div class="card-title">Contract Quick Ref</div>
-          <div class="basic-conv" id="contract-quickref"></div>
+        <div style="display:flex;gap:.7rem;margin-top:.9rem">
+          <div class="conv-group" style="flex:1">
+            <div class="conv-label">P&amp;L / Lot</div>
+            <div class="result-box" id="pnl-per-lot">—</div>
+          </div>
+          <div class="conv-group" style="flex:1">
+            <div class="conv-label">Total P&amp;L</div>
+            <div class="result-box" id="pnl-total" style="font-size:1.05rem">—</div>
+          </div>
         </div>
+        <p class="footnote">Lot values: KC $375 · RC $10 · CC $10 · CT $500 · SB $1,120 · LSU $50</p>
       </div>
-    </div>
-  </div>
 
-  <!-- ══ SECTION 5: P&L CALCULATOR ══ -->
-  <div class="section-label" style="margin-top:2rem">P&amp;L Calculator</div>
-  <div class="card" style="margin-bottom:1rem">
-    <div class="card-title">Trade P&amp;L</div>
-    <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
-      <div class="conv-group" style="min-width:90px">
-        <div class="conv-label">Commodity</div>
-        <select id="pnl-comm" onchange="updatePnlUnit();calcPnl()">
-          <option value="KC">KC</option><option value="RC">RC</option>
-          <option value="QC">QC</option><option value="CC">CC</option>
-          <option value="CT">CT</option><option value="SB">SB</option>
-          <option value="LSU">LSU</option>
-        </select>
-      </div>
-      <div class="conv-group" style="min-width:70px">
-        <div class="conv-label">Direction</div>
-        <select id="pnl-dir" onchange="calcPnl()">
-          <option value="1">Long</option>
-          <option value="-1">Short</option>
-        </select>
-      </div>
-      <div class="conv-group" style="min-width:90px">
-        <div class="conv-label">Lots</div>
-        <input type="number" id="pnl-lots" placeholder="e.g. 50" oninput="calcPnl()">
-      </div>
-      <div class="conv-group" style="min-width:100px">
-        <div class="conv-label">Entry <span id="pnl-unit-entry" style="color:var(--navy)">¢/lbs</span></div>
-        <input type="number" id="pnl-entry" placeholder="e.g. 380" oninput="calcPnl()">
-      </div>
-      <div class="conv-group" style="min-width:100px">
-        <div class="conv-label">Exit <span id="pnl-unit-exit" style="color:var(--navy)">¢/lbs</span></div>
-        <input type="number" id="pnl-exit" placeholder="e.g. 420" oninput="calcPnl()">
-      </div>
-      <div style="display:flex;gap:.7rem;flex:1;min-width:260px">
-        <div class="conv-group" style="flex:1">
-          <div class="conv-label">P&amp;L / Lot</div>
-          <div class="result-box" id="pnl-per-lot">—</div>
+      <div class="card">
+        <div class="card-title">GBP P&amp;L Converter</div>
+        <p class="card-desc">RC, LCC and LSU settle partly in GBP. Flip any P&amp;L amount between USD and GBP at a given spot rate.</p>
+        <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
+          <div class="conv-group" style="flex:1;min-width:110px">
+            <div class="conv-label">Amount</div>
+            <input type="number" id="gbp-amount" placeholder="e.g. 500000" oninput="calcGbp()">
+          </div>
+          <div class="conv-group" style="min-width:90px">
+            <div class="conv-label">From</div>
+            <select id="gbp-from" onchange="calcGbp()">
+              <option value="usd">USD</option>
+              <option value="gbp">GBP</option>
+            </select>
+          </div>
+          <div class="conv-group" style="flex:1;min-width:110px">
+            <div class="conv-label">GBP / USD rate</div>
+            <input type="number" id="gbp-rate" placeholder="e.g. 1.3566" step="0.0001" oninput="calcGbp()">
+          </div>
+          <div class="conv-group" style="min-width:130px">
+            <div class="conv-label">Converted P&amp;L</div>
+            <div class="result-box" id="gbp-result">—</div>
+          </div>
         </div>
-        <div class="conv-group" style="flex:1">
-          <div class="conv-label">Total P&amp;L</div>
-          <div class="result-box" id="pnl-total" style="font-size:1.05rem">—</div>
-        </div>
+        <p class="footnote">Enter the GBP/USD spot rate (e.g. 1.3566 means £1 = $1.3566)</p>
       </div>
-    </div>
-    <div style="margin-top:.8rem;font-size:.65rem;color:var(--ink-4);letter-spacing:.04em">
-      Lot values: KC $375/lot · RC $10/lot · CC $10/lot · CT $500/lot · SB $1,120/lot · LSU $50/lot
-    </div>
-  </div>
 
-  <!-- ══ SECTION 6: MARGIN + FX ══ -->
-  <div class="section-label" style="margin-top:1.5rem">Margin &amp; FX</div>
-  <div class="cards-row col-2" style="margin-bottom:1.5rem">
+    </div>
 
-    <!-- Margin Estimator -->
     <div class="card">
+      <div class="card-title">Two-Leg Spread P&amp;L</div>
+      <p class="card-desc">For calendar spreads and inter-market trades. Each leg is priced and sized independently — the net P&amp;L accounts for both sides.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+        <div>
+          <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:.7rem">Leg 1</div>
+          <div class="conv-row" style="flex-wrap:wrap;gap:.7rem;align-items:flex-end">
+            <div class="conv-group" style="min-width:80px">
+              <div class="conv-label">Commodity</div>
+              <select id="sp-comm1" onchange="calcSpread()">
+                <option value="KC">KC</option><option value="RC">RC</option>
+                <option value="QC">QC</option><option value="CC">CC</option>
+                <option value="CT">CT</option><option value="SB">SB</option>
+                <option value="LSU">LSU</option>
+              </select>
+            </div>
+            <div class="conv-group" style="min-width:65px">
+              <div class="conv-label">Side</div>
+              <select id="sp-side1" onchange="calcSpread()">
+                <option value="1">Buy</option>
+                <option value="-1">Sell</option>
+              </select>
+            </div>
+            <div class="conv-group" style="flex:1;min-width:65px">
+              <div class="conv-label">Lots</div>
+              <input type="number" id="sp-lots1" placeholder="e.g. 100" oninput="calcSpread()">
+            </div>
+            <div class="conv-group" style="flex:1;min-width:80px">
+              <div class="conv-label">Entry <span id="sp-unit1e" style="color:var(--navy)">¢/lbs</span></div>
+              <input type="number" id="sp-entry1" placeholder="e.g. 380" oninput="calcSpread()">
+            </div>
+            <div class="conv-group" style="flex:1;min-width:80px">
+              <div class="conv-label">Exit</div>
+              <input type="number" id="sp-exit1" placeholder="e.g. 395" oninput="calcSpread()">
+            </div>
+          </div>
+          <div style="margin-top:.7rem">
+            <div class="conv-label">Leg 1 P&amp;L</div>
+            <div class="result-box" id="sp-pnl1">—</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:.7rem">Leg 2</div>
+          <div class="conv-row" style="flex-wrap:wrap;gap:.7rem;align-items:flex-end">
+            <div class="conv-group" style="min-width:80px">
+              <div class="conv-label">Commodity</div>
+              <select id="sp-comm2" onchange="calcSpread()">
+                <option value="KC">KC</option><option value="RC">RC</option>
+                <option value="QC">QC</option><option value="CC">CC</option>
+                <option value="CT">CT</option><option value="SB">SB</option>
+                <option value="LSU">LSU</option>
+              </select>
+            </div>
+            <div class="conv-group" style="min-width:65px">
+              <div class="conv-label">Side</div>
+              <select id="sp-side2" onchange="calcSpread()">
+                <option value="-1">Sell</option>
+                <option value="1">Buy</option>
+              </select>
+            </div>
+            <div class="conv-group" style="flex:1;min-width:65px">
+              <div class="conv-label">Lots</div>
+              <input type="number" id="sp-lots2" placeholder="e.g. 100" oninput="calcSpread()">
+            </div>
+            <div class="conv-group" style="flex:1;min-width:80px">
+              <div class="conv-label">Entry <span id="sp-unit2e" style="color:var(--navy)">¢/lbs</span></div>
+              <input type="number" id="sp-entry2" placeholder="e.g. 385" oninput="calcSpread()">
+            </div>
+            <div class="conv-group" style="flex:1;min-width:80px">
+              <div class="conv-label">Exit</div>
+              <input type="number" id="sp-exit2" placeholder="e.g. 368" oninput="calcSpread()">
+            </div>
+          </div>
+          <div style="margin-top:.7rem">
+            <div class="conv-label">Leg 2 P&amp;L</div>
+            <div class="result-box" id="sp-pnl2">—</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--border);display:flex;gap:.8rem">
+        <div style="flex:1"><div class="conv-label">Net Spread P&amp;L</div><div class="result-box" id="sp-net" style="font-size:1.05rem">—</div></div>
+        <div style="flex:1"><div class="conv-label">Leg 1 contribution</div><div class="result-box" id="sp-contrib1">—</div></div>
+        <div style="flex:1"><div class="conv-label">Leg 2 contribution</div><div class="result-box" id="sp-contrib2">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: RISK ══ -->
+  <div id="tab-risk" class="tab-content">
+    <div class="cards-row col-2" style="margin-bottom:1rem">
+
+      <div class="card">
+        <div class="card-title">Position Sizer</div>
+        <p class="card-desc">How many lots to trade given a fixed dollar risk. Enter your max loss budget, entry and stop — it works out the lot count.</p>
+        <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
+          <div class="conv-group" style="min-width:90px">
+            <div class="conv-label">Commodity</div>
+            <select id="ps-comm" onchange="calcPs()">
+              <option value="KC">KC</option><option value="RC">RC</option>
+              <option value="QC">QC</option><option value="CC">CC</option>
+              <option value="CT">CT</option><option value="SB">SB</option>
+              <option value="LSU">LSU</option>
+            </select>
+          </div>
+          <div class="conv-group" style="flex:1;min-width:90px">
+            <div class="conv-label">$ at Risk (budget)</div>
+            <input type="number" id="ps-risk" placeholder="e.g. 50000" oninput="calcPs()">
+          </div>
+          <div class="conv-group" style="flex:1;min-width:90px">
+            <div class="conv-label">Entry <span id="ps-unit-e" style="color:var(--navy)">¢/lbs</span></div>
+            <input type="number" id="ps-entry" placeholder="e.g. 380" oninput="calcPs()">
+          </div>
+          <div class="conv-group" style="flex:1;min-width:90px">
+            <div class="conv-label">Stop <span id="ps-unit-s" style="color:var(--navy)">¢/lbs</span></div>
+            <input type="number" id="ps-stop" placeholder="e.g. 365" oninput="calcPs()">
+          </div>
+        </div>
+        <div style="display:flex;gap:.7rem;margin-top:.9rem">
+          <div class="conv-group" style="flex:1">
+            <div class="conv-label">Lots to trade</div>
+            <div class="result-box" id="ps-lots">—</div>
+          </div>
+          <div class="conv-group" style="flex:1">
+            <div class="conv-label">Risk per lot</div>
+            <div class="result-box" id="ps-risk-per-lot">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">RR Planner</div>
+        <p class="card-desc">Enter entry, stop and target to see the projected risk/reward, dollar amounts on each side, and the minimum win rate to break even.</p>
+        <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
+          <div class="conv-group" style="min-width:80px">
+            <div class="conv-label">Commodity</div>
+            <select id="rr-comm" onchange="calcRr()">
+              <option value="KC">KC</option><option value="RC">RC</option>
+              <option value="QC">QC</option><option value="CC">CC</option>
+              <option value="CT">CT</option><option value="SB">SB</option>
+              <option value="LSU">LSU</option>
+            </select>
+          </div>
+          <div class="conv-group" style="min-width:70px">
+            <div class="conv-label">Side</div>
+            <select id="rr-side" onchange="calcRr()">
+              <option value="1">Long</option>
+              <option value="-1">Short</option>
+            </select>
+          </div>
+          <div class="conv-group" style="min-width:70px">
+            <div class="conv-label">Lots</div>
+            <input type="number" id="rr-lots" placeholder="e.g. 50" oninput="calcRr()">
+          </div>
+          <div class="conv-group" style="flex:1;min-width:80px">
+            <div class="conv-label">Entry <span id="rr-unit" style="color:var(--navy)">¢/lbs</span></div>
+            <input type="number" id="rr-entry" placeholder="e.g. 380" oninput="calcRr()">
+          </div>
+          <div class="conv-group" style="flex:1;min-width:80px">
+            <div class="conv-label">Stop</div>
+            <input type="number" id="rr-stop" placeholder="e.g. 365" oninput="calcRr()">
+          </div>
+          <div class="conv-group" style="flex:1;min-width:80px">
+            <div class="conv-label">Target</div>
+            <input type="number" id="rr-target" placeholder="e.g. 415" oninput="calcRr()">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.6rem;margin-top:.9rem">
+          <div class="conv-group"><div class="conv-label">RR</div><div class="result-box" id="rr-ratio">—</div></div>
+          <div class="conv-group"><div class="conv-label">$ at Risk</div><div class="result-box" id="rr-atrisk">—</div></div>
+          <div class="conv-group"><div class="conv-label">$ Target</div><div class="result-box" id="rr-atarget">—</div></div>
+          <div class="conv-group"><div class="conv-label">Min Win Rate</div><div class="result-box" id="rr-minwr">—</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card" style="max-width:560px">
       <div class="card-title">Margin Estimator</div>
       <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
         <div class="conv-group" style="min-width:90px">
           <div class="conv-label">Commodity</div>
-          <select id="mg-comm" onchange="updateMarginDefaults()">
+          <select id="mg-comm" onchange="calcMargin()">
             <option value="KC">KC</option><option value="RC">RC</option>
             <option value="QC">QC</option><option value="CC">CC</option>
             <option value="CT">CT</option><option value="SB">SB</option>
@@ -488,657 +714,278 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
           <div class="result-box" id="mg-result">—</div>
         </div>
       </div>
-      <div style="margin-top:.8rem;font-size:.65rem;color:var(--ink-4);letter-spacing:.04em">
-        Enter exchange initial margin per lot — varies by broker &amp; volatility.
-      </div>
-    </div>
-
-    <!-- FX Price Converter -->
-    <div class="card">
-      <div class="card-title">FX Price Converter</div>
-      <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
-        <div class="conv-group" style="flex:1;min-width:90px">
-          <div class="conv-label">Price</div>
-          <input type="number" id="fx-price" placeholder="e.g. 5000" oninput="calcFx()">
-        </div>
-        <div class="conv-group" style="min-width:100px">
-          <div class="conv-label">Price Unit</div>
-          <select id="fx-unit" onchange="calcFx()">
-            <option value="dolMT">$/MT</option>
-            <option value="centsLbs">¢/lbs</option>
-            <option value="dolKg">$/Kg</option>
-            <option value="dolLbs">$/lbs</option>
-            <option value="centsKg">¢/kg</option>
-          </select>
-        </div>
-        <div class="conv-group" style="min-width:110px">
-          <div class="conv-label">FX Rate (per USD)</div>
-          <input type="number" id="fx-rate" placeholder="e.g. 0.93 EUR" step="0.0001" oninput="calcFx()">
-        </div>
-        <div class="conv-group" style="min-width:80px">
-          <div class="conv-label">Output Unit</div>
-          <select id="fx-out-unit" onchange="calcFx()">
-            <option value="dolMT">$/MT</option>
-            <option value="centsLbs">¢/lbs</option>
-            <option value="dolKg">$/Kg</option>
-            <option value="dolLbs">$/lbs</option>
-            <option value="centsKg">¢/kg</option>
-          </select>
-        </div>
-        <div class="conv-group" style="min-width:130px">
-          <div class="conv-label">Converted Price</div>
-          <div class="result-box" id="fx-result">—</div>
-        </div>
-      </div>
-      <div style="margin-top:.8rem;font-size:.65rem;color:var(--ink-4);letter-spacing:.04em">
-        FX rate = units of foreign currency per 1 USD (e.g. EUR/USD = 0.93 → enter 0.93)
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ══ SECTION 7: POSITION SIZER + RR PLANNER ══ -->
-  <div class="section-label" style="margin-top:2rem">Trade Sizing</div>
-  <div class="cards-row col-2" style="margin-bottom:1.5rem">
-
-    <!-- Position Sizer -->
-    <div class="card">
-      <div class="card-title">Position Sizer</div>
-      <p class="card-desc">How many lots to trade given a fixed dollar risk. Enter your max loss budget, entry price and stop — it works out the lot count for you.</p>
-      <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
-        <div class="conv-group" style="min-width:90px">
-          <div class="conv-label">Commodity</div>
-          <select id="ps-comm" onchange="calcPs()">
-            <option value="KC">KC</option><option value="RC">RC</option>
-            <option value="QC">QC</option><option value="CC">CC</option>
-            <option value="CT">CT</option><option value="SB">SB</option>
-            <option value="LSU">LSU</option>
-          </select>
-        </div>
-        <div class="conv-group" style="flex:1;min-width:90px">
-          <div class="conv-label">$ at Risk (budget)</div>
-          <input type="number" id="ps-risk" placeholder="e.g. 50000" oninput="calcPs()">
-        </div>
-        <div class="conv-group" style="flex:1;min-width:90px">
-          <div class="conv-label">Entry <span id="ps-unit-e" style="color:var(--navy)">¢/lbs</span></div>
-          <input type="number" id="ps-entry" placeholder="e.g. 380" oninput="calcPs()">
-        </div>
-        <div class="conv-group" style="flex:1;min-width:90px">
-          <div class="conv-label">Stop <span id="ps-unit-s" style="color:var(--navy)">¢/lbs</span></div>
-          <input type="number" id="ps-stop" placeholder="e.g. 365" oninput="calcPs()">
-        </div>
-      </div>
-      <div style="display:flex;gap:.7rem;margin-top:.9rem">
-        <div class="conv-group" style="flex:1">
-          <div class="conv-label">Lots to trade</div>
-          <div class="result-box" id="ps-lots">—</div>
-        </div>
-        <div class="conv-group" style="flex:1">
-          <div class="conv-label">Risk per lot</div>
-          <div class="result-box" id="ps-risk-per-lot">—</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- RR Planner -->
-    <div class="card">
-      <div class="card-title">RR Planner</div>
-      <p class="card-desc">Enter your entry, stop and target to see the projected risk/reward, dollar amounts on each side, and the minimum win rate you need to break even at this RR.</p>
-      <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
-        <div class="conv-group" style="min-width:80px">
-          <div class="conv-label">Commodity</div>
-          <select id="rr-comm" onchange="calcRr()">
-            <option value="KC">KC</option><option value="RC">RC</option>
-            <option value="QC">QC</option><option value="CC">CC</option>
-            <option value="CT">CT</option><option value="SB">SB</option>
-            <option value="LSU">LSU</option>
-          </select>
-        </div>
-        <div class="conv-group" style="min-width:70px">
-          <div class="conv-label">Side</div>
-          <select id="rr-side" onchange="calcRr()">
-            <option value="1">Long</option>
-            <option value="-1">Short</option>
-          </select>
-        </div>
-        <div class="conv-group" style="min-width:70px">
-          <div class="conv-label">Lots</div>
-          <input type="number" id="rr-lots" placeholder="e.g. 50" oninput="calcRr()">
-        </div>
-        <div class="conv-group" style="flex:1;min-width:80px">
-          <div class="conv-label">Entry <span id="rr-unit" style="color:var(--navy)">¢/lbs</span></div>
-          <input type="number" id="rr-entry" placeholder="e.g. 380" oninput="calcRr()">
-        </div>
-        <div class="conv-group" style="flex:1;min-width:80px">
-          <div class="conv-label">Stop</div>
-          <input type="number" id="rr-stop" placeholder="e.g. 365" oninput="calcRr()">
-        </div>
-        <div class="conv-group" style="flex:1;min-width:80px">
-          <div class="conv-label">Target</div>
-          <input type="number" id="rr-target" placeholder="e.g. 415" oninput="calcRr()">
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.6rem;margin-top:.9rem">
-        <div class="conv-group">
-          <div class="conv-label">RR</div>
-          <div class="result-box" id="rr-ratio">—</div>
-        </div>
-        <div class="conv-group">
-          <div class="conv-label">$ at Risk</div>
-          <div class="result-box" id="rr-atrisk">—</div>
-        </div>
-        <div class="conv-group">
-          <div class="conv-label">$ Target</div>
-          <div class="result-box" id="rr-atarget">—</div>
-        </div>
-        <div class="conv-group">
-          <div class="conv-label">Min Win Rate</div>
-          <div class="result-box" id="rr-minwr">—</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ══ SECTION 8: SPREAD P&L ══ -->
-  <div class="section-label" style="margin-top:.5rem">Spread Calculator</div>
-  <div class="card" style="margin-bottom:1.5rem">
-    <div class="card-title">Two-Leg Spread P&amp;L</div>
-    <p class="card-desc">For calendar spreads and inter-market trades. Each leg is priced and sized independently — the net P&amp;L accounts for both sides.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
-      <!-- Leg 1 -->
-      <div>
-        <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:.7rem">Leg 1</div>
-        <div class="conv-row" style="flex-wrap:wrap;gap:.7rem;align-items:flex-end">
-          <div class="conv-group" style="min-width:80px">
-            <div class="conv-label">Commodity</div>
-            <select id="sp-comm1" onchange="calcSpread()">
-              <option value="KC">KC</option><option value="RC">RC</option>
-              <option value="QC">QC</option><option value="CC">CC</option>
-              <option value="CT">CT</option><option value="SB">SB</option>
-              <option value="LSU">LSU</option>
-            </select>
-          </div>
-          <div class="conv-group" style="min-width:65px">
-            <div class="conv-label">Side</div>
-            <select id="sp-side1" onchange="calcSpread()">
-              <option value="1">Buy</option>
-              <option value="-1">Sell</option>
-            </select>
-          </div>
-          <div class="conv-group" style="flex:1;min-width:65px">
-            <div class="conv-label">Lots</div>
-            <input type="number" id="sp-lots1" placeholder="e.g. 100" oninput="calcSpread()">
-          </div>
-          <div class="conv-group" style="flex:1;min-width:80px">
-            <div class="conv-label">Entry <span id="sp-unit1e" style="color:var(--navy)">¢/lbs</span></div>
-            <input type="number" id="sp-entry1" placeholder="e.g. 380" oninput="calcSpread()">
-          </div>
-          <div class="conv-group" style="flex:1;min-width:80px">
-            <div class="conv-label">Exit</div>
-            <input type="number" id="sp-exit1" placeholder="e.g. 395" oninput="calcSpread()">
-          </div>
-        </div>
-        <div style="margin-top:.7rem">
-          <div class="conv-label">Leg 1 P&amp;L</div>
-          <div class="result-box" id="sp-pnl1">—</div>
-        </div>
-      </div>
-      <!-- Leg 2 -->
-      <div>
-        <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:.7rem">Leg 2</div>
-        <div class="conv-row" style="flex-wrap:wrap;gap:.7rem;align-items:flex-end">
-          <div class="conv-group" style="min-width:80px">
-            <div class="conv-label">Commodity</div>
-            <select id="sp-comm2" onchange="calcSpread()">
-              <option value="KC">KC</option><option value="RC">RC</option>
-              <option value="QC">QC</option><option value="CC">CC</option>
-              <option value="CT">CT</option><option value="SB">SB</option>
-              <option value="LSU">LSU</option>
-            </select>
-          </div>
-          <div class="conv-group" style="min-width:65px">
-            <div class="conv-label">Side</div>
-            <select id="sp-side2" onchange="calcSpread()" >
-              <option value="-1">Sell</option>
-              <option value="1">Buy</option>
-            </select>
-          </div>
-          <div class="conv-group" style="flex:1;min-width:65px">
-            <div class="conv-label">Lots</div>
-            <input type="number" id="sp-lots2" placeholder="e.g. 100" oninput="calcSpread()">
-          </div>
-          <div class="conv-group" style="flex:1;min-width:80px">
-            <div class="conv-label">Entry <span id="sp-unit2e" style="color:var(--navy)">¢/lbs</span></div>
-            <input type="number" id="sp-entry2" placeholder="e.g. 385" oninput="calcSpread()">
-          </div>
-          <div class="conv-group" style="flex:1;min-width:80px">
-            <div class="conv-label">Exit</div>
-            <input type="number" id="sp-exit2" placeholder="e.g. 368" oninput="calcSpread()">
-          </div>
-        </div>
-        <div style="margin-top:.7rem">
-          <div class="conv-label">Leg 2 P&amp;L</div>
-          <div class="result-box" id="sp-pnl2">—</div>
-        </div>
-      </div>
-    </div>
-    <!-- Net -->
-    <div style="margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--border);display:flex;gap:.8rem;align-items:center">
-      <div style="flex:1">
-        <div class="conv-label">Net Spread P&amp;L</div>
-        <div class="result-box" id="sp-net" style="font-size:1.05rem">—</div>
-      </div>
-      <div style="flex:1">
-        <div class="conv-label">Leg 1 contribution</div>
-        <div class="result-box" id="sp-contrib1">—</div>
-      </div>
-      <div style="flex:1">
-        <div class="conv-label">Leg 2 contribution</div>
-        <div class="result-box" id="sp-contrib2">—</div>
-      </div>
+      <p class="footnote">Enter exchange initial margin per lot — varies by broker &amp; volatility.</p>
     </div>
   </div>
 
-  <!-- ══ SECTION 9: GBP CONVERTER + TICK TABLE ══ -->
-  <div class="section-label" style="margin-top:.5rem">GBP Book &amp; Tick Reference</div>
-  <div class="cards-row col-2" style="margin-bottom:2rem">
-
-    <!-- GBP P&L Converter -->
-    <div class="card">
-      <div class="card-title">GBP P&amp;L Converter</div>
-      <p class="card-desc">RC, LCC and LSU settle partly in GBP. Use this to flip any P&amp;L amount between USD and GBP at a given spot rate.</p>
-      <div class="conv-row" style="flex-wrap:wrap;gap:.9rem;align-items:flex-end">
-        <div class="conv-group" style="flex:1;min-width:110px">
-          <div class="conv-label">Amount</div>
-          <input type="number" id="gbp-amount" placeholder="e.g. 500000" oninput="calcGbp()">
-        </div>
-        <div class="conv-group" style="min-width:100px">
-          <div class="conv-label">From</div>
-          <select id="gbp-from" onchange="calcGbp()">
-            <option value="usd">USD</option>
-            <option value="gbp">GBP</option>
-          </select>
-        </div>
-        <div class="conv-group" style="flex:1;min-width:110px">
-          <div class="conv-label">GBP / USD rate</div>
-          <input type="number" id="gbp-rate" placeholder="e.g. 1.3566" step="0.0001" oninput="calcGbp()">
-        </div>
-        <div class="conv-group" style="min-width:130px">
-          <div class="conv-label">Converted P&amp;L</div>
-          <div class="result-box" id="gbp-result">—</div>
-        </div>
-      </div>
-      <div style="margin-top:.8rem;font-size:.65rem;color:var(--ink-4);letter-spacing:.04em">
-        Enter the GBP/USD spot rate (e.g. 1.3566 means £1 = $1.3566)
-      </div>
-    </div>
-
-    <!-- Tick Value Reference -->
-    <div class="card">
-      <div class="card-title">Tick Value per Lot</div>
-      <p class="card-desc">The dollar (or pound) value of a single minimum price move. Useful for quick mental-maths on how much a 10-tick move is worth.</p>
-      <table class="ref-table" id="tick-table"></table>
-    </div>
-
-  </div>
-
-</div>
+</div><!-- .page -->
 
 <script>
-// ══════════════════════════════════════════════
-//  DATA — add new commodities here
-// ══════════════════════════════════════════════
 const COMMODITIES = {
-  KC:  { name: 'KC Lots',  stdVal: 37500,  stdUnit: 'Lbs', lotKg: 17010,  priceUnit: '¢/lbs', lotValue: 375   },
-  RC:  { name: 'RC Lots',  stdVal: 10,     stdUnit: 'MT',  lotKg: 10000,  priceUnit: '$/MT',  lotValue: 10    },
-  QC:  { name: 'QC Lots',  stdVal: 10,     stdUnit: 'MT',  lotKg: 10000,  priceUnit: '$/MT',  lotValue: 10    },
-  CC:  { name: 'CC Lots',  stdVal: 10,     stdUnit: 'MT',  lotKg: 10000,  priceUnit: '$/MT',  lotValue: 10    },
-  CT:  { name: 'CT Lots',  stdVal: 50000,  stdUnit: 'Lbs', lotKg: 22680,  priceUnit: '¢/lbs', lotValue: 500   },
-  SB:  { name: 'SB Lots',  stdVal: 112000, stdUnit: 'Lbs', lotKg: 50802,  priceUnit: '¢/lbs', lotValue: 1120  },
-  LSU: { name: 'LSU Lots', stdVal: 50,     stdUnit: 'MT',  lotKg: 50000,  priceUnit: '$/MT',  lotValue: 50    },
+  KC:  { name:'KC Lots',  stdVal:37500,  stdUnit:'Lbs', lotKg:17010,  priceUnit:'¢/lbs', lotValue:375   },
+  RC:  { name:'RC Lots',  stdVal:10,     stdUnit:'MT',  lotKg:10000,  priceUnit:'$/MT',  lotValue:10    },
+  QC:  { name:'QC Lots',  stdVal:10,     stdUnit:'MT',  lotKg:10000,  priceUnit:'$/MT',  lotValue:10    },
+  CC:  { name:'CC Lots',  stdVal:10,     stdUnit:'MT',  lotKg:10000,  priceUnit:'$/MT',  lotValue:10    },
+  CT:  { name:'CT Lots',  stdVal:50000,  stdUnit:'Lbs', lotKg:22680,  priceUnit:'¢/lbs', lotValue:500   },
+  SB:  { name:'SB Lots',  stdVal:112000, stdUnit:'Lbs', lotKg:50802,  priceUnit:'¢/lbs', lotValue:1120  },
+  LSU: { name:'LSU Lots', stdVal:50,     stdUnit:'MT',  lotKg:50000,  priceUnit:'$/MT',  lotValue:50    },
+};
+const TO_KG    = { mt:1000, kg:1, lbs:1/2.20462, bags:60, bale:217.724 };
+const TO_DOLMT = { dolMT:1, centsLbs:22.0462, dolKg:1000, dolLbs:2204.62, centsKg:10 };
+const TICKS    = {
+  KC:  { tickSize:0.05, tickVal:18.75, currency:'USD', note:'0.05¢/lbs' },
+  RC:  { tickSize:1,    tickVal:10.00, currency:'USD', note:'$1/MT'      },
+  QC:  { tickSize:1,    tickVal:10.00, currency:'USD', note:'$1/MT'      },
+  CC:  { tickSize:1,    tickVal:10.00, currency:'USD', note:'$1/MT'      },
+  CT:  { tickSize:0.01, tickVal:5.00,  currency:'USD', note:'0.01¢/lbs'  },
+  SB:  { tickSize:0.01, tickVal:11.20, currency:'USD', note:'0.01¢/lbs'  },
+  LSU: { tickSize:0.10, tickVal:5.00,  currency:'USD', note:'$0.10/MT'   },
 };
 
-// Weight unit → kg
-const TO_KG = {
-  mt:   1000,
-  kg:   1,
-  lbs:  1 / 2.20462,
-  bags: 60,
-  bale: 217.724,
-};
-
-// Price unit → $/MT base
-const TO_DOLMT = {
-  dolMT:    1,
-  centsLbs: 22.0462,
-  dolKg:    1000,
-  dolLbs:   2204.62,
-  centsKg:  10,
-};
-
-// ── Formatting ──
 function fmt(n) {
   if (!isFinite(n) || isNaN(n)) return '—';
-  if (Math.abs(n) >= 1e6)  return (n / 1e6).toFixed(1) + 'M';
-  if (Math.abs(n) >= 1000) return n.toLocaleString('en', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  if (Math.abs(n) >= 1e6)  return (n/1e6).toFixed(1)+'M';
+  if (Math.abs(n) >= 1000) return n.toLocaleString('en',{minimumFractionDigits:1,maximumFractionDigits:1});
   return n.toFixed(1);
 }
-
-// ── Calculators ──
-function calcVtoL() {
-  const val  = parseFloat(document.getElementById('vtl-value').value);
-  const unit = document.getElementById('vtl-unit').value;
-  const comm = document.getElementById('vtl-comm').value;
-  if (!val) { document.getElementById('vtl-result').textContent = '—'; return; }
-  const kg   = val * TO_KG[unit];
-  const lots = kg / COMMODITIES[comm].lotKg;
-  document.getElementById('vtl-result').textContent = fmt(lots);
-}
-
-function calcLtoV() {
-  const lots = parseFloat(document.getElementById('ltv-lots').value);
-  const comm = document.getElementById('ltv-comm').value;
-  const unit = document.getElementById('ltv-unit').value;
-  if (!lots) { document.getElementById('ltv-result').textContent = '—'; return; }
-  const kg  = lots * COMMODITIES[comm].lotKg;
-  const val = kg / TO_KG[unit];
-  document.getElementById('ltv-result').textContent = fmt(val);
-}
-
-function calcGen() {
-  const val  = parseFloat(document.getElementById('gen-val').value);
-  const from = document.getElementById('gen-from').value;
-  const to   = document.getElementById('gen-to').value;
-  if (!val) { document.getElementById('gen-result').textContent = '—'; return; }
-  const result = val * TO_KG[from] / TO_KG[to];
-  document.getElementById('gen-result').textContent = fmt(result);
-}
-
-function calcPtp() {
-  const val  = parseFloat(document.getElementById('ptp-val').value);
-  const from = document.getElementById('ptp-from').value;
-  const to   = document.getElementById('ptp-to').value;
-  if (!val) { document.getElementById('ptp-result').textContent = '—'; return; }
-  const inDolMT = val * TO_DOLMT[from];
-  const result  = inDolMT / TO_DOLMT[to];
-  document.getElementById('ptp-result').textContent = fmt(result);
-}
-
-// ── Build reference table ──
-function buildRefTable() {
-  const tbody = document.getElementById('ref-table-body');
-  Object.entries(COMMODITIES).forEach(([key, c]) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${c.name}</td>
-      <td>${c.stdVal.toLocaleString()}</td>
-      <td>${c.stdUnit}</td>
-      <td>${c.lotKg.toLocaleString()}</td>`;
-    tbody.appendChild(tr);
-  });
-}
-
-// ── Build weight matrix ──
-function buildWeightMatrix() {
-  const units = ['MT','KG','Lbs','Bale','Bags\n(60Kg)'];
-  const keys  = ['mt','kg','lbs','bale','bags'];
-  let html = '<table class="matrix"><thead><tr><th></th>';
-  units.forEach(u => html += `<th>${u}</th>`);
-  html += '</tr></thead><tbody>';
-  keys.forEach((rk, ri) => {
-    html += `<tr><td>${units[ri].replace('\n',' ')}</td>`;
-    keys.forEach((ck, ci) => {
-      const val = TO_KG[rk] / TO_KG[ck];
-      const cls = ri === ci ? ' class="diag"' : '';
-      html += `<td${cls}>${fmtMatrix(val)}</td>`;
-    });
-    html += '</tr>';
-  });
-  html += '</tbody></table>';
-  document.getElementById('weight-matrix').innerHTML = html;
-}
-
-// ── Build price matrix ──
-function buildPriceMatrix() {
-  const labels = ['$/MT','¢/lbs','$/Kg','$/lbs','¢/kg'];
-  const keys   = ['dolMT','centsLbs','dolKg','dolLbs','centsKg'];
-  let html = '<table class="matrix"><thead><tr><th></th>';
-  labels.forEach(l => html += `<th>${l}</th>`);
-  html += '</tr></thead><tbody>';
-  keys.forEach((rk, ri) => {
-    html += `<tr><td>${labels[ri]}</td>`;
-    keys.forEach((ck, ci) => {
-      const val = TO_DOLMT[rk] / TO_DOLMT[ck];
-      const cls = ri === ci ? ' class="diag"' : '';
-      html += `<td${cls}>${fmtMatrix(val)}</td>`;
-    });
-    html += '</tr>';
-  });
-  html += '</tbody></table>';
-  document.getElementById('price-matrix').innerHTML = html;
-}
-
 function fmtMatrix(n) {
-  if (n === 1) return '1.00';
-  if (n >= 1000) return n.toLocaleString('en', { maximumFractionDigits: 0 });
-  if (n >= 1)    return n.toFixed(2);
-  if (n >= 0.01) return n.toFixed(4);
+  if (n===1) return '1.00';
+  if (n>=1000) return n.toLocaleString('en',{maximumFractionDigits:0});
+  if (n>=1)    return n.toFixed(2);
+  if (n>=0.01) return n.toFixed(4);
   return n.toFixed(5);
 }
 
-// ── Quick ref ──
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggleRefPanel() {
+  const panel = document.getElementById('ref-panel');
+  const btn   = document.getElementById('ref-btn');
+  const open  = panel.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  btn.textContent = open ? 'Reference ▴' : 'Reference ▾';
+}
+
+function calcVtoL() {
+  const val=parseFloat(document.getElementById('vtl-value').value);
+  const unit=document.getElementById('vtl-unit').value;
+  const comm=document.getElementById('vtl-comm').value;
+  const el=document.getElementById('vtl-result');
+  if(!val){el.textContent='—';return;}
+  el.textContent=fmt(val*TO_KG[unit]/COMMODITIES[comm].lotKg);
+}
+function calcLtoV() {
+  const lots=parseFloat(document.getElementById('ltv-lots').value);
+  const comm=document.getElementById('ltv-comm').value;
+  const unit=document.getElementById('ltv-unit').value;
+  const el=document.getElementById('ltv-result');
+  if(!lots){el.textContent='—';return;}
+  el.textContent=fmt(lots*COMMODITIES[comm].lotKg/TO_KG[unit]);
+}
+function calcGen() {
+  const val=parseFloat(document.getElementById('gen-val').value);
+  const from=document.getElementById('gen-from').value;
+  const to=document.getElementById('gen-to').value;
+  const el=document.getElementById('gen-result');
+  if(!val){el.textContent='—';return;}
+  el.textContent=fmt(val*TO_KG[from]/TO_KG[to]);
+}
+function calcPtp() {
+  const val=parseFloat(document.getElementById('ptp-val').value);
+  const from=document.getElementById('ptp-from').value;
+  const to=document.getElementById('ptp-to').value;
+  const el=document.getElementById('ptp-result');
+  if(!val){el.textContent='—';return;}
+  el.textContent=fmt(val*TO_DOLMT[from]/TO_DOLMT[to]);
+}
+function calcFx() {
+  const price=parseFloat(document.getElementById('fx-price').value);
+  const unit=document.getElementById('fx-unit').value;
+  const rate=parseFloat(document.getElementById('fx-rate').value);
+  const outUnit=document.getElementById('fx-out-unit').value;
+  const el=document.getElementById('fx-result');
+  if(!price||!rate){el.textContent='—';return;}
+  el.textContent=fmt(price*TO_DOLMT[unit]*rate/TO_DOLMT[outUnit]);
+}
+function updatePnlUnit() {
+  const unit=COMMODITIES[document.getElementById('pnl-comm').value].priceUnit;
+  document.getElementById('pnl-unit-entry').textContent=unit;
+  document.getElementById('pnl-unit-exit').textContent=unit;
+}
+function calcPnl() {
+  const comm=document.getElementById('pnl-comm').value;
+  const dir=parseFloat(document.getElementById('pnl-dir').value);
+  const lots=parseFloat(document.getElementById('pnl-lots').value);
+  const entry=parseFloat(document.getElementById('pnl-entry').value);
+  const exit=parseFloat(document.getElementById('pnl-exit').value);
+  const plEl=document.getElementById('pnl-per-lot');
+  const totEl=document.getElementById('pnl-total');
+  if(!lots||!entry||!exit){
+    [plEl,totEl].forEach(e=>{e.textContent='—';e.style.background='var(--navy)';}); return;
+  }
+  const perLot=dir*(exit-entry)*COMMODITIES[comm].lotValue;
+  const total=perLot*lots;
+  const sign=perLot>=0?'+':'';
+  const color=perLot>=0?'#1b7f3b':'#c0392b';
+  plEl.textContent=sign+'$'+fmt(perLot);  plEl.style.background=color;
+  totEl.textContent=sign+'$'+fmt(total);  totEl.style.background=color;
+}
+function calcMargin() {
+  const lots=parseFloat(document.getElementById('mg-lots').value);
+  const perLot=parseFloat(document.getElementById('mg-per-lot').value);
+  const el=document.getElementById('mg-result');
+  if(!lots||!perLot){el.textContent='—';return;}
+  el.textContent='$'+fmt(lots*perLot);
+}
+function calcPs() {
+  const comm=document.getElementById('ps-comm').value;
+  const risk=parseFloat(document.getElementById('ps-risk').value);
+  const entry=parseFloat(document.getElementById('ps-entry').value);
+  const stop=parseFloat(document.getElementById('ps-stop').value);
+  const unit=COMMODITIES[comm].priceUnit;
+  document.getElementById('ps-unit-e').textContent=unit;
+  document.getElementById('ps-unit-s').textContent=unit;
+  const lotsEl=document.getElementById('ps-lots');
+  const riskEl=document.getElementById('ps-risk-per-lot');
+  if(!risk||!entry||!stop||entry===stop){lotsEl.textContent='—';riskEl.textContent='—';return;}
+  const riskPerLot=Math.abs(entry-stop)*COMMODITIES[comm].lotValue;
+  const lots=Math.floor(risk/riskPerLot);
+  lotsEl.textContent=lots>0?lots+' lots':'—';
+  riskEl.textContent='$'+fmt(riskPerLot);
+}
+function calcRr() {
+  const comm=document.getElementById('rr-comm').value;
+  const lots=parseFloat(document.getElementById('rr-lots').value);
+  const entry=parseFloat(document.getElementById('rr-entry').value);
+  const stop=parseFloat(document.getElementById('rr-stop').value);
+  const target=parseFloat(document.getElementById('rr-target').value);
+  document.getElementById('rr-unit').textContent=COMMODITIES[comm].priceUnit;
+  const rrEl=document.getElementById('rr-ratio');
+  const arEl=document.getElementById('rr-atrisk');
+  const atEl=document.getElementById('rr-atarget');
+  const wrEl=document.getElementById('rr-minwr');
+  if(!lots||!entry||!stop||!target){
+    [rrEl,arEl,atEl,wrEl].forEach(e=>{e.textContent='—';e.style.background='var(--navy)';}); return;
+  }
+  const lv=COMMODITIES[comm].lotValue;
+  const risk=Math.abs(entry-stop)*lv*lots;
+  const reward=Math.abs(target-entry)*lv*lots;
+  const rr=reward/risk;
+  rrEl.textContent=rr.toFixed(2)+'x';
+  arEl.textContent='$'+fmt(risk);
+  atEl.textContent='$'+fmt(reward);
+  wrEl.textContent=(100/(1+rr)).toFixed(1)+'%';
+  rrEl.style.background=rr>=2?'#1b7f3b':rr>=1?'#7a5800':'#c0392b';
+}
+function spreadLegPnl(commId,sideId,lotsId,entryId,exitId) {
+  const comm=document.getElementById(commId).value;
+  const side=parseFloat(document.getElementById(sideId).value);
+  const lots=parseFloat(document.getElementById(lotsId).value);
+  const entry=parseFloat(document.getElementById(entryId).value);
+  const exit=parseFloat(document.getElementById(exitId).value);
+  if(!lots||!entry||!exit) return null;
+  return side*(exit-entry)*COMMODITIES[comm].lotValue*lots;
+}
+function calcSpread() {
+  document.getElementById('sp-unit1e').textContent=COMMODITIES[document.getElementById('sp-comm1').value].priceUnit;
+  document.getElementById('sp-unit2e').textContent=COMMODITIES[document.getElementById('sp-comm2').value].priceUnit;
+  const pnl1=spreadLegPnl('sp-comm1','sp-side1','sp-lots1','sp-entry1','sp-exit1');
+  const pnl2=spreadLegPnl('sp-comm2','sp-side2','sp-lots2','sp-entry2','sp-exit2');
+  function setBox(id,val) {
+    const el=document.getElementById(id);
+    if(val===null){el.textContent='—';el.style.background='var(--navy)';return;}
+    const sign=val>=0?'+':'';
+    el.textContent=sign+'$'+fmt(val);
+    el.style.background=val>=0?'#1b7f3b':'#c0392b';
+  }
+  setBox('sp-pnl1',pnl1); setBox('sp-pnl2',pnl2);
+  if(pnl1===null&&pnl2===null){setBox('sp-net',null);setBox('sp-contrib1',null);setBox('sp-contrib2',null);return;}
+  const net=(pnl1||0)+(pnl2||0);
+  const total=Math.abs(pnl1||0)+Math.abs(pnl2||0);
+  setBox('sp-net',net);
+  const el1=document.getElementById('sp-contrib1');
+  const el2=document.getElementById('sp-contrib2');
+  el1.textContent=total?((Math.abs(pnl1||0)/total)*100).toFixed(0)+'%':'—'; el1.style.background='var(--navy)';
+  el2.textContent=total?((Math.abs(pnl2||0)/total)*100).toFixed(0)+'%':'—'; el2.style.background='var(--navy)';
+}
+function calcGbp() {
+  const amount=parseFloat(document.getElementById('gbp-amount').value);
+  const from=document.getElementById('gbp-from').value;
+  const rate=parseFloat(document.getElementById('gbp-rate').value);
+  const el=document.getElementById('gbp-result');
+  if(!amount||!rate){el.textContent='—';return;}
+  const result=from==='usd'?amount/rate:amount*rate;
+  const label=from==='usd'?'£':'$';
+  el.textContent=(result<0?'-':'')+label+fmt(Math.abs(result));
+}
+
+function buildRefTable() {
+  const tbody=document.getElementById('ref-table-body');
+  Object.entries(COMMODITIES).forEach(([k,c])=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${c.name}</td><td>${c.stdVal.toLocaleString()}</td><td>${c.stdUnit}</td><td>${c.lotKg.toLocaleString()}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+function buildWeightMatrix() {
+  const units=['MT','KG','Lbs','Bale','Bags (60Kg)'];
+  const keys=['mt','kg','lbs','bale','bags'];
+  let html='<table class="matrix"><thead><tr><th></th>';
+  units.forEach(u=>html+=`<th>${u}</th>`);
+  html+='</tr></thead><tbody>';
+  keys.forEach((rk,ri)=>{
+    html+=`<tr><td>${units[ri]}</td>`;
+    keys.forEach((ck,ci)=>{
+      const v=TO_KG[rk]/TO_KG[ck];
+      html+=`<td${ri===ci?' class="diag"':''}>${fmtMatrix(v)}</td>`;
+    });
+    html+='</tr>';
+  });
+  document.getElementById('weight-matrix').innerHTML=html+'</tbody></table>';
+}
+function buildPriceMatrix() {
+  const labels=['$/MT','¢/lbs','$/Kg','$/lbs','¢/kg'];
+  const keys=['dolMT','centsLbs','dolKg','dolLbs','centsKg'];
+  let html='<table class="matrix"><thead><tr><th></th>';
+  labels.forEach(l=>html+=`<th>${l}</th>`);
+  html+='</tr></thead><tbody>';
+  keys.forEach((rk,ri)=>{
+    html+=`<tr><td>${labels[ri]}</td>`;
+    keys.forEach((ck,ci)=>{
+      const v=TO_DOLMT[rk]/TO_DOLMT[ck];
+      html+=`<td${ri===ci?' class="diag"':''}>${fmtMatrix(v)}</td>`;
+    });
+    html+='</tr>';
+  });
+  document.getElementById('price-matrix').innerHTML=html+'</tbody></table>';
+}
 function buildQuickRef() {
-  const el = document.getElementById('contract-quickref');
-  Object.entries(COMMODITIES).forEach(([key, c]) => {
-    const div = document.createElement('div');
-    div.className = 'bc-row';
-    div.innerHTML = `<span class="bc-val">1</span><span class="bc-unit">${c.name}</span><span class="bc-eq">=</span><span class="bc-val">${c.lotKg.toLocaleString()}</span><span class="bc-unit">Kg</span>`;
+  const el=document.getElementById('contract-quickref');
+  Object.entries(COMMODITIES).forEach(([k,c])=>{
+    const div=document.createElement('div');
+    div.className='bc-row';
+    div.innerHTML=`<span class="bc-val">1</span><span class="bc-unit">${c.name}</span><span class="bc-eq">=</span><span class="bc-val">${c.lotKg.toLocaleString()}</span><span class="bc-unit">Kg</span>`;
     el.appendChild(div);
   });
 }
-
-// ── P&L ──
-function updatePnlUnit() {
-  const unit = COMMODITIES[document.getElementById('pnl-comm').value].priceUnit;
-  document.getElementById('pnl-unit-entry').textContent = unit;
-  document.getElementById('pnl-unit-exit').textContent  = unit;
-}
-function calcPnl() {
-  const comm  = document.getElementById('pnl-comm').value;
-  const dir   = parseFloat(document.getElementById('pnl-dir').value);
-  const lots  = parseFloat(document.getElementById('pnl-lots').value);
-  const entry = parseFloat(document.getElementById('pnl-entry').value);
-  const exit  = parseFloat(document.getElementById('pnl-exit').value);
-  if (!lots || !entry || !exit) {
-    document.getElementById('pnl-per-lot').textContent = '—';
-    document.getElementById('pnl-total').textContent   = '—';
-    return;
-  }
-  const lv       = COMMODITIES[comm].lotValue;
-  const perLot   = dir * (exit - entry) * lv;
-  const total    = perLot * lots;
-  const sign     = perLot >= 0 ? '+' : '';
-  const color    = perLot >= 0 ? '#1b7f3b' : '#c0392b';
-  document.getElementById('pnl-per-lot').textContent = sign + '$' + fmt(perLot);
-  document.getElementById('pnl-per-lot').style.background = color;
-  document.getElementById('pnl-total').textContent   = sign + '$' + fmt(total);
-  document.getElementById('pnl-total').style.background   = color;
-}
-
-// ── Margin ──
-function updateMarginDefaults() { calcMargin(); }
-function calcMargin() {
-  const lots   = parseFloat(document.getElementById('mg-lots').value);
-  const perLot = parseFloat(document.getElementById('mg-per-lot').value);
-  if (!lots || !perLot) { document.getElementById('mg-result').textContent = '—'; return; }
-  document.getElementById('mg-result').textContent = '$' + fmt(lots * perLot);
-}
-
-// ── FX ──
-function calcFx() {
-  const price   = parseFloat(document.getElementById('fx-price').value);
-  const unit    = document.getElementById('fx-unit').value;
-  const rate    = parseFloat(document.getElementById('fx-rate').value);
-  const outUnit = document.getElementById('fx-out-unit').value;
-  if (!price || !rate) { document.getElementById('fx-result').textContent = '—'; return; }
-  const inDolMT  = price * TO_DOLMT[unit];
-  const outDolMT = inDolMT * rate;
-  const result   = outDolMT / TO_DOLMT[outUnit];
-  document.getElementById('fx-result').textContent = fmt(result);
-}
-
-function toggleMatrices() {
-  const body = document.getElementById('matrices-body');
-  const chev = document.getElementById('matrices-chevron');
-  const open = body.style.display === 'none';
-  body.style.display = open ? 'block' : 'none';
-  chev.style.transform = open ? 'rotate(0deg)' : 'rotate(-90deg)';
+function buildTickTable() {
+  const el=document.getElementById('tick-table');
+  let html=`<thead><tr><th style="text-align:left">Contract</th><th>Min Tick</th><th>Tick Value / Lot</th><th>10 Ticks</th><th>Ccy</th></tr></thead><tbody>`;
+  Object.entries(TICKS).forEach(([k,t])=>{
+    html+=`<tr><td>${k}</td><td>${t.note}</td><td>$${t.tickVal.toFixed(2)}</td><td>$${(t.tickVal*10).toFixed(2)}</td><td>${t.currency}</td></tr>`;
+  });
+  el.innerHTML=html+'</tbody>';
 }
 
 buildRefTable();
 buildWeightMatrix();
 buildPriceMatrix();
 buildQuickRef();
-
-// ── Tick data (tick size, tick value per lot, currency) ──
-const TICKS = {
-  KC:  { tickSize: 0.05,  tickVal: 18.75, currency: 'USD', note: '0.05¢/lbs' },
-  RC:  { tickSize: 1,     tickVal: 10.00, currency: 'USD', note: '$1/MT'      },
-  QC:  { tickSize: 1,     tickVal: 10.00, currency: 'USD', note: '$1/MT'      },
-  CC:  { tickSize: 1,     tickVal: 10.00, currency: 'USD', note: '$1/MT'      },
-  CT:  { tickSize: 0.01,  tickVal: 5.00,  currency: 'USD', note: '0.01¢/lbs'  },
-  SB:  { tickSize: 0.01,  tickVal: 11.20, currency: 'USD', note: '0.01¢/lbs'  },
-  LSU: { tickSize: 0.10,  tickVal: 5.00,  currency: 'USD', note: '$0.10/MT'   },
-};
-
-// ── Position Sizer ──
-function calcPs() {
-  const comm  = document.getElementById('ps-comm').value;
-  const risk  = parseFloat(document.getElementById('ps-risk').value);
-  const entry = parseFloat(document.getElementById('ps-entry').value);
-  const stop  = parseFloat(document.getElementById('ps-stop').value);
-  const unit  = COMMODITIES[comm].priceUnit;
-  document.getElementById('ps-unit-e').textContent = unit;
-  document.getElementById('ps-unit-s').textContent = unit;
-  const lotsEl   = document.getElementById('ps-lots');
-  const riskEl   = document.getElementById('ps-risk-per-lot');
-  if (!risk || !entry || !stop || entry === stop) {
-    lotsEl.textContent = '—'; riskEl.textContent = '—'; return;
-  }
-  const lv         = COMMODITIES[comm].lotValue;
-  const riskPerLot = Math.abs(entry - stop) * lv;
-  const lots       = Math.floor(risk / riskPerLot);
-  lotsEl.textContent   = lots > 0 ? lots + ' lots' : '—';
-  riskEl.textContent   = '$' + fmt(riskPerLot);
-}
-
-// ── RR Planner ──
-function calcRr() {
-  const comm   = document.getElementById('rr-comm').value;
-  const side   = parseFloat(document.getElementById('rr-side').value);
-  const lots   = parseFloat(document.getElementById('rr-lots').value);
-  const entry  = parseFloat(document.getElementById('rr-entry').value);
-  const stop   = parseFloat(document.getElementById('rr-stop').value);
-  const target = parseFloat(document.getElementById('rr-target').value);
-  document.getElementById('rr-unit').textContent = COMMODITIES[comm].priceUnit;
-  const rrEl  = document.getElementById('rr-ratio');
-  const arEl  = document.getElementById('rr-atrisk');
-  const atEl  = document.getElementById('rr-atarget');
-  const wrEl  = document.getElementById('rr-minwr');
-  if (!lots || !entry || !stop || !target) {
-    [rrEl, arEl, atEl, wrEl].forEach(e => e.textContent = '—'); return;
-  }
-  const lv      = COMMODITIES[comm].lotValue;
-  const risk    = Math.abs(entry - stop)   * lv * lots;
-  const reward  = Math.abs(target - entry) * lv * lots;
-  const rr      = reward / risk;
-  const minWr   = 1 / (1 + rr);
-  rrEl.textContent  = rr.toFixed(2) + 'x';
-  arEl.textContent  = '$' + fmt(risk);
-  atEl.textContent  = '$' + fmt(reward);
-  wrEl.textContent  = (minWr * 100).toFixed(1) + '%';
-  const color = rr >= 2 ? '#1b7f3b' : rr >= 1 ? '#7a5800' : '#c0392b';
-  rrEl.style.background = color;
-}
-
-// ── Spread P&L ──
-function spreadLegPnl(commId, sideId, lotsId, entryId, exitId) {
-  const comm  = document.getElementById(commId).value;
-  const side  = parseFloat(document.getElementById(sideId).value);
-  const lots  = parseFloat(document.getElementById(lotsId).value);
-  const entry = parseFloat(document.getElementById(entryId).value);
-  const exit  = parseFloat(document.getElementById(exitId).value);
-  if (!lots || !entry || !exit) return null;
-  return side * (exit - entry) * COMMODITIES[comm].lotValue * lots;
-}
-
-function calcSpread() {
-  // sync price unit labels
-  document.getElementById('sp-unit1e').textContent = COMMODITIES[document.getElementById('sp-comm1').value].priceUnit;
-  document.getElementById('sp-unit2e').textContent = COMMODITIES[document.getElementById('sp-comm2').value].priceUnit;
-  const pnl1 = spreadLegPnl('sp-comm1','sp-side1','sp-lots1','sp-entry1','sp-exit1');
-  const pnl2 = spreadLegPnl('sp-comm2','sp-side2','sp-lots2','sp-entry2','sp-exit2');
-
-  function setBox(id, val) {
-    const el = document.getElementById(id);
-    if (val === null) { el.textContent = '—'; el.style.background = 'var(--navy)'; return; }
-    const sign = val >= 0 ? '+' : '';
-    el.textContent = sign + '$' + fmt(val);
-    el.style.background = val >= 0 ? '#1b7f3b' : '#c0392b';
-  }
-  setBox('sp-pnl1', pnl1);
-  setBox('sp-pnl2', pnl2);
-  if (pnl1 === null && pnl2 === null) {
-    setBox('sp-net', null); setBox('sp-contrib1', null); setBox('sp-contrib2', null); return;
-  }
-  const net   = (pnl1 || 0) + (pnl2 || 0);
-  const total = Math.abs(pnl1 || 0) + Math.abs(pnl2 || 0);
-  setBox('sp-net', net);
-  const el1 = document.getElementById('sp-contrib1');
-  const el2 = document.getElementById('sp-contrib2');
-  el1.textContent = total ? ((Math.abs(pnl1 || 0) / total) * 100).toFixed(0) + '%' : '—';
-  el1.style.background = 'var(--navy)';
-  el2.textContent = total ? ((Math.abs(pnl2 || 0) / total) * 100).toFixed(0) + '%' : '—';
-  el2.style.background = 'var(--navy)';
-}
-
-// ── GBP Converter ──
-function calcGbp() {
-  const amount = parseFloat(document.getElementById('gbp-amount').value);
-  const from   = document.getElementById('gbp-from').value;
-  const rate   = parseFloat(document.getElementById('gbp-rate').value);
-  const el     = document.getElementById('gbp-result');
-  if (!amount || !rate) { el.textContent = '—'; return; }
-  const result = from === 'usd' ? amount / rate : amount * rate;
-  const label  = from === 'usd' ? '£' : '$';
-  const sign   = result >= 0 ? '' : '-';
-  el.textContent = sign + label + fmt(Math.abs(result));
-}
-
-// ── Tick table ──
-function buildTickTable() {
-  const el = document.getElementById('tick-table');
-  let html = `<thead><tr>
-    <th style="text-align:left">Contract</th>
-    <th>Min Tick</th>
-    <th>Tick Value / Lot</th>
-    <th>10 Ticks</th>
-    <th>Ccy</th>
-  </tr></thead><tbody>`;
-  Object.entries(TICKS).forEach(([key, t]) => {
-    html += `<tr>
-      <td>${key}</td>
-      <td>${t.note}</td>
-      <td>$${t.tickVal.toFixed(2)}</td>
-      <td>$${(t.tickVal * 10).toFixed(2)}</td>
-      <td>${t.currency}</td>
-    </tr>`;
-  });
-  html += '</tbody>';
-  el.innerHTML = html;
-}
-
 buildTickTable();
 </script>
 </body>
