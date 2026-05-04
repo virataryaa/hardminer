@@ -15,30 +15,20 @@
 html { font-size: 15px; -webkit-font-smoothing: antialiased; }
 body { background: var(--bg); color: var(--ink); font-family: -apple-system,'Helvetica Neue',sans-serif; min-height: 100vh; }
 
-/* ── Topbar ── */
-.topbar {
-  height: 48px; display: flex; align-items: center; justify-content: space-between;
-  padding: 0 1.6rem; background: var(--navy);
-  position: sticky; top: 0; z-index: 100;
-}
-.topbar-title {
-  font-size: .78rem; font-weight: 600; letter-spacing: .1em;
-  text-transform: uppercase; color: rgba(255,255,255,.9);
-}
-.ref-btn {
-  background: rgba(255,255,255,.12); border: none; border-radius: 8px;
-  color: rgba(255,255,255,.85); cursor: pointer; font-family: inherit;
-  font-size: .68rem; font-weight: 600; letter-spacing: .07em;
-  padding: 5px 13px; text-transform: uppercase; transition: background .2s;
-}
-.ref-btn:hover { background: rgba(255,255,255,.22); }
-.ref-btn.open  { background: rgba(255,255,255,.28); }
-
 /* ── Tab bar ── */
+.ref-btn {
+  background: none; border: none; border-bottom: 2px solid transparent;
+  color: var(--ink-4); cursor: pointer; font-family: inherit;
+  font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+  padding: .75rem 1.1rem; text-transform: uppercase;
+  transition: color .18s; margin-bottom: -2px; margin-left: auto;
+}
+.ref-btn:hover { color: var(--navy); }
+.ref-btn.open  { color: var(--navy); }
 .tabbar {
   background: var(--surface); border-bottom: 2px solid var(--border);
   display: flex; padding: 0 1.2rem;
-  position: sticky; top: 48px; z-index: 99;
+  position: sticky; top: 0; z-index: 99;
 }
 .tab {
   background: none; border: none; border-bottom: 2px solid transparent;
@@ -168,17 +158,12 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
 </head>
 <body>
 
-<div class="topbar">
-  <div style="width:90px"></div>
-  <span class="topbar-title">Unit Desk</span>
-  <button class="ref-btn" id="ref-btn" onclick="toggleRefPanel()">Reference ▾</button>
-</div>
-
 <div class="tabbar">
   <button class="tab active" onclick="switchTab('size',this)">Size / Volume</button>
   <button class="tab" onclick="switchTab('price',this)">Price</button>
   <button class="tab" onclick="switchTab('pnl',this)">P&amp;L</button>
   <button class="tab" onclick="switchTab('risk',this)">Risk</button>
+  <button class="ref-btn" id="ref-btn" onclick="toggleRefPanel()">Reference ▾</button>
 </div>
 
 <!-- Reference panel — drops below tabbar, pushes content down -->
