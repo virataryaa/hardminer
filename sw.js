@@ -1,4 +1,4 @@
-const CACHE = 'hardminer-v3';
+const CACHE = 'hardminer-v4';
 const ASSETS = ['/', '/index.html', '/coming-soon.html', '/manifest.json'];
 
 self.addEventListener('install', e => {
