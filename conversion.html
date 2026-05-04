@@ -4,41 +4,46 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Unit Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #fafafa; --surface: #fff; --ink: #1d1d1f; --ink-2: #424245;
-  --ink-3: #6e6e73; --ink-4: #aeaeb2; --border: rgba(0,0,0,0.08);
-  --border-mid: rgba(0,0,0,0.13); --navy: #0a2463; --red: #c0392b;
+  --bg: #0D1620; --surface: #15222E;
+  --ink: #E8EEF2; --ink-2: #BCD4DE; --ink-3: #8AA6B3; --ink-4: #5E7B89;
+  --border: rgba(188,212,222,.07); --border-mid: rgba(188,212,222,.14);
+  --accent: #6AB3C9; --accent-hover: #88C9DD;
+  --red: #e05c5c; --green: #4fc89a;
   --ease: cubic-bezier(0.25,0.46,0.45,0.94);
 }
 html { font-size: 15px; -webkit-font-smoothing: antialiased; }
-body { background: var(--bg); color: var(--ink); font-family: -apple-system,'Helvetica Neue',sans-serif; min-height: 100vh; }
+body { background: var(--bg); color: var(--ink); font-family: 'Inter',-apple-system,sans-serif; min-height: 100vh; }
 
 /* ── Tab bar ── */
 .ref-btn {
   background: none; border: none; border-bottom: 2px solid transparent;
   color: var(--ink-4); cursor: pointer; font-family: inherit;
-  font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+  font-size: .7rem; font-weight: 600; letter-spacing: .08em;
   padding: .75rem 1.1rem; text-transform: uppercase;
   transition: color .18s; margin-bottom: -2px; margin-left: auto;
 }
-.ref-btn:hover { color: var(--navy); }
-.ref-btn.open  { color: var(--navy); }
+.ref-btn:hover { color: var(--accent); }
+.ref-btn.open  { color: var(--accent); }
 .tabbar {
-  background: var(--surface); border-bottom: 2px solid var(--border);
+  background: var(--surface); border-bottom: 1px solid var(--border-mid);
   display: flex; padding: 0 1.2rem;
   position: sticky; top: 0; z-index: 99;
 }
 .tab {
   background: none; border: none; border-bottom: 2px solid transparent;
-  color: var(--ink-3); cursor: pointer; font-family: inherit;
-  font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+  color: var(--ink-4); cursor: pointer; font-family: inherit;
+  font-size: .7rem; font-weight: 600; letter-spacing: .08em;
   padding: .75rem 1.1rem; text-transform: uppercase;
   transition: color .18s, border-color .18s; margin-bottom: -2px;
 }
-.tab:hover:not(.active) { color: var(--navy); }
-.tab.active { border-bottom-color: var(--navy); color: var(--navy); }
+.tab:hover:not(.active) { color: var(--accent); }
+.tab.active { border-bottom-color: var(--accent); color: var(--accent); }
 
 /* ── Reference panel ── */
 #ref-panel {
@@ -86,22 +91,24 @@ body { background: var(--bg); color: var(--ink); font-family: -apple-system,'Hel
 
 input[type=number], select {
   height: 38px; border: 1px solid var(--border-mid); border-radius: 8px;
-  background: #f5f5f7; color: var(--ink); font-size: .88rem;
+  background: var(--bg); color: var(--ink); font-size: .88rem;
   padding: 0 .75rem; outline: none; width: 100%;
   transition: border-color .2s, background .2s;
-  font-family: -apple-system,'Helvetica Neue',sans-serif;
+  font-family: 'Inter',-apple-system,sans-serif;
 }
-input[type=number]:focus, select:focus { border-color: var(--navy); background: #fff; }
+input[type=number]:focus, select:focus { border-color: var(--accent); background: #0a1a27; }
 input[type=number] { -moz-appearance: textfield; }
 input[type=number]::-webkit-inner-spin-button { display: none; }
+select option { background: var(--surface); color: var(--ink); }
 
 .to-label {
   font-size: .72rem; color: var(--ink-4); font-weight: 500;
   padding-top: 1.3rem; white-space: nowrap;
 }
 .result-box {
-  height: 38px; border-radius: 8px; background: var(--navy);
-  color: #fff; font-size: .95rem; font-weight: 600;
+  height: 38px; border-radius: 8px;
+  background: rgba(106,179,201,.12); border: 1px solid rgba(106,179,201,.2);
+  color: var(--accent); font-size: .95rem; font-weight: 600;
   display: flex; align-items: center; padding: 0 .85rem;
   letter-spacing: .01em; min-width: 110px; width: 100%;
 }
@@ -122,7 +129,7 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
 .matrix-wrap { overflow-x: auto; }
 .matrix { border-collapse: collapse; font-size: .76rem; width: 100%; }
 .matrix th {
-  background: var(--navy); color: rgba(255,255,255,.85);
+  background: rgba(106,179,201,.15); color: var(--ink-2);
   padding: .45rem .6rem; font-size: .58rem; font-weight: 600;
   letter-spacing: .06em; text-align: center; white-space: nowrap;
 }
@@ -130,24 +137,24 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
 .matrix th:last-child  { border-radius: 0 6px 0 0; }
 .matrix td { padding: .45rem .6rem; border-bottom: 1px solid var(--border); text-align: center; color: var(--ink-2); }
 .matrix td:first-child { font-weight: 700; color: var(--ink); background: #f5f5f7; text-align: left; white-space: nowrap; }
-.matrix td.diag { background: rgba(10,36,99,.07); color: var(--navy); font-weight: 700; }
+.matrix td.diag { background: rgba(106,179,201,.08); color: var(--accent); font-weight: 700; }
 .matrix tr:last-child td { border-bottom: none; }
 
 /* ── Basic conv / rate pills ── */
 .basic-conv { display: flex; flex-direction: column; gap: .55rem; }
 .bc-row { display: flex; align-items: center; gap: .5rem; font-size: .82rem; color: var(--ink-2); }
-.bc-val  { font-weight: 700; color: var(--navy); min-width: 30px; }
+.bc-val  { font-weight: 700; color: var(--accent); min-width: 30px; }
 .bc-eq   { color: var(--ink-4); }
 .bc-unit { color: var(--ink-3); }
 .rate-pills { display: flex; flex-direction: column; gap: .5rem; }
 .rate-pill {
   display: flex; align-items: center; justify-content: space-between;
-  background: #f5f5f7; border: 1px solid var(--border);
+  background: rgba(188,212,222,.04); border: 1px solid var(--border-mid);
   border-radius: 8px; padding: .5rem .85rem; font-size: .78rem;
 }
 .rp-from { color: var(--ink-3); }
 .rp-eq   { color: var(--ink-4); margin: 0 .4rem; }
-.rp-to   { font-weight: 700; color: var(--navy); }
+.rp-to   { font-weight: 700; color: var(--accent); }
 
 .footnote { margin-top:.8rem; font-size:.65rem; color:var(--ink-4); letter-spacing:.04em; }
 
@@ -448,11 +455,11 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
             <input type="number" id="pnl-lots" placeholder="e.g. 50" oninput="calcPnl()">
           </div>
           <div class="conv-group" style="min-width:100px">
-            <div class="conv-label">Entry <span id="pnl-unit-entry" style="color:var(--navy)">¢/lbs</span></div>
+            <div class="conv-label">Entry <span id="pnl-unit-entry" style="color:var(--accent)">¢/lbs</span></div>
             <input type="number" id="pnl-entry" placeholder="e.g. 380" oninput="calcPnl()">
           </div>
           <div class="conv-group" style="min-width:100px">
-            <div class="conv-label">Exit <span id="pnl-unit-exit" style="color:var(--navy)">¢/lbs</span></div>
+            <div class="conv-label">Exit <span id="pnl-unit-exit" style="color:var(--accent)">¢/lbs</span></div>
             <input type="number" id="pnl-exit" placeholder="e.g. 420" oninput="calcPnl()">
           </div>
         </div>
@@ -526,7 +533,7 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
               <input type="number" id="sp-lots1" placeholder="e.g. 100" oninput="calcSpread()">
             </div>
             <div class="conv-group" style="flex:1;min-width:80px">
-              <div class="conv-label">Entry <span id="sp-unit1e" style="color:var(--navy)">¢/lbs</span></div>
+              <div class="conv-label">Entry <span id="sp-unit1e" style="color:var(--accent)">¢/lbs</span></div>
               <input type="number" id="sp-entry1" placeholder="e.g. 380" oninput="calcSpread()">
             </div>
             <div class="conv-group" style="flex:1;min-width:80px">
@@ -563,7 +570,7 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
               <input type="number" id="sp-lots2" placeholder="e.g. 100" oninput="calcSpread()">
             </div>
             <div class="conv-group" style="flex:1;min-width:80px">
-              <div class="conv-label">Entry <span id="sp-unit2e" style="color:var(--navy)">¢/lbs</span></div>
+              <div class="conv-label">Entry <span id="sp-unit2e" style="color:var(--accent)">¢/lbs</span></div>
               <input type="number" id="sp-entry2" placeholder="e.g. 385" oninput="calcSpread()">
             </div>
             <div class="conv-group" style="flex:1;min-width:80px">
@@ -607,11 +614,11 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
             <input type="number" id="ps-risk" placeholder="e.g. 50000" oninput="calcPs()">
           </div>
           <div class="conv-group" style="flex:1;min-width:90px">
-            <div class="conv-label">Entry <span id="ps-unit-e" style="color:var(--navy)">¢/lbs</span></div>
+            <div class="conv-label">Entry <span id="ps-unit-e" style="color:var(--accent)">¢/lbs</span></div>
             <input type="number" id="ps-entry" placeholder="e.g. 380" oninput="calcPs()">
           </div>
           <div class="conv-group" style="flex:1;min-width:90px">
-            <div class="conv-label">Stop <span id="ps-unit-s" style="color:var(--navy)">¢/lbs</span></div>
+            <div class="conv-label">Stop <span id="ps-unit-s" style="color:var(--accent)">¢/lbs</span></div>
             <input type="number" id="ps-stop" placeholder="e.g. 365" oninput="calcPs()">
           </div>
         </div>
@@ -652,7 +659,7 @@ input[type=number]::-webkit-inner-spin-button { display: none; }
             <input type="number" id="rr-lots" placeholder="e.g. 50" oninput="calcRr()">
           </div>
           <div class="conv-group" style="flex:1;min-width:80px">
-            <div class="conv-label">Entry <span id="rr-unit" style="color:var(--navy)">¢/lbs</span></div>
+            <div class="conv-label">Entry <span id="rr-unit" style="color:var(--accent)">¢/lbs</span></div>
             <input type="number" id="rr-entry" placeholder="e.g. 380" oninput="calcRr()">
           </div>
           <div class="conv-group" style="flex:1;min-width:80px">
@@ -811,12 +818,12 @@ function calcPnl() {
   const plEl=document.getElementById('pnl-per-lot');
   const totEl=document.getElementById('pnl-total');
   if(!lots||!entry||!exit){
-    [plEl,totEl].forEach(e=>{e.textContent='—';e.style.background='var(--navy)';}); return;
+    [plEl,totEl].forEach(e=>{e.textContent='—';e.style.background='rgba(106,179,201,.12)';}); return;
   }
   const perLot=dir*(exit-entry)*COMMODITIES[comm].lotValue;
   const total=perLot*lots;
   const sign=perLot>=0?'+':'';
-  const color=perLot>=0?'#1b7f3b':'#c0392b';
+  const color=perLot>=0?'#1d6b47':'#c0392b';
   plEl.textContent=sign+'$'+fmt(perLot);  plEl.style.background=color;
   totEl.textContent=sign+'$'+fmt(total);  totEl.style.background=color;
 }
@@ -855,7 +862,7 @@ function calcRr() {
   const atEl=document.getElementById('rr-atarget');
   const wrEl=document.getElementById('rr-minwr');
   if(!lots||!entry||!stop||!target){
-    [rrEl,arEl,atEl,wrEl].forEach(e=>{e.textContent='—';e.style.background='var(--navy)';}); return;
+    [rrEl,arEl,atEl,wrEl].forEach(e=>{e.textContent='—';e.style.background='rgba(106,179,201,.12)';}); return;
   }
   const lv=COMMODITIES[comm].lotValue;
   const risk=Math.abs(entry-stop)*lv*lots;
@@ -865,7 +872,7 @@ function calcRr() {
   arEl.textContent='$'+fmt(risk);
   atEl.textContent='$'+fmt(reward);
   wrEl.textContent=(100/(1+rr)).toFixed(1)+'%';
-  rrEl.style.background=rr>=2?'#1b7f3b':rr>=1?'#7a5800':'#c0392b';
+  rrEl.style.background=rr>=2?'#1d6b47':rr>=1?'#7a5800':'#c0392b';
 }
 function spreadLegPnl(commId,sideId,lotsId,entryId,exitId) {
   const comm=document.getElementById(commId).value;
@@ -883,10 +890,10 @@ function calcSpread() {
   const pnl2=spreadLegPnl('sp-comm2','sp-side2','sp-lots2','sp-entry2','sp-exit2');
   function setBox(id,val) {
     const el=document.getElementById(id);
-    if(val===null){el.textContent='—';el.style.background='var(--navy)';return;}
+    if(val===null){el.textContent='—';el.style.background='rgba(106,179,201,.12)';return;}
     const sign=val>=0?'+':'';
     el.textContent=sign+'$'+fmt(val);
-    el.style.background=val>=0?'#1b7f3b':'#c0392b';
+    el.style.background=val>=0?'#1d6b47':'#c0392b';
   }
   setBox('sp-pnl1',pnl1); setBox('sp-pnl2',pnl2);
   if(pnl1===null&&pnl2===null){setBox('sp-net',null);setBox('sp-contrib1',null);setBox('sp-contrib2',null);return;}
@@ -895,8 +902,8 @@ function calcSpread() {
   setBox('sp-net',net);
   const el1=document.getElementById('sp-contrib1');
   const el2=document.getElementById('sp-contrib2');
-  el1.textContent=total?((Math.abs(pnl1||0)/total)*100).toFixed(0)+'%':'—'; el1.style.background='var(--navy)';
-  el2.textContent=total?((Math.abs(pnl2||0)/total)*100).toFixed(0)+'%':'—'; el2.style.background='var(--navy)';
+  el1.textContent=total?((Math.abs(pnl1||0)/total)*100).toFixed(0)+'%':'—'; el1.style.background='rgba(106,179,201,.12)';
+  el2.textContent=total?((Math.abs(pnl2||0)/total)*100).toFixed(0)+'%':'—'; el2.style.background='rgba(106,179,201,.12)';
 }
 function calcGbp() {
   const amount=parseFloat(document.getElementById('gbp-amount').value);
