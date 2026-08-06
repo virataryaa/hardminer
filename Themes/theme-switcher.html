@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICEBREAKER — Theme Switcher (Archived)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Playfair+Display:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=DM+Serif+Display&family=Inter:wght@400;500;600&family=Geist:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/*
+  Archived from icebreaker.html on 2026-08-06.
+  This was the "Customize" tweaks panel (gear icon, bottom-right) that let you
+  live-preview Theme / Card Style / Typography / Text Size / Popup (modal) Color
+  on the homepage. Removed from icebreaker.html to cut page-load weight (it was
+  pulling in 7 Google Font families up front for a rarely-used cosmetic feature).
+
+  This file is a fully working standalone copy of that panel, wired up against a
+  sample of the homepage's own grid/card markup, so the exact look of every
+  swatch can still be previewed. To re-integrate any of it into icebreaker.html:
+    1. Copy the relevant CSS variables/classes back into the <style> block there.
+    2. Copy THEMES / CARD_STYLES / FONT_PAIRS / SIZE_SCALES / ROYAL_COLORS and the
+       apply*() functions + swatch-builder IIFE back into the bottom <script>.
+    3. Re-add the .tweaks panel + .tweaks-btn markup and the Shift+T listener.
+    4. Restore the full Google Fonts <link> above (fraunces-inter is the only
+       pair used by default — the others are only needed if Typography swatches
+       come back).
+*/
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0D1620;--surface:#15222E;
+  --ink:#E8EEF2;--ink-2:#BCD4DE;--ink-3:#8AA6B3;--ink-4:#5E7B89;
+  --line:rgba(188,212,222,.14);--line-soft:rgba(188,212,222,.07);
+  --accent:#6AB3C9;--accent-hover:#88C9DD;--accent-wash:rgba(106,179,201,.08);
+  --topbar-bg:rgba(13,22,32,.85);--live:#5FD4C2;
+  --royal:#4FB0C8;
+  --card-bg:var(--surface);--card-ink:var(--ink);--card-sub:var(--ink-4);
+  --card-border:var(--line);--card-soft:var(--line-soft);
+  --card-hover:var(--accent-wash);--card-hover-ink:var(--accent);
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+html{font-size:var(--base-size,16.5px);-webkit-font-smoothing:antialiased}
+body{background:var(--bg);background-attachment:fixed;color:var(--ink);font-family:var(--font-ui,'Inter'),-apple-system,sans-serif;min-height:100vh;transition:background .35s var(--ease),color .35s var(--ease);padding:2.5rem 2rem 6rem}
+
+.note{max-width:640px;margin:0 auto 2.5rem;font-size:.8rem;line-height:1.6;color:var(--ink-3);border:1px solid var(--line);border-radius:12px;padding:1rem 1.2rem;background:var(--surface)}
+.note b{color:var(--ink)}
+
+.preview-title{font-family:var(--font-display,'Fraunces'),Georgia,serif;font-weight:var(--display-weight,300);font-size:2.4rem;text-align:center;margin-bottom:2rem;color:var(--ink)}
+.preview-title em{font-style:italic;color:var(--ink-3)}
+
+/* Sample card grid, mirrors icebreaker.html's .group/.row so swatches preview accurately */
+.grid{display:grid;grid-template-columns:1fr 1fr;max-width:640px;margin:0 auto 3rem;gap:1rem}
+.group{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;overflow:hidden;transition:background .25s var(--ease),border-color .25s var(--ease)}
+.row{display:flex;align-items:center;gap:12px;width:100%;padding:1rem 1.15rem;border:none;background:transparent;border-bottom:1px solid var(--card-soft);text-align:left;color:var(--card-ink);font-family:inherit}
+.group .row:last-child{border-bottom:none}
+.r-dot{width:5px;height:5px;border-radius:50%;background:var(--card-sub);flex-shrink:0;opacity:.55}
+.r-text{flex:1;display:flex;flex-direction:column;gap:3px}
+.r-name{font-size:.95rem;font-weight:500;letter-spacing:-.01em}
+.r-sub{font-size:.62rem;letter-spacing:.09em;color:var(--card-sub);text-transform:uppercase}
+
+/* TWEAKS PANEL — identical to the archived homepage panel */
+.tweaks{position:fixed;bottom:60px;right:20px;z-index:200;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;width:280px;box-shadow:0 16px 40px rgba(0,0,0,.4),0 4px 10px rgba(0,0,0,.2);font-family:'Inter',sans-serif;display:block;max-height:80vh;overflow-y:auto}
+.tweaks h4{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--ink-3);margin:4px 0 8px}
+.tweaks h4:not(:first-child){margin-top:18px}
+.swatch-list{display:flex;flex-direction:column;gap:6px}
+.swatch{display:flex;align-items:center;gap:10px;padding:7px 9px;border:1px solid var(--line);border-radius:9px;cursor:pointer;background:transparent;width:100%;font-family:inherit;text-align:left;transition:border-color .15s,background .15s;color:var(--ink)}
+.swatch:hover{border-color:var(--ink-4)}
+.swatch.active{border-color:var(--accent);background:var(--accent-wash)}
+.sw-chips{display:flex;border-radius:4px;overflow:hidden;border:1px solid var(--line);flex-shrink:0}
+.sw-chips span{width:14px;height:20px;display:block}
+.sw-name{font-size:.78rem;font-weight:500;flex:1}
+.sw-desc{font-size:.6rem;color:var(--ink-4);letter-spacing:.04em}
+.sw-preview{flex-shrink:0;width:36px;height:22px;border-radius:6px;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="note"><b>Archived panel.</b> This is the "Customize" tweaks panel that used to live on icebreaker.html (gear icon, bottom-right). It was pulled off the homepage to cut page-load weight — see the comment at the top of this file's &lt;style&gt; block for how to bring any piece of it back.</div>
+
+<div class="preview-title">Hard<em>Miner</em></div>
+
+<div class="grid">
+  <div class="group">
+    <div class="row"><span class="r-dot"></span><span class="r-text"><span class="r-name">Coffee</span><span class="r-sub">Arabica · Robusta</span></span></div>
+    <div class="row"><span class="r-dot"></span><span class="r-text"><span class="r-name">Cocoa</span><span class="r-sub">Beans · Products</span></span></div>
+    <div class="row"><span class="r-dot"></span><span class="r-text"><span class="r-name">Sugar</span><span class="r-sub">Raw · White</span></span></div>
+  </div>
+  <div class="group">
+    <div class="row"><span class="r-dot"></span><span class="r-text"><span class="r-name">Rollex</span><span class="r-sub">Seasonality · Scatter</span></span></div>
+    <div class="row"><span class="r-dot"></span><span class="r-text"><span class="r-name">VaR</span><span class="r-sub">Monitor · Margin</span></span></div>
+    <div class="row"><span class="r-dot"></span><span class="r-text"><span class="r-name">Optimus Prime</span><span class="r-sub">Backtesting · Strategy</span></span></div>
+  </div>
+</div>
+
+<!-- Tweaks Panel -->
+<div class="tweaks" id="tweaks">
+  <h4>Theme</h4><div class="swatch-list" id="theme-list"></div>
+  <h4>Card Style</h4><div class="swatch-list" id="card-list"></div>
+  <h4>Typography</h4><div class="swatch-list" id="font-list"></div>
+  <h4>Text Size</h4><div class="swatch-list" id="size-list"></div>
+  <h4>Popup Color</h4><div class="swatch-list" id="royal-list"></div>
+</div>
+
+<script>
+const TWEAK_DEFAULTS = {theme:'abyss',cardStyle:'glass',fontPair:'fraunces-inter',textSize:'comfy',royal:'cyan'};
+
+const THEMES = {
+  harbor:{name:'Deep Harbor',desc:'Warm paper · navy',vars:{'--bg':'#F4F2ED','--surface':'#FBFAF6','--ink':'#0B1B2A','--ink-2':'#123249','--ink-3':'#3E6278','--ink-4':'#7A96A6','--line':'rgba(18,50,73,.14)','--line-soft':'rgba(18,50,73,.08)','--accent':'#123249','--accent-hover':'#061221','--accent-wash':'rgba(18,50,73,.04)','--topbar-bg':'rgba(244,242,237,.85)','--live':'#2ea043'},chips:['#F4F2ED','#123249','#3E6278']},
+  glacier:{name:'Glacier',desc:'Cool white · teal',vars:{'--bg':'#F1F4F6','--surface':'#FAFCFD','--ink':'#0A1E26','--ink-2':'#1E4D5F','--ink-3':'#436F7F','--ink-4':'#7BA1AE','--line':'rgba(30,77,95,.15)','--line-soft':'rgba(30,77,95,.08)','--accent':'#1E4D5F','--accent-hover':'#0F3744','--accent-wash':'rgba(30,77,95,.05)','--topbar-bg':'rgba(241,244,246,.85)','--live':'#2ea043'},chips:['#F1F4F6','#1E4D5F','#436F7F']},
+  graphite:{name:'Graphite',desc:'Neutral · restrained',vars:{'--bg':'#F2F2F0','--surface':'#FAFAF8','--ink':'#0A0A0A','--ink-2':'#1A1A1A','--ink-3':'#555','--ink-4':'#9A9A98','--line':'rgba(0,0,0,.12)','--line-soft':'rgba(0,0,0,.06)','--accent':'#1A1A1A','--accent-hover':'#000','--accent-wash':'rgba(0,0,0,.04)','--topbar-bg':'rgba(242,242,240,.85)','--live':'#2ea043'},chips:['#F2F2F0','#1A1A1A','#555']},
+  abyss:{name:'Abyss',desc:'Mesh gradient · deep teal',vars:{'--bg':"radial-gradient(ellipse 70% 60% at 20% 80%,color-mix(in srgb,#1a4a5a 38%,#0D1620) 0%,transparent 65%),radial-gradient(ellipse 60% 50% at 80% 20%,color-mix(in srgb,#2a5568 32%,#0D1620) 0%,transparent 60%),radial-gradient(ellipse 80% 70% at 50% 30%,color-mix(in srgb,#4FB0C8 7%,#0D1620) 0%,transparent 55%),#0D1620",'--surface':'#15222E','--ink':'#E8EEF2','--ink-2':'#BCD4DE','--ink-3':'#8AA6B3','--ink-4':'#5E7B89','--line':'rgba(188,212,222,.14)','--line-soft':'rgba(188,212,222,.07)','--accent':'#6AB3C9','--accent-hover':'#88C9DD','--accent-wash':'rgba(106,179,201,.08)','--topbar-bg':'rgba(13,22,32,.85)','--live':'#5FD4C2'},chips:['#0D1620','#1a4a5a','#4FB0C8']},
+  midnight:{name:'Midnight',desc:'Dark · icy cyan',vars:{'--bg':'#0D1620','--surface':'#15222E','--ink':'#E8EEF2','--ink-2':'#BCD4DE','--ink-3':'#8AA6B3','--ink-4':'#5E7B89','--line':'rgba(188,212,222,.14)','--line-soft':'rgba(188,212,222,.07)','--accent':'#6AB3C9','--accent-hover':'#88C9DD','--accent-wash':'rgba(106,179,201,.08)','--topbar-bg':'rgba(13,22,32,.85)','--live':'#5FD4C2'},chips:['#0D1620','#6AB3C9','#BCD4DE']},
+};
+
+const CARD_STYLES = {
+  default:{name:'Default',desc:'Follows theme',preview:{bg:'#15222E',fg:'#E8EEF2'},vars:{}},
+  ice:{name:'Ice',desc:'Light bg · navy text',preview:{bg:'#EAF1F5',fg:'#0B2D44'},vars:{'--card-bg':'#EAF1F5','--card-ink':'#0B2D44','--card-sub':'#4A6B80','--card-border':'rgba(11,45,68,.15)','--card-soft':'rgba(11,45,68,.08)','--card-hover':'rgba(11,45,68,.06)','--card-hover-ink':'#0B2D44'}},
+  frost:{name:'Frost',desc:'Pale cyan · deep navy',preview:{bg:'#D8E6EC',fg:'#0E2432'},vars:{'--card-bg':'#D8E6EC','--card-ink':'#0E2432','--card-sub':'#3F5F72','--card-border':'rgba(14,36,50,.18)','--card-soft':'rgba(14,36,50,.09)','--card-hover':'rgba(14,36,50,.07)','--card-hover-ink':'#0E2432'}},
+  parchment:{name:'Parchment',desc:'Warm off-white · navy',preview:{bg:'#F1EDE3',fg:'#0E2432'},vars:{'--card-bg':'#F1EDE3','--card-ink':'#0E2432','--card-sub':'#5A6473','--card-border':'rgba(14,36,50,.16)','--card-soft':'rgba(14,36,50,.08)','--card-hover':'rgba(14,36,50,.05)','--card-hover-ink':'#0E2432'}},
+  pearl:{name:'Pearl',desc:'Pure white · navy',preview:{bg:'#FFFFFF',fg:'#0B2D44'},vars:{'--card-bg':'#FFFFFF','--card-ink':'#0B2D44','--card-sub':'#4A6B80','--card-border':'rgba(11,45,68,.14)','--card-soft':'rgba(11,45,68,.07)','--card-hover':'rgba(11,45,68,.05)','--card-hover-ink':'#0B2D44'}},
+  glass:{name:'Glass',desc:'Translucent · cyan accent',preview:{bg:'rgba(255,255,255,.08)',fg:'#E8EEF2',border:'1px solid rgba(255,255,255,.16)'},vars:{'--card-bg':'rgba(255,255,255,.04)','--card-ink':'#E8EEF2','--card-sub':'#8AA6B3','--card-border':'rgba(255,255,255,.12)','--card-soft':'rgba(255,255,255,.06)','--card-hover':'rgba(106,179,201,.1)','--card-hover-ink':'#6AB3C9'}},
+  steel:{name:'Steel',desc:'Lighter panel, same family',preview:{bg:'#1E2F3D',fg:'#E8EEF2'},vars:{'--card-bg':'#1E2F3D','--card-ink':'#E8EEF2','--card-sub':'#8AA6B3','--card-border':'rgba(188,212,222,.16)','--card-soft':'rgba(188,212,222,.09)','--card-hover':'rgba(106,179,201,.12)','--card-hover-ink':'#6AB3C9'}},
+};
+
+const FONT_PAIRS = {
+  'fraunces-inter':{name:'Fraunces + Inter',desc:'Warm serif · clean sans',display:'Fraunces',ui:'Inter',dw:300,sample:'Aa'},
+  'playfair-geist':{name:'Playfair + Geist',desc:'Editorial · modern',display:'Playfair Display',ui:'Geist',dw:400,sample:'Aa'},
+  'cormorant-ibm':{name:'Cormorant + IBM Plex',desc:'Elegant · technical',display:'Cormorant Garamond',ui:'IBM Plex Sans',dw:300,sample:'Aa'},
+  'dmserif-space':{name:'DM Serif + Space Grotesk',desc:'High contrast · geometric',display:'DM Serif Display',ui:'Space Grotesk',dw:400,sample:'Aa'},
+  'fraunces-geist':{name:'Fraunces + Geist',desc:'Warm · precise',display:'Fraunces',ui:'Geist',dw:400,sample:'Aa'},
+};
+
+const SIZE_SCALES = {
+  compact:{name:'Compact',desc:'Denser UI',size:'13.5px'},
+  medium:{name:'Medium',desc:'Default',size:'15px'},
+  comfy:{name:'Comfy',desc:'Roomy',size:'16.5px'},
+  large:{name:'Large',desc:'Presentation',size:'18px'},
+};
+
+const ROYAL_COLORS = {
+  sapphire:{name:'Sapphire',desc:'Deep royal blue',hex:'#3B6FD1'},
+  amethyst:{name:'Amethyst',desc:'Royal purple',hex:'#7A5CD1'},
+  emerald:{name:'Emerald',desc:'Jewel green',hex:'#2F9E7D'},
+  ruby:{name:'Ruby',desc:'Crimson',hex:'#C8475C'},
+  gold:{name:'Gold',desc:'Champagne',hex:'#C99B4A'},
+  cyan:{name:'Cyan',desc:'Icy',hex:'#4FB0C8'},
+  obsidian:{name:'Obsidian',desc:'Monochrome',hex:'#2A3542'},
+};
+
+const root = document.documentElement;
+function applyTheme(id){
+  const t=THEMES[id]||THEMES.midnight;
+  Object.entries(t.vars).forEach(([k,v])=>root.style.setProperty(k,v));
+  document.querySelectorAll('#theme-list .swatch').forEach(s=>s.classList.toggle('active',s.dataset.id===id));
+}
+function applyCardStyle(id){
+  const c=CARD_STYLES[id]||CARD_STYLES.default;
+  ['--card-bg','--card-ink','--card-sub','--card-border','--card-soft','--card-hover','--card-hover-ink'].forEach(k=>root.style.removeProperty(k));
+  Object.entries(c.vars).forEach(([k,v])=>root.style.setProperty(k,v));
+  document.querySelectorAll('#card-list .swatch').forEach(s=>s.classList.toggle('active',s.dataset.id===id));
+}
+function applyFont(id){
+  const f=FONT_PAIRS[id]||FONT_PAIRS['fraunces-inter'];
+  root.style.setProperty('--font-display',`'${f.display}'`);
+  root.style.setProperty('--font-ui',`'${f.ui}'`);
+  root.style.setProperty('--display-weight',f.dw);
+  document.querySelectorAll('#font-list .swatch').forEach(s=>s.classList.toggle('active',s.dataset.id===id));
+}
+function applySize(id){
+  const sc=SIZE_SCALES[id]||SIZE_SCALES.comfy;
+  root.style.setProperty('--base-size',sc.size);
+  document.querySelectorAll('#size-list .swatch').forEach(s=>s.classList.toggle('active',s.dataset.id===id));
+}
+function applyRoyal(id){
+  const r=ROYAL_COLORS[id]||ROYAL_COLORS.cyan;
+  root.style.setProperty('--royal',r.hex);
+  document.querySelectorAll('#royal-list .swatch').forEach(s=>s.classList.toggle('active',s.dataset.id===id));
+}
+
+(function(){
+  const tl=document.getElementById('theme-list');
+  Object.entries(THEMES).forEach(([id,t])=>{
+    const b=document.createElement('button');b.className='swatch';b.dataset.id=id;
+    b.innerHTML=`<span class="sw-chips">${t.chips.map(c=>`<span style="background:${c}"></span>`).join('')}</span><span style="display:flex;flex-direction:column;gap:2px;flex:1"><span class="sw-name">${t.name}</span><span class="sw-desc">${t.desc}</span></span>`;
+    b.onclick=()=>applyTheme(id);tl.appendChild(b);
+  });
+  const cl=document.getElementById('card-list');
+  Object.entries(CARD_STYLES).forEach(([id,c])=>{
+    const b=document.createElement('button');b.className='swatch';b.dataset.id=id;
+    const pv=c.preview;
+    b.innerHTML=`<span class="sw-preview" style="background:${pv.bg};color:${pv.fg};${pv.border?'border:'+pv.border:''}">Aa</span><span style="display:flex;flex-direction:column;gap:2px;flex:1"><span class="sw-name">${c.name}</span><span class="sw-desc">${c.desc}</span></span>`;
+    b.onclick=()=>applyCardStyle(id);cl.appendChild(b);
+  });
+  const fl=document.getElementById('font-list');
+  Object.entries(FONT_PAIRS).forEach(([id,f])=>{
+    const b=document.createElement('button');b.className='swatch';b.dataset.id=id;
+    b.innerHTML=`<span class="sw-preview" style="background:#15222E;color:#E8EEF2;font-family:'${f.display}',serif;font-weight:${f.dw};font-size:1rem;font-style:italic">${f.sample}</span><span style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:0"><span class="sw-name" style="font-family:'${f.ui}',sans-serif">${f.name}</span><span class="sw-desc">${f.desc}</span></span>`;
+    b.onclick=()=>applyFont(id);fl.appendChild(b);
+  });
+  const sl=document.getElementById('size-list');
+  Object.entries(SIZE_SCALES).forEach(([id,sc])=>{
+    const b=document.createElement('button');b.className='swatch';b.dataset.id=id;
+    b.innerHTML=`<span class="sw-preview" style="background:#15222E;color:#E8EEF2;font-size:${parseFloat(sc.size)*.78}px">Aa</span><span style="display:flex;flex-direction:column;gap:2px;flex:1"><span class="sw-name">${sc.name}</span><span class="sw-desc">${sc.desc}</span></span>`;
+    b.onclick=()=>applySize(id);sl.appendChild(b);
+  });
+  const rl=document.getElementById('royal-list');
+  Object.entries(ROYAL_COLORS).forEach(([id,r])=>{
+    const b=document.createElement('button');b.className='swatch';b.dataset.id=id;
+    b.innerHTML=`<span class="sw-preview" style="background:${r.hex};color:#fff;box-shadow:0 0 14px ${r.hex}55 inset">●</span><span style="display:flex;flex-direction:column;gap:2px;flex:1"><span class="sw-name">${r.name}</span><span class="sw-desc">${r.desc}</span></span>`;
+    b.onclick=()=>applyRoyal(id);rl.appendChild(b);
+  });
+})();
+
+applyTheme(TWEAK_DEFAULTS.theme);
+applyCardStyle(TWEAK_DEFAULTS.cardStyle);
+applyFont(TWEAK_DEFAULTS.fontPair);
+applySize(TWEAK_DEFAULTS.textSize);
+applyRoyal(TWEAK_DEFAULTS.royal);
+</script>
+</body>
+</html>
