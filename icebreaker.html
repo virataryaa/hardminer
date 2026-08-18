@@ -72,10 +72,15 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 .r-sub{font-size:.62rem;letter-spacing:.09em;color:var(--card-sub);font-weight:400;text-transform:uppercase}
 .r-arrow{display:inline-flex;color:var(--card-sub);opacity:0;transition:opacity .2s,transform .22s var(--ease),color .2s}
 .r-arrow svg{width:13px;height:13px;display:block}
-.row-thin{padding:.55rem 1.15rem}
-.row-thin .r-name{font-size:.78rem}
+.row-thin{padding:.55rem 1.15rem 0.55rem calc(1.15rem - 2px);border-left:2px solid rgba(232,160,32,.4);background:rgba(232,160,32,.04)}
+.row-thin:hover{background:rgba(232,160,32,.09);padding-left:calc(1.45rem - 2px)}
+.row-thin .r-name{font-size:.78rem;color:#e0ac4a}
+.row-thin:hover .r-name{color:#f0c06a}
 .row-thin .r-sub{font-size:.56rem}
-.row-thin .r-dot{width:4px;height:4px}
+.row-thin .r-dot{width:4px;height:4px;background:#e0ac4a;opacity:.7}
+.row-thin:hover .r-dot{background:#f0c06a;opacity:1}
+.row-thin .r-arrow{color:#e0ac4a}
+.row-thin:hover .r-arrow{color:#f0c06a}
 .row{opacity:0;animation:rowIn .3s var(--ease) forwards}
 @keyframes rowIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 .group .row:nth-child(1){animation-delay:.28s}
