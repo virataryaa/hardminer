@@ -72,6 +72,10 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 .r-sub{font-size:.62rem;letter-spacing:.09em;color:var(--card-sub);font-weight:400;text-transform:uppercase}
 .r-arrow{display:inline-flex;color:var(--card-sub);opacity:0;transition:opacity .2s,transform .22s var(--ease),color .2s}
 .r-arrow svg{width:13px;height:13px;display:block}
+.row-thin{padding:.55rem 1.15rem}
+.row-thin .r-name{font-size:.78rem}
+.row-thin .r-sub{font-size:.56rem}
+.row-thin .r-dot{width:4px;height:4px}
 .row{opacity:0;animation:rowIn .3s var(--ease) forwards}
 @keyframes rowIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 .group .row:nth-child(1){animation-delay:.28s}
@@ -188,6 +192,7 @@ function checkPass(){
     <div class="group-label">COT</div>
     <div class="group">
       <a class="row" href="https://icebreaker-cot-all-nn2nig8qktfwd4k2yvrn9p.streamlit.app/" target="_blank" rel="noopener"><span class="r-dot"></span><span class="r-text"><span class="r-name">COT Comprehensive</span><span class="r-sub">Recap · Prediction · VaR · Pain · Proximity</span></span><span class="r-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>
+      <a class="row row-thin" href="https://interim-migration-cot-all-dviic3fxsojoe9xvqmxzzs.streamlit.app/" target="_blank" rel="noopener"><span class="r-dot"></span><span class="r-text"><span class="r-name">Interim COT Monitor (LSEG)</span></span><span class="r-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>
     </div>
 
     <div class="group-label">Positioning &amp; Flow</div>
