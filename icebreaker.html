@@ -206,11 +206,11 @@ function checkPass(){
 
     <div class="group-label">Positioning &amp; Flow</div>
     <div class="group">
+      <button class="row" onclick="openModal('Futures Comprehensive (OI Progression)','non-fundamentals')"><span class="r-dot"></span><span class="r-text"><span class="r-name">Futures Comprehensive (OI Progression)</span><span class="r-sub">Volume · Liquidity</span></span><span class="r-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h14M13 6l6 6-6 6"/></svg></span></button>
       <button class="row" onclick="openModal('Rollex','non-fundamentals')"><span class="r-dot"></span><span class="r-text"><span class="r-name">Rollex</span><span class="r-sub">Seasonality · Scatter · Volatility</span></span><span class="r-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h14M13 6l6 6-6 6"/></svg></span></button>
       <a class="row" href="https://fly-seasonality-yjsrvrjcfxcezyly2dz6kz.streamlit.app/" target="_blank" rel="noopener" id="seasonality-row"><span class="r-dot"></span><span class="r-text"><span class="r-name">Seasonality</span><span class="r-sub">Outright · Spread · Fly</span></span><span class="r-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>
       <button class="row" onclick="openModal('Arb','non-fundamentals')"><span class="r-dot"></span><span class="r-text"><span class="r-name">Arb</span><span class="r-sub">KC/RC · CC/LCC · Spread Monitor</span></span><span class="r-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h14M13 6l6 6-6 6"/></svg></span></button>
       <button class="row" onclick="openModal('Options','non-fundamentals')"><span class="r-dot"></span><span class="r-text"><span class="r-name">Options</span><span class="r-sub">OI Change · Volume · Settle</span></span><span class="r-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h14M13 6l6 6-6 6"/></svg></span></button>
-      <button class="row" onclick="openModal('Open Interest','non-fundamentals')"><span class="r-dot"></span><span class="r-text"><span class="r-name">Open Interest</span><span class="r-sub">Volume · Liquidity</span></span><span class="r-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h14M13 6l6 6-6 6"/></svg></span></button>
     </div>
 
     <div class="group-label">Structure &amp; Risk</div>
@@ -277,7 +277,7 @@ const LINKS = {
     'Arb':{'Arb ( ICE )':'https://icebreaker-arb-qdspbbdr24pckznafefrmw.streamlit.app/','Arb ( LSEG )':'https://interim-migration-arb-6fxwrbfx4539voujkhv6di.streamlit.app/'},
     'Options':{'Options ( ICE )':'https://icebreaker-options-itl9refpvnthw3ifvqwmcz.streamlit.app/','Options ( LSEG )':'https://interim-migration-options-aa7ck2bsxhxgkbnczleggq.streamlit.app/'},
     'Cross Section':{'Cross Section Monitor':'https://cross-section-new-wbjv7bf2y77jjnmedlugkq.streamlit.app/'},
-    'Open Interest':{'Open Interest ( ICE )':'https://icebreaker-futures-oi-vzub6otr4krmrsakkmwuqp.streamlit.app/','Open Interest ( LSEG )':'https://interim-migration-futures-oi-3ojs8tugpuxycdfh9nrtdn.streamlit.app/'},
+    'Futures Comprehensive (OI Progression)':{'Open Interest ( ICE )':'https://icebreaker-futures-oi-vzub6otr4krmrsakkmwuqp.streamlit.app/','Open Interest ( LSEG )':'https://interim-migration-futures-oi-3ojs8tugpuxycdfh9nrtdn.streamlit.app/'},
     'VaR':{'VaR Monitor ( ICE )':'https://icebreaker-var-8ej6bmncuuk8zmganrwxhf.streamlit.app/','VaR Monitor ( LSEG )':'https://interim-migration-var-st5pdh27fxp8feev8wuppw.streamlit.app/','Exchange vs Model Margin':'https://exchange-margin-project-deqnunallzamuteqw5tzhj.streamlit.app/'},
     'Optimus Prime':{'Backtesting Engine':'https://icebreaker-rollex-dmtgksmivkujo5ycwbgd3k.streamlit.app/','Statistics':'https://www.notion.so/Optimus-Prime-Statistics-333fbb7607b880ee8876cdfe10893956?source=copy_link','Strategy':'coming-soon.html'},
   }
