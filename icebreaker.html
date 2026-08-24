@@ -37,6 +37,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 .pill-solid{background:var(--accent);color:var(--bg)}
 .pill-solid:hover{background:var(--accent-hover);transform:translateY(-1px)}
 .pill-outline{background:transparent;color:var(--ink-2);border:1px solid var(--ink-4)}
+.pill-accent{background:var(--accent-wash);color:var(--accent-hover);border:1px solid color-mix(in srgb,var(--accent) 40%,transparent)}
+.pill-accent:hover{background:color-mix(in srgb,var(--accent) 16%,transparent);border-color:var(--accent);transform:translateY(-1px)}
 .pill-outline:hover{background:var(--surface);transform:translateY(-1px)}
 .tb-date{font-size:.68rem;letter-spacing:.06em;color:var(--ink-3);display:flex;align-items:center;gap:8px}
 .live{width:6px;height:6px;border-radius:50%;background:var(--live);box-shadow:0 0 0 3px color-mix(in srgb,var(--live) 20%,transparent);animation:breathe 2.4s ease-in-out infinite;flex-shrink:0}
@@ -156,7 +158,7 @@ function checkPass(){
 <!-- Topbar -->
 <header class="topbar">
   <div class="tb-left">
-    <a class="pill pill-solid" href="https://landing-page-rr65qhxg5y2rmvxpksr47d.streamlit.app/" target="_blank" rel="noopener">Landing Page (PoC)</a>
+    <a class="pill pill-accent" href="https://landing-page-rr65qhxg5y2rmvxpksr47d.streamlit.app/" target="_blank" rel="noopener">Landing Page (PoC)</a>
   </div>
   <div class="tb-date"><span class="live"></span><span id="live-date"></span></div>
   <div class="tb-right">
