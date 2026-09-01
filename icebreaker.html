@@ -158,7 +158,7 @@ function checkPass(){
 <!-- Topbar -->
 <header class="topbar">
   <div class="tb-left">
-    <a class="pill pill-accent" href="https://landing-page-rr65qhxg5y2rmvxpksr47d.streamlit.app/" target="_blank" rel="noopener">Landing Page</a>
+    <a class="pill pill-accent" href="https://lseg-landing-page-agk5zqxnvu2trywv9juqta.streamlit.app/" target="_blank" rel="noopener">Landing Page</a>
     <a class="pill pill-accent" href="https://news-wire-wgg3erlqw4zg9sjxyffvj9.streamlit.app/" target="_blank" rel="noopener">News Wire</a>
   </div>
   <div class="tb-date"><span class="live"></span><span id="live-date"></span></div>
@@ -202,7 +202,7 @@ function checkPass(){
     <div class="group-label">COT</div>
     <div class="group">
       <button class="row" onclick="openModal('COT Comprehensive','non-fundamentals')"><span class="r-dot"></span><span class="r-text"><span class="r-name">COT Comprehensive</span><span class="r-sub">Recap · Prediction · VaR · Pain · Proximity</span></span><span class="r-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h14M13 6l6 6-6 6"/></svg></span></button>
-      <a class="row" href="https://interim-migration-index-ieixetke46qqy6chemmmd6.streamlit.app/" target="_blank" rel="noopener"><span class="r-dot"></span><span class="r-text"><span class="r-name">Index Flows</span><span class="r-sub">CIT Index Traders · Weight Deviation</span></span><span class="r-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>
+      <a class="row" href="https://lseg-index-ak9kohpujqm9kclrgubb9r.streamlit.app/" target="_blank" rel="noopener"><span class="r-dot"></span><span class="r-text"><span class="r-name">Index Flows</span><span class="r-sub">CIT Index Traders · Weight Deviation</span></span><span class="r-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>
     </div>
 
     <div class="group-label">Positioning &amp; Flow</div>
@@ -258,8 +258,8 @@ document.addEventListener('keydown',e=>{
 
 const LINKS = {
   fundamentals:{
-    'Coffee':{'Brazil: Cecafe, Luis & Comexstat':'https://cecafe-monthly-65dkrsxjs7686jtfybs8ih.streamlit.app/','TDM Trade Flows':'iframe:TDM Trade Flows:https://coffeeexportertdm-a4vbj7jhz3cllqvhaz4nsi.streamlit.app/','Currency Dashboard ( ICE )':'https://icebreaker-currency-5ysxbyhld8ta5qngqqe6bk.streamlit.app/','Currency Dashboard ( LSEG )':'https://interim-migration-currency-ejlqfktneqqxqqdmxz8dwp.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
-    'Cocoa':{'TDM Trade Flows':'https://cocoa-tradeflows-3rfkxpn5osmtg6cb4uqxbs.streamlit.app/','Currency Dashboard ( ICE )':'https://icebreaker-currency-5ysxbyhld8ta5qngqqe6bk.streamlit.app/','Currency Dashboard ( LSEG )':'https://interim-migration-currency-ejlqfktneqqxqqdmxz8dwp.streamlit.app/','Pod Counts & Settings':'https://podcounts-l2lq89nypa2vwtbogg4ch9.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
+    'Coffee':{'Brazil: Cecafe, Luis & Comexstat':'https://cecafe-monthly-65dkrsxjs7686jtfybs8ih.streamlit.app/','TDM Trade Flows':'iframe:TDM Trade Flows:https://coffeeexportertdm-a4vbj7jhz3cllqvhaz4nsi.streamlit.app/','Currency Dashboard ( ICE )':'https://icebreaker-currency-5ysxbyhld8ta5qngqqe6bk.streamlit.app/','Currency Dashboard ( LSEG )':'https://lseg-currency-bw57xoqiqrjhkyfhaukldw.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
+    'Cocoa':{'TDM Trade Flows':'https://cocoa-tradeflows-3rfkxpn5osmtg6cb4uqxbs.streamlit.app/','Currency Dashboard ( ICE )':'https://icebreaker-currency-5ysxbyhld8ta5qngqqe6bk.streamlit.app/','Currency Dashboard ( LSEG )':'https://lseg-currency-bw57xoqiqrjhkyfhaukldw.streamlit.app/','Pod Counts & Settings':'https://podcounts-l2lq89nypa2vwtbogg4ch9.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
     'Sugar':{'UNICA':'https://unica-dashboard-4rcnkpujqyajanbhbm9vcb.streamlit.app/','Trade Flows':'https://sugar-tradeflows-8y8mt7mrj9qr5znqftk7gm.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
     'Cotton':{'Trade Flows':'https://cotton-tradeflows-new-ssrhhoiqnw2okz5zqkwvq6.streamlit.app/','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
     'Orange Juice':{'Trade Flows':'coming-soon.html','Supply & Demand':'coming-soon.html','Production / Crop':'coming-soon.html','Stocks / Inventories':'coming-soon.html'},
@@ -271,15 +271,15 @@ const LINKS = {
     'Weather':{'<strong>Weather Aggregation</strong>':'https://weather-aggregation-ggz3zjxavouuk2fbkg9wjh.streamlit.app/','<strong>ENSO Monitor</strong>':'https://f4he7uukeecp3qbiubd4ob.streamlit.app/','Coffee (Maxar)':'https://weather-new-3vkh3k8cfyoyodhspwhmur.streamlit.app/','Cocoa (Maxar)':'https://cocoa-weather-asmewzdyvp6xqoijmneuyz.streamlit.app/','Sugar (Maxar)':'https://weather-sugar-kbprtwg9heyafvssv3wnkt.streamlit.app/'},
   },
   'non-fundamentals':{
-    'Rollex':{'Rollex ( ICE )':'https://icebreaker-rollex-huzeqzszozgjxf9vz4cklh.streamlit.app/','Rollex ( LSEG )':'https://interim-migration-rollex-nhawujes2vizbbacqtxkgf.streamlit.app/'},
-    'COT Comprehensive':{'COT Comprehensive ( ICE )':'https://icebreaker-cot-all-nn2nig8qktfwd4k2yvrn9p.streamlit.app/','COT Comprehensive ( LSEG )':'https://interim-migration-cot-all-dviic3fxsojoe9xvqmxzzs.streamlit.app/','COT Distribution ( LSEG )':'https://interim-migration-cot-all-4yhhgv3dfzrsz9krjrlhyp.streamlit.app/'},
+    'Rollex':{'Rollex ( ICE )':'https://icebreaker-rollex-huzeqzszozgjxf9vz4cklh.streamlit.app/','Rollex ( LSEG )':'https://lseg-rollex-4xpepzkhswuapj4hfgnmir.streamlit.app/'},
+    'COT Comprehensive':{'COT Comprehensive ( ICE )':'https://icebreaker-cot-all-nn2nig8qktfwd4k2yvrn9p.streamlit.app/','COT Comprehensive ( LSEG )':'https://lseg-cot-all-nmkxapqrkifswtyfxgq7st.streamlit.app/','COT Distribution ( LSEG )':'https://lseg-cot-all-4nj6vkoykubqyhq8285xrg.streamlit.app/'},
     'COT Analysis':{'COT Dashboard':'https://icebreaker-cot-all-nn2nig8qktfwd4k2yvrn9p.streamlit.app/','Pain Trade Monitor':'https://icebreaker-cot-mibcpad72vybhste9qp2ux.streamlit.app/','COT Prediction':'https://icebreaker-cot-prediction-hc8fbgczj8ms3s5etlzvbg.streamlit.app/','Spec Proximity Dashboard':'https://icebreaker-spec-proximity-s5z6seowgfjp677qtwmj3l.streamlit.app/'},
-    'Roll Yield':{'Roll Yield ( ICE )':'https://icebreaker-rollyield-bq3igngwkldspssayhds6l.streamlit.app/','Roll Yield ( LSEG )':'https://interim-migration-rollyield-nr4yksj7oq3g3jygs73j7e.streamlit.app/'},
-    'Arb':{'Arb ( ICE )':'https://icebreaker-arb-qdspbbdr24pckznafefrmw.streamlit.app/','Arb ( LSEG )':'https://interim-migration-arb-6fxwrbfx4539voujkhv6di.streamlit.app/'},
-    'Options':{'Options ( ICE )':'https://icebreaker-options-itl9refpvnthw3ifvqwmcz.streamlit.app/','Options ( LSEG )':'https://interim-migration-options-aa7ck2bsxhxgkbnczleggq.streamlit.app/'},
+    'Roll Yield':{'Roll Yield ( ICE )':'https://icebreaker-rollyield-bq3igngwkldspssayhds6l.streamlit.app/','Roll Yield ( LSEG )':'https://lseg-roll-yield-khcoretuv6thwmfgklhxxv.streamlit.app/'},
+    'Arb':{'Arb ( ICE )':'https://icebreaker-arb-qdspbbdr24pckznafefrmw.streamlit.app/','Arb ( LSEG )':'https://lseg-arb-cnz6atgsge2wabkyn7htne.streamlit.app/'},
+    'Options':{'Options ( ICE )':'https://icebreaker-options-itl9refpvnthw3ifvqwmcz.streamlit.app/','Options ( LSEG )':'https://lseg-options-au4w7xvw8fjxymnh8s8cis.streamlit.app/'},
     'Cross Section':{'Cross Section Monitor':'https://cross-section-new-wbjv7bf2y77jjnmedlugkq.streamlit.app/'},
-    'OI Progression & Volume':{'Open Interest ( ICE )':'https://icebreaker-futures-oi-vzub6otr4krmrsakkmwuqp.streamlit.app/','Open Interest ( LSEG )':'https://interim-migration-futures-oi-3ojs8tugpuxycdfh9nrtdn.streamlit.app/'},
-    'VaR':{'VaR Monitor ( ICE )':'https://icebreaker-var-8ej6bmncuuk8zmganrwxhf.streamlit.app/','VaR Monitor ( LSEG )':'https://interim-migration-var-st5pdh27fxp8feev8wuppw.streamlit.app/','Exchange vs Model Margin':'https://exchange-margin-project-deqnunallzamuteqw5tzhj.streamlit.app/'},
+    'OI Progression & Volume':{'Open Interest ( ICE )':'https://icebreaker-futures-oi-vzub6otr4krmrsakkmwuqp.streamlit.app/','Open Interest ( LSEG )':'https://lseg-futures-7mg3yjsoz7hnwn3vgspabu.streamlit.app/'},
+    'VaR':{'VaR Monitor ( ICE )':'https://icebreaker-var-8ej6bmncuuk8zmganrwxhf.streamlit.app/','VaR Monitor ( LSEG )':'https://lseg-var-3uh5buf85aubf5ff9velqr.streamlit.app/','Exchange vs Model Margin':'https://exchange-margin-project-deqnunallzamuteqw5tzhj.streamlit.app/'},
     'Optimus Prime':{'Backtesting Engine':'https://icebreaker-rollex-dmtgksmivkujo5ycwbgd3k.streamlit.app/','Statistics':'https://www.notion.so/Optimus-Prime-Statistics-333fbb7607b880ee8876cdfe10893956?source=copy_link','Strategy':'coming-soon.html'},
   }
 };
